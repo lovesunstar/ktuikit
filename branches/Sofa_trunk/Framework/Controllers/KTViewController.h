@@ -31,39 +31,46 @@
 // For example, "Contains "View Controllers" by Jonathan Dann and Cathy Shive" will do.
 
 #import <Cocoa/Cocoa.h>
-#import "KTViewLayout.h"
-// XS for Xtra-Special!
+#import "KTViewProtocol.h"
 
 @class KTWindowController;
-@interface KTViewController : NSViewController {
-@private
-	KTViewController *_parent;
-	KTWindowController *_windowController;
-	NSMutableArray *_children;
-	NSMutableArray * _topLevelNibObjects;
+
+@interface KTViewController : NSViewController 
+{
+	@private
+		KTViewController *		_parent;
+		KTWindowController *	_windowController;
+		NSMutableArray *		_subcontrollers;
+		NSMutableArray *		_topLevelNibObjects;
 }
 
-@property(assign) KTViewController *parent;
 @property(assign) KTWindowController *windowController;
-@property(readonly,copy) NSMutableArray *children; // there's no mutableCopy keyword so this will be @synthesized in the implementation to get the default getter, but we'll write our own setter, otherwise mutability is lost
+@property(readonly,copy) NSMutableArray *subcontrollers; // there's no mutableCopy keyword so this will be @synthesized in the implementation to get the default getter, but we'll write our own setter, otherwise mutability is lost
+
 @property(readonly) NSArray *descendants;
 @property(readonly) KTViewController *rootController;
 
 + (id)viewControllerWithWindowController:(KTWindowController*)theWindowController;
 - (id)initWithNibName:(NSString *)name bundle:(NSBundle *)bundle windowController:(KTWindowController *)windowController;
-//- (NSView<KTViewLayout>*)view;
-//- (void)setView:(NSView<KTViewLayout>*)theView;
-- (NSUInteger)countOfChildren;
-- (KTViewController *)objectInChildrenAtIndex:(NSUInteger)index;
 
-- (void)addChild:(KTViewController *)viewController;
-- (void)insertObject:(KTViewController *)viewController inChildrenAtIndex:(NSUInteger)index;
-- (void)insertObjects:(NSArray *)viewControllers inChildrenAtIndexes:(NSIndexSet *)indexes;
-- (void)insertObjects:(NSArray *)viewControllers inChildrenAtIndex:(NSUInteger)index;
+#pragma mark View
+//- (NSView<KTView>*)view;
+//- (void)setView:(NSView<KTView>*)theView;
 
-- (void)removeChild:(KTViewController *)viewController;
-- (void)removeObjectFromChildrenAtIndex:(NSUInteger)index;
 
+#pragma mark Subcontrollers
+- (KTViewController *)subcontrollerAtIndex:(NSUInteger)index;
+- (void)addSubcontroller:(KTViewController *)viewController;
+- (void)insertSubcontroller:(KTViewController *)viewController atIndex:(NSUInteger)index;
+- (void)insertSubcontrollers:(NSArray *)viewControllers atIndexes:(NSIndexSet *)indexes;
+- (void)insertSubcontrollers:(NSArray *)viewControllers atIndex:(NSUInteger)index;
+- (void)removeSubcontroller:(KTViewController *)viewController;
+- (void)removeSubcontrollerAtIndex:(NSUInteger)index;
+- (void)removeAllSubcontrollers;
+
+
+
+#pragma mark KVO/Bindings
 - (void)removeObservations;
 
 @end

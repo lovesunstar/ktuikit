@@ -54,23 +54,27 @@
 #pragma mark Private API
 
 @interface KTViewController ()
-@property(readwrite,copy) NSMutableArray *children;
+@property(readwrite,copy) NSMutableArray *subcontrollers;
+
 @end
 
 @interface KTViewController (Private)
-// This method is made private so users of the class can't (easily) set the children array whenever they want, they must use the indexed accessors provided. If this was public then our methods that mantain the responder chain and pass the represented object and window controller to the children would be subverted. Alternatively the setter could set all the required variables on the objects in the newChildren array, but the API then becomes a little clunkier.
-- (void)setChildren:(NSMutableArray *)newChildren;
+- (void)setSubcontrollers:(NSMutableArray *)newChildren;
 - (void)releaseNibObjects;
+- (KTViewController*)parent;
+- (void)setParent:(KTViewController*)theParent;
+
 @end
 
 @implementation KTViewController (Private)
-- (void)setChildren:(NSMutableArray *)newChildren;
+
+- (void)setSubcontrollers:(NSMutableArray *)newChildren;
 {
-	if (_children == newChildren)
+	if (_subcontrollers == newChildren)
 		return;
 	NSMutableArray *newChildrenCopy = [newChildren mutableCopy];
-	[_children release];
-	_children = newChildrenCopy;
+	[_subcontrollers release];
+	_subcontrollers = newChildrenCopy;
 	[self.windowController patchResponderChain];
 }
 
@@ -83,6 +87,19 @@
 	}
 	[_topLevelNibObjects release];
 }
+
+
+- (KTViewController*)parent
+{
+	return _parent;
+}
+
+
+- (void)setParent:(KTViewController*)theParent
+{
+	_parent = theParent;
+}
+
 
 @end
  
@@ -97,20 +114,13 @@
 
 #pragma mark Accessors
 
-@synthesize parent = _parent;
+//@synthesize parent = _parent;
 @synthesize windowController = _windowController;
-@synthesize children = _children;
+@synthesize subcontrollers = _subcontrollers;
+
 @dynamic rootController;
 @dynamic descendants;
 
-//- (NSView<KTViewLayout>*)view
-//{
-//	return (NSView<KTViewLayout>*)[super view];
-//}
-//- (void)setView:(NSView<KTViewLayout>*)theView
-//{
-//	[super setView:theView];
-//}
 #pragma mark Designated Initialiser
 
 - (id)initWithNibName:(NSString *)name bundle:(NSBundle *)bundle windowController:(KTWindowController *)windowController;
@@ -118,7 +128,7 @@
 	if (![super initWithNibName:name bundle:bundle])
 		return nil;
 	self.windowController = windowController; // non-retained to avoid retain cycles
-	self.children = [NSMutableArray array]; // set up a blank mutable array
+	self.subcontrollers = [NSMutableArray array]; // set up a blank mutable array
 	_topLevelNibObjects = [[NSMutableArray alloc] init];
 	return self;
 }
@@ -136,74 +146,93 @@
 {
 	// NSLog(@"%@ dealloc", self);
 	[self releaseNibObjects];
-	[_children release];
+	[_subcontrollers release];
 	[super dealloc];
 }
 
 - (void)setWindowController:(KTWindowController*)theWindowController
 {
-	[[self children] makeObjectsPerformSelector:@selector(setWindowController:) withObject:theWindowController];
+	_windowController = theWindowController;
+	[[self subcontrollers] makeObjectsPerformSelector:@selector(setWindowController:) withObject:theWindowController];
 	[[self windowController] patchResponderChain];
 }
 
-#pragma mark Indexed Accessors
 
-- (NSUInteger)countOfChildren;
+
+//#pragma mark -
+//#pragma mark View
+//- (NSView<KTView>*)view
+//{
+//	return (NSView<KTView>*)[super view];
+//}
+//
+//- (void)setView:(NSView<KTView>*)theView
+//{
+//	[super setView:theView];
+//}
+
+
+#pragma mark Subcontrollers
+
+- (NSUInteger)countOfSubcontrollers;
 {
-	return [self.children count];
+	return [self.subcontrollers count];
 }
 
-- (KTViewController *)objectInChildrenAtIndex:(NSUInteger)index;
+- (KTViewController *)subcontrollerAtIndex:(NSUInteger)index;
 {
-	return [self.children objectAtIndex:index];
+	return [self.subcontrollers objectAtIndex:index];
 }
 
-// ------------------------------------------
-// This will add a new KTViewController subclass to the end of the children array.
-// ------------------------------------------
-- (void)addChild:(KTViewController *)viewController;
+
+- (void)addSubcontroller:(KTViewController *)viewController;
 {
-	[self insertObject:viewController inChildrenAtIndex:[self.children count]];
+	[self insertSubcontroller:viewController atIndex:[self.subcontrollers count]];
 }
 
-- (void)removeChild:(KTViewController *)viewController;
+- (void)removeSubcontroller:(KTViewController *)viewController;
 {
 	[[viewController view] removeFromSuperview];
 	[viewController removeObservations];
-	[self.children removeObject:viewController];
+	[self.subcontrollers removeObject:viewController];
 	[self.windowController patchResponderChain];
 }
 
-- (void)removeObjectFromChildrenAtIndex:(NSUInteger)index;
+- (void)removeSubcontrollerAtIndex:(NSUInteger)index;
 {
-	KTViewController *	aChildToRemove = [self.children objectAtIndex:index];
+	KTViewController *	aChildToRemove = [self.subcontrollers objectAtIndex:index];
 	[[aChildToRemove view] removeFromSuperview];
 	[aChildToRemove removeObservations];
-	[self.children removeObjectAtIndex:index];
+	[self.subcontrollers removeObjectAtIndex:index];
 	[self.windowController patchResponderChain]; // each time a controller is removed then the repsonder chain needs fixing
 }
 
-- (void)insertObject:(KTViewController *)viewController inChildrenAtIndex:(NSUInteger)index;
+- (void)insertSubcontroller:(KTViewController *)viewController atIndex:(NSUInteger)index;
 {
-	[self.children insertObject:viewController atIndex:index];
+	[self.subcontrollers insertObject:viewController atIndex:index];
 	[viewController setParent:self];
 	[self.windowController patchResponderChain];
 }
 
-- (void)insertObjects:(NSArray *)viewControllers inChildrenAtIndexes:(NSIndexSet *)indexes;
+- (void)insertSubcontrollers:(NSArray *)viewControllers atIndexes:(NSIndexSet *)indexes;
 {
-	[self.children insertObjects:viewControllers atIndexes:indexes];
+	[self.subcontrollers insertObjects:viewControllers atIndexes:indexes];
 	[viewControllers makeObjectsPerformSelector:@selector(setParent:) withObject:self];
 	[self.windowController patchResponderChain]; 
 }
 
-- (void)insertObjects:(NSArray *)viewControllers inChildrenAtIndex:(NSUInteger)index;
+- (void)insertSubcontrollers:(NSArray *)viewControllers atIndex:(NSUInteger)index;
 {
-	[self insertObjects:viewControllers inChildrenAtIndexes:[NSIndexSet indexSetWithIndex:index]];
+	[self insertSubcontrollers:viewControllers atIndexes:[NSIndexSet indexSetWithIndex:index]];
+}
+
+- (void)removeAllSubcontrollers
+{
+	[self setSubcontrollers:[NSArray array]];
+	[[self windowController] patchResponderChain];
 }
 
 # pragma mark Utilities
-
 // ------------------------------------------
 // This method is not used in the example but does demonstrates an important point of our setup: the root controller in the tree should have parent = nil.  If you'd rather set the parent of the root node to the window controller, this method must be modified to check the class of the parent object.
 // ------------------------------------------
@@ -223,20 +252,24 @@
 - (NSArray *)descendants;
 {
 	NSMutableArray *array = [NSMutableArray array];
-	for (KTViewController *child in self.children) {
+	for (KTViewController *child in self.subcontrollers) {
 		[array addObject:child];
-		if ([child countOfChildren] > 0)
+		if ([child countOfSubcontrollers] > 0)
 			[array addObjectsFromArray:[child descendants]];
 	}
 	return [[array copy] autorelease]; // return an immutable array
 }
+
+
+#pragma mark -
+#pragma mark KVO/Bindings
 
 // --------------------------------------
 // Any manual KVO or bindings that you have set up (other than to the representedObject) should be removed in this method.  It is called by the window controller on in the -windowWillClose: method.  After this the window controller can safely call -dealloc without any warnings that it is being deallocated while observers are still registered.
 // --------------------------------------
 - (void)removeObservations
 {
-	[self.children makeObjectsPerformSelector:@selector(removeObservations)];
+	[self.subcontrollers makeObjectsPerformSelector:@selector(removeObservations)];
 }
 
 // --------------------------------------
