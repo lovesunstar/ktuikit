@@ -121,6 +121,11 @@
 	[self patchResponderChain];
 }
 
+- (void)removeAllViewControllers
+{
+	[self.viewControllers removeAllObjects];
+}
+
 // ---------------------------------------------------
 // This method creates an array containing all the view controllers, then adds them to the responder chain in sequence. The last view controller in the array has nextResponder == nil.
 // ---------------------------------------------------

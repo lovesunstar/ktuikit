@@ -48,6 +48,7 @@
 
 - (void)removeViewController:(KTViewController *)viewController;
 - (void)removeObjectFromViewControllersAtIndex:(NSUInteger)index;
+- (void)removeAllViewControllers;
 
 - (void)patchResponderChain;
 @end

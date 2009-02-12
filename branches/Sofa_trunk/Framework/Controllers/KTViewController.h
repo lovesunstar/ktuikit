@@ -52,6 +52,7 @@
 
 + (id)viewControllerWithWindowController:(KTWindowController*)theWindowController;
 - (id)initWithNibName:(NSString *)name bundle:(NSBundle *)bundle windowController:(KTWindowController *)windowController;
+- (BOOL)loadNibNamed:(NSString*)theNibName bundle:(NSBundle*)theBundle;
 
 #pragma mark View
 //- (NSView<KTView>*)view;
