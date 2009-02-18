@@ -3,6 +3,7 @@
 #import <KTUIKit/KTLayoutManager.h>
 #import <KTUIKit/KTStyleManager.h>
 #import <KTUIKit/KTView.h>
+#import <KTUIKit/KTOpenGLView.h>
 #import <KTUIKit/KTScrollView.h>
 #import <KTUIKit/KTAppKitSplitView.h>
 #import <KTUIKit/KTWebView.h>

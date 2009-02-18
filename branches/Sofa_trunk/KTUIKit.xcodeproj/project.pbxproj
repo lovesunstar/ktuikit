@@ -47,6 +47,9 @@
 		4C64728C0ED966AC00CE9208 /* TestAppWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = 4C64728B0ED966AC00CE9208 /* TestAppWindow.nib */; };
 		4C7AE9FA0ECF9DCE00F79A75 /* TextView.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C7AE9F90ECF9DCE00F79A75 /* TextView.tif */; };
 		4C7AEA080ECFA3F500F79A75 /* WebKit.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7AEA070ECFA3F500F79A75 /* WebKit.png */; };
+		4C8123490F49740C007F2749 /* KTOpenGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8123470F49740C007F2749 /* KTOpenGLView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C81234A0F49740C007F2749 /* KTOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8123480F49740C007F2749 /* KTOpenGLView.m */; };
+		4C81237D0F4985DD007F2749 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C81237C0F4985DD007F2749 /* OpenGL.framework */; };
 		4C9A7E5E0EBDB6D200F8AA48 /* KTSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9A7E5C0EBDB6D200F8AA48 /* KTSegmentedControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9A7E5F0EBDB6D200F8AA48 /* KTSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9A7E5D0EBDB6D200F8AA48 /* KTSegmentedControl.m */; };
 		4C9A7E620EBDB76300F8AA48 /* KTSegmentedControlIntegration.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9A7E610EBDB76300F8AA48 /* KTSegmentedControlIntegration.m */; };
@@ -238,6 +241,9 @@
 		4C64728B0ED966AC00CE9208 /* TestAppWindow.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = TestAppWindow.nib; sourceTree = "<group>"; };
 		4C7AE9F90ECF9DCE00F79A75 /* TextView.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = TextView.tif; sourceTree = "<group>"; };
 		4C7AEA070ECFA3F500F79A75 /* WebKit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WebKit.png; sourceTree = "<group>"; };
+		4C8123470F49740C007F2749 /* KTOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTOpenGLView.h; sourceTree = "<group>"; };
+		4C8123480F49740C007F2749 /* KTOpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTOpenGLView.m; sourceTree = "<group>"; };
+		4C81237C0F4985DD007F2749 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		4C9A7E5C0EBDB6D200F8AA48 /* KTSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSegmentedControl.h; sourceTree = "<group>"; };
 		4C9A7E5D0EBDB6D200F8AA48 /* KTSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTSegmentedControl.m; sourceTree = "<group>"; };
 		4C9A7E600EBDB74500F8AA48 /* KTSegmentedControl.classdescription */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = KTSegmentedControl.classdescription; path = "Plugin/Class Descriptions/KTSegmentedControl.classdescription"; sourceTree = "<group>"; };
@@ -356,6 +362,7 @@
 				4C14A33B0EC8606600E94D88 /* Quartz.framework in Frameworks */,
 				13F8B89007B43554008AE28D /* Cocoa.framework in Frameworks */,
 				4C9A7F590EBDC59800F8AA48 /* WebKit.framework in Frameworks */,
+				4C81237D0F4985DD007F2749 /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,6 +407,7 @@
 		13F8B6FD07B43410008AE28D /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4C81237C0F4985DD007F2749 /* OpenGL.framework */,
 				4C14A3300EC85FC200E94D88 /* Quartz.framework */,
 				4C9A7F580EBDC59800F8AA48 /* WebKit.framework */,
 				DD92D38A0106425D02CA0E72 /* Cocoa.framework */,
@@ -565,6 +573,8 @@
 			children = (
 				4C9C5D890DE9F41800AE6913 /* KTView.h */,
 				4C9C5D8A0DE9F41800AE6913 /* KTView.m */,
+				4C8123470F49740C007F2749 /* KTOpenGLView.h */,
+				4C8123480F49740C007F2749 /* KTOpenGLView.m */,
 				4CD98F990EBC7BBB008BD0EA /* KTScrollView.h */,
 				4CD98F9A0EBC7BBB008BD0EA /* KTScrollView.m */,
 				4C9A7EE60EBDBC9600F8AA48 /* KTAppKitSplitView.h */,
@@ -767,6 +777,7 @@
 				4C14A3370EC85FEF00E94D88 /* KTImageKitBrowserView.h in Headers */,
 				4CD4637E0ED03594009725B9 /* KTWindow.h in Headers */,
 				4CB23FA70ED9A13F00486F39 /* KTColorWell.h in Headers */,
+				4C8123490F49740C007F2749 /* KTOpenGLView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -946,6 +957,7 @@
 				4CB23FA80ED9A13F00486F39 /* KTColorWell.m in Sources */,
 				AB06FAC70EE9739F008A85C9 /* KTViewController.m in Sources */,
 				AB06FAC90EE973A5008A85C9 /* KTWindowController.m in Sources */,
+				4C81234A0F49740C007F2749 /* KTOpenGLView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
