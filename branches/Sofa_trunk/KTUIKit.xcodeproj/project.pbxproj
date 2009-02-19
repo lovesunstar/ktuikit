@@ -36,6 +36,8 @@
 		4C3EAA4A0ECF5843004492C4 /* KTStyleInspector.nib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3EAA3F0ECF5843004492C4 /* KTStyleInspector.nib */; };
 		4C3EAA4B0ECF5843004492C4 /* KTUIKitLibrary.nib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3EAA410ECF5843004492C4 /* KTUIKitLibrary.nib */; };
 		4C3EAA4C0ECF5843004492C4 /* KTViewInspector.nib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3EAA430ECF5843004492C4 /* KTViewInspector.nib */; };
+		4C5CB27F0F4D9899002768CA /* KTOpenGLLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5CB27D0F4D9899002768CA /* KTOpenGLLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C5CB2800F4D9899002768CA /* KTOpenGLLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5CB27E0F4D9899002768CA /* KTOpenGLLayer.m */; };
 		4C6471DA0ED9617F00CE9208 /* KTUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53DF68FD067E5B5A0090B5B0 /* KTUIKit.framework */; };
 		4C64720C0ED962BA00CE9208 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD92D38A0106425D02CA0E72 /* Cocoa.framework */; };
 		4C6472190ED962DA00CE9208 /* KTUIKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 53DF68FD067E5B5A0090B5B0 /* KTUIKit.framework */; };
@@ -106,6 +108,8 @@
 		4CB240910ED9AA9300486F39 /* KTColorWell.classdescription in Resources */ = {isa = PBXBuildFile; fileRef = 4CB23FE60ED9A3DD00486F39 /* KTColorWell.classdescription */; };
 		4CC1F40E0DE940F70035CE00 /* KTViewIntegration.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC1F40D0DE940F70035CE00 /* KTViewIntegration.m */; };
 		4CC1F41D0DE9418F0035CE00 /* KTLayoutManagerInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC1F41C0DE9418F0035CE00 /* KTLayoutManagerInspector.m */; };
+		4CC892B80F4D5B920051936E /* KTOpenGLTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC892B60F4D5B920051936E /* KTOpenGLTexture.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CC892B90F4D5B920051936E /* KTOpenGLTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC892B70F4D5B920051936E /* KTOpenGLTexture.m */; };
 		4CCA96180EBC4FD200CF9A03 /* KTButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCA96160EBC4FD200CF9A03 /* KTButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CCA96190EBC4FD200CF9A03 /* KTButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCA96170EBC4FD200CF9A03 /* KTButton.m */; };
 		4CCA961C0EBC506C00CF9A03 /* KTButtonIntegration.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCA961B0EBC506C00CF9A03 /* KTButtonIntegration.m */; };
@@ -230,6 +234,8 @@
 		4C3EAA400ECF5843004492C4 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/KTStyleInspector.nib; sourceTree = "<group>"; };
 		4C3EAA420ECF5843004492C4 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/KTUIKitLibrary.nib; sourceTree = "<group>"; };
 		4C3EAA440ECF5843004492C4 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/KTViewInspector.nib; sourceTree = "<group>"; };
+		4C5CB27D0F4D9899002768CA /* KTOpenGLLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTOpenGLLayer.h; sourceTree = "<group>"; };
+		4C5CB27E0F4D9899002768CA /* KTOpenGLLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTOpenGLLayer.m; sourceTree = "<group>"; };
 		4C6471C20ED9612400CE9208 /* TestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C6472620ED963F100CE9208 /* TestApp-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TestApp-Info.plist"; sourceTree = "<group>"; };
 		4C6472670ED9642600CE9208 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -319,6 +325,8 @@
 		4CC1F40D0DE940F70035CE00 /* KTViewIntegration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTViewIntegration.m; sourceTree = "<group>"; };
 		4CC1F41B0DE9418F0035CE00 /* KTLayoutManagerInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTLayoutManagerInspector.h; sourceTree = "<group>"; };
 		4CC1F41C0DE9418F0035CE00 /* KTLayoutManagerInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTLayoutManagerInspector.m; sourceTree = "<group>"; };
+		4CC892B60F4D5B920051936E /* KTOpenGLTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTOpenGLTexture.h; sourceTree = "<group>"; };
+		4CC892B70F4D5B920051936E /* KTOpenGLTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTOpenGLTexture.m; sourceTree = "<group>"; };
 		4CCA96160EBC4FD200CF9A03 /* KTButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTButton.h; sourceTree = "<group>"; };
 		4CCA96170EBC4FD200CF9A03 /* KTButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTButton.m; sourceTree = "<group>"; };
 		4CCA961B0EBC506C00CF9A03 /* KTButtonIntegration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTButtonIntegration.m; sourceTree = "<group>"; };
@@ -623,6 +631,7 @@
 				4C9A811E0EBDD7E500F8AA48 /* NSViewSubclasses */,
 				4CCA96150EBC4FD200CF9A03 /* NSControlSubclasses */,
 				4C9A83700EBE26C700F8AA48 /* CustomViewsAndControls */,
+				4CC892B50F4D5B690051936E /* OpenGL */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -669,6 +678,17 @@
 				4CB23EFC0ED989E800486F39 /* poof_item.aif */,
 			);
 			path = Sounds;
+			sourceTree = "<group>";
+		};
+		4CC892B50F4D5B690051936E /* OpenGL */ = {
+			isa = PBXGroup;
+			children = (
+				4CC892B60F4D5B920051936E /* KTOpenGLTexture.h */,
+				4CC892B70F4D5B920051936E /* KTOpenGLTexture.m */,
+				4C5CB27D0F4D9899002768CA /* KTOpenGLLayer.h */,
+				4C5CB27E0F4D9899002768CA /* KTOpenGLLayer.m */,
+			);
+			path = OpenGL;
 			sourceTree = "<group>";
 		};
 		4CCA96150EBC4FD200CF9A03 /* NSControlSubclasses */ = {
@@ -778,6 +798,8 @@
 				4CD4637E0ED03594009725B9 /* KTWindow.h in Headers */,
 				4CB23FA70ED9A13F00486F39 /* KTColorWell.h in Headers */,
 				4C8123490F49740C007F2749 /* KTOpenGLView.h in Headers */,
+				4CC892B80F4D5B920051936E /* KTOpenGLTexture.h in Headers */,
+				4C5CB27F0F4D9899002768CA /* KTOpenGLLayer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -958,6 +980,8 @@
 				AB06FAC70EE9739F008A85C9 /* KTViewController.m in Sources */,
 				AB06FAC90EE973A5008A85C9 /* KTWindowController.m in Sources */,
 				4C81234A0F49740C007F2749 /* KTOpenGLView.m in Sources */,
+				4CC892B90F4D5B920051936E /* KTOpenGLTexture.m in Sources */,
+				4C5CB2800F4D9899002768CA /* KTOpenGLLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

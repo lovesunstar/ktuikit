@@ -7,6 +7,7 @@
 //
 
 #import "KTOpenGLView.h"
+#import "KTOpenGLLayer.h"
 
 @interface KTOpenGLView (Private)
 
@@ -16,6 +17,9 @@
 @end
 
 @implementation KTOpenGLView
+
+@synthesize openGLLayer = mOpenGLLayer;
+
 //=========================================================== 
 // - defaultPixelFormat
 //=========================================================== 
@@ -109,6 +113,9 @@
 	return self;
 }
 
+
+
+
 //=========================================================== 
 // - dealloc
 //=========================================================== 
@@ -117,6 +124,8 @@
 	[mLayoutManager release];
 	[mStyleManager release];
 	[mLabel release];
+	[mOpenGLLayer setView:nil];
+	[mOpenGLLayer release];
 	[super dealloc];
 }
 
@@ -212,6 +221,8 @@
 - (void)drawInContext:(NSOpenGLContext*)theContext
 {
 	// subclasses can override this to do custom drawing over the styles
+	if(mOpenGLLayer)
+		[mOpenGLLayer drawLayers];
 }
 
 
@@ -263,6 +274,114 @@
 	float aZPos = -1.0 * (aBounds.size.height*0.5) / tan( 3.14159 / 6.0 );
 	glTranslatef(-aBounds.size.width*0.5, -aBounds.size.height*0.5, aZPos );
 }
+
+#pragma mark -
+#pragma mark openGLLayers
+
+//=========================================================== 
+// - setOpenGLLayer:
+//===========================================================
+- (void)setOpenGLLayer:(KTOpenGLLayer*)theLayer
+{
+	if(mOpenGLLayer != theLayer)
+	{
+		[theLayer retain];
+		[theLayer setView:self];
+		[theLayer setNextResponder:self];
+		[theLayer setSuperlayer:nil];
+		[mOpenGLLayer setView:nil];
+		[mOpenGLLayer release];
+		mOpenGLLayer = theLayer;
+	}
+}
+
+
+//=========================================================== 
+// - mouseDown:
+//===========================================================
+- (void)mouseDown:(NSEvent*)theEvent
+{
+	if(mOpenGLLayer)
+	{
+		NSPoint	aMousePoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+		KTOpenGLLayer * aHitTestResult = [mOpenGLLayer hitTest:aMousePoint];
+		if(aHitTestResult)
+		{
+			[aHitTestResult mouseDown:theEvent];
+			return;
+		}
+	}
+}
+
+//=========================================================== 
+// - mouseUp:
+//===========================================================
+- (void)mouseUp:(NSEvent*)theEvent
+{
+	if(mOpenGLLayer)
+	{
+		NSPoint	aMousePoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+		KTOpenGLLayer * aHitTestResult = [mOpenGLLayer hitTest:aMousePoint];
+		if(aHitTestResult)
+		{
+			[aHitTestResult mouseUp:theEvent];
+			return;
+		}
+	}
+}
+
+//=========================================================== 
+// - mouseDragged:
+//===========================================================
+- (void)mouseDragged:(NSEvent*)theEvent
+{
+	if(mOpenGLLayer)
+	{
+		NSPoint	aMousePoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+		KTOpenGLLayer * aHitTestResult = [mOpenGLLayer hitTest:aMousePoint];
+		if(aHitTestResult)
+		{
+			[aHitTestResult mouseDragged:theEvent];
+			return;
+		}
+	}
+}
+
+//=========================================================== 
+// - mouseMoved:
+//===========================================================
+- (void)mouseMoved:(NSEvent*)theEvent
+{
+	if(mOpenGLLayer)
+	{
+		NSPoint	aMousePoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+		KTOpenGLLayer * aHitTestResult = [mOpenGLLayer hitTest:aMousePoint];
+		if(aHitTestResult)
+		{
+			[aHitTestResult mouseMoved:theEvent];
+			return;
+		}
+	}
+}
+
+
+//=========================================================== 
+// - scrollWheel:
+//===========================================================
+- (void)scrollWheel:(NSEvent *)theEvent
+{
+	if(mOpenGLLayer)
+	{
+		NSPoint	aMousePoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+		KTOpenGLLayer * aHitTestResult = [mOpenGLLayer hitTest:aMousePoint];
+		if(aHitTestResult)
+		{
+			[aHitTestResult scrollWheel:theEvent];
+			return;
+		}
+	}
+}
+
 
 
 #pragma mark -
@@ -334,7 +453,10 @@
 //===========================================================
 - (NSArray*)children
 {
-	return nil;
+	NSArray *	aChildren = nil;
+	if(mOpenGLLayer!=nil)
+		aChildren = [NSArray arrayWithObject:mOpenGLLayer];
+	return aChildren;
 }
 
 

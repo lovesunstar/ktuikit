@@ -192,7 +192,6 @@
 
 - (void)removeSubcontroller:(KTViewController *)viewController;
 {
-	[[viewController view] removeFromSuperview];
 	[viewController removeObservations];
 	[self.subcontrollers removeObject:viewController];
 	[self.windowController patchResponderChain];
@@ -201,7 +200,6 @@
 - (void)removeSubcontrollerAtIndex:(NSUInteger)index;
 {
 	KTViewController *	aChildToRemove = [self.subcontrollers objectAtIndex:index];
-	[[aChildToRemove view] removeFromSuperview];
 	[aChildToRemove removeObservations];
 	[self.subcontrollers removeObjectAtIndex:index];
 	[self.windowController patchResponderChain]; // each time a controller is removed then the repsonder chain needs fixing

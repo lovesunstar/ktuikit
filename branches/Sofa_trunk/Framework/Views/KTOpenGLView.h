@@ -17,13 +17,21 @@
 #import "KTLayoutManager.h"
 #import "KTStyleManager.h"
 
+@class KTOpenGLLayer;
+
 @interface KTOpenGLView : NSOpenGLView <KTView>
 {
 	KTLayoutManager *			mLayoutManager;
 	KTStyleManager *			mStyleManager;
 	NSString *					mLabel;
+	KTOpenGLLayer *				mOpenGLLayer;
 }
+
+@property (readwrite, retain) KTOpenGLLayer * openGLLayer;
+
 + (NSOpenGLPixelFormat*)defaultPixelFormat;
 - (void)drawInContext:(NSOpenGLContext*)theContext;
+
+
 
 @end
