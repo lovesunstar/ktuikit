@@ -32,6 +32,10 @@
 		4C14A33B0EC8606600E94D88 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C14A3300EC85FC200E94D88 /* Quartz.framework */; };
 		4C14A38A0EC860EC00E94D88 /* KTImageKitBrowserViewIntegration.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A3890EC860EC00E94D88 /* KTImageKitBrowserViewIntegration.m */; };
 		4C180D880ECF699A00FB2123 /* KTScrollView.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C180D870ECF699A00FB2123 /* KTScrollView.tif */; };
+		4C2998100F4EC52A000B1A8E /* KTOpenGLControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C29980E0F4EC52A000B1A8E /* KTOpenGLControl.h */; };
+		4C2998110F4EC52A000B1A8E /* KTOpenGLControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C29980F0F4EC52A000B1A8E /* KTOpenGLControl.m */; };
+		4C2998140F4EC770000B1A8E /* KTOpenGLButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2998120F4EC770000B1A8E /* KTOpenGLButton.h */; };
+		4C2998150F4EC770000B1A8E /* KTOpenGLButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2998130F4EC770000B1A8E /* KTOpenGLButton.m */; };
 		4C3EAA490ECF5843004492C4 /* KTLayoutManagerInspector.nib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3EAA3D0ECF5843004492C4 /* KTLayoutManagerInspector.nib */; };
 		4C3EAA4A0ECF5843004492C4 /* KTStyleInspector.nib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3EAA3F0ECF5843004492C4 /* KTStyleInspector.nib */; };
 		4C3EAA4B0ECF5843004492C4 /* KTUIKitLibrary.nib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3EAA410ECF5843004492C4 /* KTUIKitLibrary.nib */; };
@@ -228,6 +232,10 @@
 		4C14A3870EC860BA00E94D88 /* KTImageKitBrowserView.classdescription */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = KTImageKitBrowserView.classdescription; path = "Plugin/Class Descriptions/KTImageKitBrowserView.classdescription"; sourceTree = "<group>"; };
 		4C14A3890EC860EC00E94D88 /* KTImageKitBrowserViewIntegration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTImageKitBrowserViewIntegration.m; sourceTree = "<group>"; };
 		4C180D870ECF699A00FB2123 /* KTScrollView.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = KTScrollView.tif; sourceTree = "<group>"; };
+		4C29980E0F4EC52A000B1A8E /* KTOpenGLControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTOpenGLControl.h; sourceTree = "<group>"; };
+		4C29980F0F4EC52A000B1A8E /* KTOpenGLControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTOpenGLControl.m; sourceTree = "<group>"; };
+		4C2998120F4EC770000B1A8E /* KTOpenGLButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTOpenGLButton.h; sourceTree = "<group>"; };
+		4C2998130F4EC770000B1A8E /* KTOpenGLButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTOpenGLButton.m; sourceTree = "<group>"; };
 		4C3EA96E0ECF492E004492C4 /* KTViewLayoutSharedImplementation_ChildlessNSView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTViewLayoutSharedImplementation_ChildlessNSView.m; sourceTree = "<group>"; };
 		4C3EA96F0ECF492E004492C4 /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
 		4C3EAA3E0ECF5843004492C4 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/KTLayoutManagerInspector.nib; sourceTree = "<group>"; };
@@ -687,6 +695,10 @@
 				4CC892B70F4D5B920051936E /* KTOpenGLTexture.m */,
 				4C5CB27D0F4D9899002768CA /* KTOpenGLLayer.h */,
 				4C5CB27E0F4D9899002768CA /* KTOpenGLLayer.m */,
+				4C29980E0F4EC52A000B1A8E /* KTOpenGLControl.h */,
+				4C29980F0F4EC52A000B1A8E /* KTOpenGLControl.m */,
+				4C2998120F4EC770000B1A8E /* KTOpenGLButton.h */,
+				4C2998130F4EC770000B1A8E /* KTOpenGLButton.m */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
@@ -800,6 +812,8 @@
 				4C8123490F49740C007F2749 /* KTOpenGLView.h in Headers */,
 				4CC892B80F4D5B920051936E /* KTOpenGLTexture.h in Headers */,
 				4C5CB27F0F4D9899002768CA /* KTOpenGLLayer.h in Headers */,
+				4C2998100F4EC52A000B1A8E /* KTOpenGLControl.h in Headers */,
+				4C2998140F4EC770000B1A8E /* KTOpenGLButton.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -982,6 +996,8 @@
 				4C81234A0F49740C007F2749 /* KTOpenGLView.m in Sources */,
 				4CC892B90F4D5B920051936E /* KTOpenGLTexture.m in Sources */,
 				4C5CB2800F4D9899002768CA /* KTOpenGLLayer.m in Sources */,
+				4C2998110F4EC52A000B1A8E /* KTOpenGLControl.m in Sources */,
+				4C2998150F4EC770000B1A8E /* KTOpenGLButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
