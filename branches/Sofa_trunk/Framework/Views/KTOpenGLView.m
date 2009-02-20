@@ -19,6 +19,7 @@
 @implementation KTOpenGLView
 
 @synthesize openGLLayer = mOpenGLLayer;
+@synthesize shouldAcceptFirstResponder = mShouldAcceptFirstResponder;
 
 //=========================================================== 
 // - defaultPixelFormat
@@ -283,18 +284,82 @@
 //===========================================================
 - (void)setOpenGLLayer:(KTOpenGLLayer*)theLayer
 {
-	if(mOpenGLLayer != theLayer)
-	{
-		[theLayer retain];
-		[theLayer setView:self];
-		[theLayer setNextResponder:self];
-		[theLayer setSuperlayer:nil];
-		[mOpenGLLayer setView:nil];
-		[mOpenGLLayer release];
-		mOpenGLLayer = theLayer;
-	}
+	[theLayer retain];
+	
+	id aNextResponder = [self nextResponder];
+	// make the layer our next responder
+	[self setNextResponder:theLayer];
+	
+	if(aNextResponder != mOpenGLLayer)
+		[theLayer setNextResponder:aNextResponder];
+	else
+		[theLayer setNextResponder:[mOpenGLLayer nextResponder]];
+	
+	[mOpenGLLayer setView:nil];
+	[mOpenGLLayer release];
+	
+	[theLayer setView:self];
+	[theLayer setSuperlayer:nil];
+
+	mOpenGLLayer = theLayer;
+	
+	[self setShouldAcceptFirstResponder:YES];
 }
 
+
+#pragma mark -
+#pragma mark Responder Chain
+//=========================================================== 
+// - setNextResponder:
+//===========================================================
+- (void)setNextResponder:(NSResponder*)theResponder
+{
+	if(mOpenGLLayer!=nil)
+	{
+		[super setNextResponder:mOpenGLLayer];
+		[mOpenGLLayer setNextResponder:theResponder];
+	}
+	else
+		[super setNextResponder:theResponder];
+}
+
+//=========================================================== 
+// - acceptsFirstResponder:
+//===========================================================
+- (BOOL)acceptsFirstResponder
+{
+	return mShouldAcceptFirstResponder;	
+}
+
+
+//=========================================================== 
+// - becomeFirstResponder:
+//===========================================================
+- (BOOL)becomeFirstResponder
+{
+	if(mOpenGLLayer!=nil)
+	{
+		if([mOpenGLLayer becomeFirstResponder])
+			[mOpenGLLayer setNeedsDisplay:YES];
+		return [mOpenGLLayer becomeFirstResponder];
+	}
+	return mShouldAcceptFirstResponder;
+}
+
+
+//=========================================================== 
+// - resignFirstResponder:
+//===========================================================
+- (BOOL)resignFirstResponder
+{
+	if(mOpenGLLayer!=nil)
+	{
+		if([mOpenGLLayer resignFirstResponder])
+			[mOpenGLLayer setNeedsDisplay:YES];
+		return [mOpenGLLayer resignFirstResponder];
+	}
+	return YES;
+}
 
 //=========================================================== 
 // - mouseDown:

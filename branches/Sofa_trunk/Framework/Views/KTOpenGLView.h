@@ -25,9 +25,11 @@
 	KTStyleManager *			mStyleManager;
 	NSString *					mLabel;
 	KTOpenGLLayer *				mOpenGLLayer;
+	BOOL						mShouldAcceptFirstResponder;
 }
 
 @property (readwrite, retain) KTOpenGLLayer * openGLLayer;
+@property (readwrite, assign) BOOL shouldAcceptFirstResponder;
 
 + (NSOpenGLPixelFormat*)defaultPixelFormat;
 - (void)drawInContext:(NSOpenGLContext*)theContext;
