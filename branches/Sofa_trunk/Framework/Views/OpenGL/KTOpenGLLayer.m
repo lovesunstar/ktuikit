@@ -18,7 +18,6 @@
 @synthesize sublayers = mSublayers;
 @synthesize superlayer = mSuperlayer;
 @synthesize view = mView;
-
 //=========================================================== 
 // - initWithFrame
 //===========================================================
@@ -147,6 +146,14 @@
 - (NSRect)frame
 {
 	return mFrame;
+}
+
+//=========================================================== 
+// - bounds
+//===========================================================
+- (NSRect)bounds
+{
+	return NSMakeRect(0, 0, mFrame.size.width, mFrame.size.height);
 }
 
 //=========================================================== 

@@ -29,6 +29,7 @@
 @property (readwrite, retain) NSMutableArray * sublayers;
 
 - (id)initWithFrame:(NSRect)theFrame;
+- (NSRect)bounds;
 
 - (void)addSublayer:(KTOpenGLLayer*)theSublayer;
 - (void)removeSublayer:(KTOpenGLLayer*)theSublayer;
@@ -38,4 +39,5 @@
 
 - (KTOpenGLLayer*)hitTest:(NSPoint)thePoint;
 - (void)setNeedsDisplay:(BOOL)theBool;
+
 @end

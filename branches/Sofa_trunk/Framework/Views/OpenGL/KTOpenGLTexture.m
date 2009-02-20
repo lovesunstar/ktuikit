@@ -6,6 +6,11 @@
 //  Copyright 2009 __MyCompanyName__. All rights reserved.
 //
 
+
+// Apple Docs: Techniques for working with texture data:
+//http://developer.apple.com/documentation/graphicsimaging/Conceptual/OpenGL-MacProgGuide/opengl_texturedata/chapter_10_section_5.html#//apple_ref/doc/uid/TP40001987-CH407-SW28
+
+
 #import "KTOpenGLTexture.h"
 
 #if __BIG_ENDIAN__
@@ -59,7 +64,6 @@
 		NSInteger			aSamplesPerPixel;
 		unsigned char *		aBitmapData;
 		
-		
 		aBitmapData = [theNSBitmapImageRep bitmapData];
 		mOriginalPixelsWide = [theNSBitmapImageRep pixelsWide];
 		mOriginalPixelsHigh = [theNSBitmapImageRep pixelsHigh];
@@ -67,7 +71,7 @@
 		aHasAlpha = [theNSBitmapImageRep hasAlpha];
 		aFormat1 = aHasAlpha ? GL_RGBA8 : GL_RGB8;
 		aFormat2 = aHasAlpha ? GL_RGBA : GL_RGB;
-		aSamplesPerPixel = aHasAlpha ? 4 : 3;
+		aSamplesPerPixel = aHasAlpha ? 3 : 3;
 		
 		aType = aHasAlpha ? ARGB_IMAGE_TYPE : GL_UNSIGNED_BYTE;
 		
@@ -88,9 +92,7 @@
 		glBindTexture(GL_TEXTURE_RECTANGLE_EXT, 0);
 		
 	}
-
 }
-
 
 
 //----------------------------------------------------------------------------------------
