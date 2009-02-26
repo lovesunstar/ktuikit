@@ -40,7 +40,7 @@
 //----------------------------------------------------------------------------------------
 - (void)dealloc
 {
-	[self deleteTexture];
+	[self performSelectorOnMainThread:@selector(deleteTexture) withObject:nil waitUntilDone:YES];
 	[super dealloc];
 }
 
@@ -67,6 +67,8 @@
 		aBitmapData = [theNSBitmapImageRep bitmapData];
 		mOriginalPixelsWide = [theNSBitmapImageRep pixelsWide];
 		mOriginalPixelsHigh = [theNSBitmapImageRep pixelsHigh];
+
+		NSLog(@"%@", theNSBitmapImageRep);
 
 		aHasAlpha = [theNSBitmapImageRep hasAlpha];
 		aFormat1 = aHasAlpha ? GL_RGBA8 : GL_RGB8;
@@ -137,6 +139,13 @@
 
 }
 
+//----------------------------------------------------------------------------------------
+//	size
+//----------------------------------------------------------------------------------------
+- (NSSize)size
+{
+	return NSMakeSize(mOriginalPixelsWide, mOriginalPixelsHigh);
+}
 
 //----------------------------------------------------------------------------------------
 //	deleteTexture

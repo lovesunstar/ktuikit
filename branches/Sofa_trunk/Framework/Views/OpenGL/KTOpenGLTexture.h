@@ -24,5 +24,5 @@
 - (void)createTextureFromNSBitmapImageRep:(NSBitmapImageRep*)theNSBitmapImageRep;
 - (void)drawInRect:(NSRect)theRect alpha:(CGFloat)theAlpha;
 - (void)deleteTexture;
-
+- (NSSize)size;
 @end

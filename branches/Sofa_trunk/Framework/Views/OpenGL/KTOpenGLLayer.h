@@ -19,7 +19,7 @@
 		NSRect					mFrame;
 		NSMutableArray *		mSublayers;
 		KTOpenGLLayer *			mSuperlayer;
-		KTOpenGLView *			mView;
+		KTOpenGLView *			wView;
 }
 
 @property (readwrite, assign) NSRect frame;

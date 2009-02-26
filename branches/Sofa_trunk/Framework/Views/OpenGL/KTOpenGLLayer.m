@@ -17,7 +17,7 @@
 @synthesize viewLayoutManager = mLayoutManager;
 @synthesize sublayers = mSublayers;
 @synthesize superlayer = mSuperlayer;
-@synthesize view = mView;
+@synthesize view = wView;
 //=========================================================== 
 // - initWithFrame
 //===========================================================
@@ -28,6 +28,7 @@
 		mFrame = theFrame;
 		mSublayers = [[NSMutableArray alloc] init];
 		mLayoutManager = [[KTLayoutManager alloc] initWithView:self];
+		wView = nil;
 	}
 	return self;
 }
@@ -40,6 +41,7 @@
 {
 	[mSublayers release];
 	[mLayoutManager release];
+	wView = nil;
 	[super dealloc];
 }
 
@@ -48,15 +50,18 @@
 //===========================================================
 - (void)addSublayer:(KTOpenGLLayer*)theSublayer
 {
-	// take care of the responder chain
-	[theSublayer setNextResponder:self];
-	// tell sublayer about its super layer
-	[theSublayer setSuperlayer:self];
-	// tell the sublayer about its view
-	[theSublayer setView:[self view]];
-	
-	// add
-	[mSublayers addObject:theSublayer];
+	if(theSublayer)
+	{
+		// take care of the responder chain
+		[theSublayer setNextResponder:self];
+		// tell sublayer about its super layer
+		[theSublayer setSuperlayer:self];
+		// tell the sublayer about its view
+		[theSublayer setView:[self view]];
+		
+		// add
+		[mSublayers addObject:theSublayer];
+	}
 }
 
 
@@ -65,7 +70,8 @@
 //===========================================================
 - (void)removeSublayer:(KTOpenGLLayer*)theSublayer
 {
-	[mSublayers removeObject:theSublayer];
+	if(theSublayer)
+		[mSublayers removeObject:theSublayer];
 }
 
 
@@ -99,6 +105,15 @@
 	[[self view] setNeedsDisplay:YES];
 }
 
+
+//=========================================================== 
+// - setView
+//===========================================================
+- (void)setView:(KTOpenGLView*)theView
+{
+	wView = theView;
+	[mSublayers makeObjectsPerformSelector:@selector(setView:) withObject:theView];
+}
 
 
 #pragma mark Events
@@ -164,8 +179,8 @@
 	id<KTViewLayout> aParent = nil;
 	if(mSuperlayer!=nil)
 		aParent = mSuperlayer;
-	else if(mView != nil)
-		aParent = mView;
+	else if(wView != nil)
+		aParent = wView;
 		
 	return aParent;
 }
