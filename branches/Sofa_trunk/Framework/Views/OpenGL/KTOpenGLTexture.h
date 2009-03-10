@@ -12,6 +12,7 @@
 #import <OpenGL/gl.h>
 #import <OpenGL/glext.h>
 
+
 @interface KTOpenGLTexture : NSObject 
 {
 	@private
@@ -19,9 +20,11 @@
 		size_t				mOriginalPixelsWide;
 		size_t				mOriginalPixelsHigh;
 		id					mBitmapSource;
+		NSOpenGLContext *	mOpenGLContext;
 }
 
-- (void)createTextureFromNSBitmapImageRep:(NSBitmapImageRep*)theNSBitmapImageRep;
+- (void)createTextureWithTextureInfo:(NSDictionary*)theTextureInfo;
+- (void)createTextureFromNSBitmapImageRep:(NSBitmapImageRep*)theNSBitmapImageRep openGLContext:(NSOpenGLContext*)theContext;
 - (void)drawInRect:(NSRect)theRect alpha:(CGFloat)theAlpha;
 - (void)deleteTexture;
 - (NSSize)size;

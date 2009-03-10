@@ -1,5 +1,6 @@
 #import <KTUIKit/KTWindowController.h>
 #import <KTUIKit/KTViewController.h>
+#import <KTUIKit/KTLayerController.h>
 #import <KTUIKit/KTLayoutManager.h>
 #import <KTUIKit/KTStyleManager.h>
 #import <KTUIKit/KTView.h>
@@ -22,3 +23,4 @@
 #import <KTUIKit/KTImageView.h>
 #import <KTUIKit/KTGradientPicker.h>
 #import <KTUIKit/KTColorWell.h>
+#import <KTUIKit/KTAnimator.h>

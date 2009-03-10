@@ -14,6 +14,7 @@
 @implementation KTOpenGLLayer
 
 @synthesize frame = mFrame;
+@synthesize alpha = mAlpha;
 @synthesize viewLayoutManager = mLayoutManager;
 @synthesize sublayers = mSublayers;
 @synthesize superlayer = mSuperlayer;
@@ -28,6 +29,7 @@
 		mFrame = theFrame;
 		mSublayers = [[NSMutableArray alloc] init];
 		mLayoutManager = [[KTLayoutManager alloc] initWithView:self];
+		mAlpha = 1.0;
 		wView = nil;
 	}
 	return self;
@@ -114,6 +116,146 @@
 	wView = theView;
 	[mSublayers makeObjectsPerformSelector:@selector(setView:) withObject:theView];
 }
+
+
+//=========================================================== 
+// - notifiyLayersViewDidReshape
+//===========================================================
+- (void)notifiyLayersViewDidReshape
+{
+//	[self viewDidReshape];
+//	[mSublayers makeObjectsPerformSelector:@selector(notifiyLayersViewDidReshape:) withObject:nil];
+}
+
+
+//=========================================================== 
+// - viewDidReshape
+//===========================================================
+- (void)viewDidReshape
+{
+}
+
+
+
+#pragma mark Coordinate System
+//=========================================================== 
+// - convertRect:fromLayer
+//===========================================================
+- (NSRect)convertRect:(NSRect)theRect fromLayer:(KTOpenGLLayer*)theLayer
+{
+	NSRect aRectToReturn = NSZeroRect;
+	aRectToReturn.origin = [self convertPoint:theRect.origin fromLayer:theLayer];
+	aRectToReturn.size = theRect.size;
+	return aRectToReturn;
+}
+
+//=========================================================== 
+// - convertPoint:fromLayer
+//===========================================================
+- (NSPoint)convertPoint:(NSPoint)thePoint fromLayer:(KTOpenGLLayer*)theLayer
+{
+	NSPoint aPointToReturn = NSZeroPoint;
+	// convert the point to the view's coordinate system
+	NSPoint aLayerOrigin = [theLayer frame].origin;
+	NSPoint aViewPoint = NSMakePoint(aLayerOrigin.x + thePoint.x, aLayerOrigin.y + thePoint.y);
+	// where is this point in our coordinate system?
+	aPointToReturn.x = aViewPoint.x - [self frame].origin.x;
+	aPointToReturn.y = aViewPoint.y - [self frame].origin.y;
+	return aPointToReturn;
+}
+
+//=========================================================== 
+// - convertRectToViewRect
+//===========================================================
+- (NSRect)convertRectToViewRect:(NSRect)theRect
+{
+	NSRect aRectToReturn = NSZeroRect;
+	return aRectToReturn;
+}
+
+//=========================================================== 
+// - convertPointToViewPoint
+//===========================================================
+- (NSPoint)convertPointToViewPoint:(NSPoint)thePoint
+{
+	NSPoint aPointToReturn = NSZeroPoint;
+	return aPointToReturn;
+}
+
+//=========================================================== 
+// - positionX
+//===========================================================
+- (CGFloat)positionX
+{
+	return [self frame].origin.x;
+}
+
+
+//=========================================================== 
+// - setPositionX
+//===========================================================
+- (void)setPositionX:(CGFloat)thePosition
+{
+	NSRect aFrame = [self frame];
+	aFrame.origin.x = thePosition;
+	[self setFrame:aFrame];
+}
+
+//=========================================================== 
+// - positionY
+//===========================================================
+- (CGFloat)positionY
+{
+	return [self frame].origin.y;
+}
+
+//=========================================================== 
+// - setPositionY
+//===========================================================
+- (void)setPositionY:(CGFloat)thePosition
+{
+	NSRect aFrame = [self frame];
+	aFrame.origin.y = thePosition;
+	[self setFrame:aFrame];
+}
+
+//=========================================================== 
+// - width
+//===========================================================
+- (CGFloat)width
+{
+	return [self frame].size.width;
+}
+
+//=========================================================== 
+// - setWidth
+//===========================================================
+- (void)setWidth:(CGFloat)thePosition
+{
+	NSRect aFrame = [self frame];
+	aFrame.size.width = thePosition;
+	[self setFrame:aFrame];
+}
+
+
+//=========================================================== 
+// - height
+//===========================================================
+- (CGFloat)height
+{
+	return [self frame].size.height;
+}
+
+//=========================================================== 
+// - setHeight
+//===========================================================
+- (void)setHeight:(CGFloat)thePosition
+{
+	NSRect aFrame = [self frame];
+	aFrame.size.height = thePosition;
+	[self setFrame:aFrame];
+}
+
 
 
 #pragma mark Events

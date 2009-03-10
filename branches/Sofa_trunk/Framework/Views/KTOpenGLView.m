@@ -26,12 +26,14 @@
 //=========================================================== 
 + (NSOpenGLPixelFormat*)defaultPixelFormat
 {
-	NSOpenGLPixelFormatAttribute anAttributes[] = {
+	NSOpenGLPixelFormatAttribute anAttributes[] = 
+	{
 		NSOpenGLPFAAccelerated,
 		NSOpenGLPFADoubleBuffer,
 		NSOpenGLPFANoRecovery,
-		NSOpenGLPFAColorSize, (NSOpenGLPixelFormatAttribute)32,
-		(NSOpenGLPixelFormatAttribute)0
+		NSOpenGLPFAColorSize, (NSOpenGLPixelFormatAttribute)32, 
+		NSOpenGLPFAStencilSize,(NSOpenGLPixelFormatAttribute)1,		
+		(NSOpenGLPixelFormatAttribute)0 // zero terminated array
 	};
     return [[(NSOpenGLPixelFormat *)[NSOpenGLPixelFormat alloc] initWithAttributes:anAttributes] autorelease];
 }
@@ -98,7 +100,6 @@
 	// swap interval
 	GLint swapInterval = 1;
 	[anOpenGLContext setValues:&swapInterval forParameter:NSOpenGLCPSwapInterval];
-	
 		
 	KTLayoutManager * aLayoutManager = [theCoder decodeObjectForKey:@"layoutManager"];
 	[aLayoutManager setView:self];
@@ -161,10 +162,12 @@
     glDisable (GL_SCISSOR_TEST);
     glDisable (GL_DITHER);
     glDisable (GL_CULL_FACE);
-	
+	glDisable(GL_STENCIL_TEST);
+		
     glColorMask (GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
     glDepthMask (GL_FALSE);
-    glStencilMask (0);
+    glStencilMask (GL_FALSE);
+	
     glHint (GL_TRANSFORM_HINT_APPLE, GL_FASTEST);
 	
 	glEnable(GL_BLEND);
@@ -177,6 +180,8 @@
 - (void) reshape
 {
 	[super reshape];
+	if(mOpenGLLayer)
+		[mOpenGLLayer notifiyLayersViewDidReshape];
 }
 
 //=========================================================== 
@@ -207,14 +212,12 @@
 //		[self setup3DCamera];
 //	else
 //		[self setup2DCamera];
-	
-	[self setup2DCamera];
+
 	float aRed, aGreen, aBlue, anAlpha;
 	[[[[self styleManager] backgroundColor] colorUsingColorSpaceName:NSCalibratedRGBColorSpace] getRed:&aRed green:&aGreen blue:&aBlue alpha:&anAlpha];
-	
 	glClearColor(aRed, aGreen, aBlue, anAlpha);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+	[self setup2DCamera];
 	[self drawInContext:aCurrentContext];
 	[aCurrentContext flushBuffer];
 		
@@ -377,6 +380,7 @@
 		if(aHitTestResult)
 		{
 			[aHitTestResult mouseDown:theEvent];
+			mCurrentMouseEventHandler = aHitTestResult;
 			return;
 		}
 	}
@@ -389,12 +393,21 @@
 {
 	if(mOpenGLLayer)
 	{
-		NSPoint	aMousePoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-		KTOpenGLLayer * aHitTestResult = [mOpenGLLayer hitTest:aMousePoint];
-		if(aHitTestResult)
+		if(mCurrentMouseEventHandler!=nil)
 		{
-			[aHitTestResult mouseUp:theEvent];
+			[mCurrentMouseEventHandler mouseUp:theEvent];
+			mCurrentMouseEventHandler = nil;
 			return;
+		}
+		else
+		{
+			NSPoint	aMousePoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+			KTOpenGLLayer * aHitTestResult = [mOpenGLLayer hitTest:aMousePoint];
+			if(aHitTestResult)
+			{
+				[aHitTestResult mouseUp:theEvent];
+				return;
+			}
 		}
 	}
 }
@@ -406,12 +419,21 @@
 {
 	if(mOpenGLLayer)
 	{
-		NSPoint	aMousePoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-		KTOpenGLLayer * aHitTestResult = [mOpenGLLayer hitTest:aMousePoint];
-		if(aHitTestResult)
+		if(mCurrentMouseEventHandler!=nil)
 		{
-			[aHitTestResult mouseDragged:theEvent];
+			[mCurrentMouseEventHandler mouseDragged:theEvent];
 			return;
+		}
+		else
+		{
+			NSPoint	aMousePoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+			KTOpenGLLayer * aHitTestResult = [mOpenGLLayer hitTest:aMousePoint];
+			if(aHitTestResult)
+			{
+				[aHitTestResult mouseDragged:theEvent];
+				mCurrentMouseEventHandler = aHitTestResult;
+				return;
+			}
 		}
 	}
 }

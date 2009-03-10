@@ -50,6 +50,7 @@
 
 #import "KTViewController.h"
 #import "KTWindowController.h"
+#import "KTLayerController.h"
 
 #pragma mark Private API
 
@@ -130,6 +131,7 @@
 	self.windowController = windowController; // non-retained to avoid retain cycles
 	self.subcontrollers = [NSMutableArray array]; // set up a blank mutable array
 	_topLevelNibObjects = [[NSMutableArray alloc] init];
+	mLayerControllers = [[NSMutableArray alloc] init];
 	return self;
 }
 
@@ -147,6 +149,7 @@
 	// NSLog(@"%@ dealloc", self);
 	[self releaseNibObjects];
 	[_subcontrollers release];
+	[mLayerControllers release];
 	[super dealloc];
 }
 
@@ -230,6 +233,19 @@
 	[[self windowController] patchResponderChain];
 }
 
+
+- (void)addLayerController:(KTLayerController*)theLayerController
+{
+	[mLayerControllers addObject:theLayerController];
+	[[self windowController] patchResponderChain];
+}
+
+- (void)removeLayerController:(KTLayerController*)theLayerController
+{
+	[mLayerControllers removeObject:theLayerController];
+	[[self windowController] patchResponderChain];
+}
+
 # pragma mark Utilities
 // ------------------------------------------
 // This method is not used in the example but does demonstrates an important point of our setup: the root controller in the tree should have parent = nil.  If you'd rather set the parent of the root node to the window controller, this method must be modified to check the class of the parent object.
@@ -255,6 +271,12 @@
 		if ([child countOfSubcontrollers] > 0)
 			[array addObjectsFromArray:[child descendants]];
 	}
+	for(KTLayerController * aLayerController in mLayerControllers)
+	{
+		[array addObject:aLayerController];
+		if([[aLayerController subcontrollers] count] > 0)
+			[array addObjectsFromArray:[aLayerController descendants]];
+	}
 	return [[array copy] autorelease]; // return an immutable array
 }
 
@@ -267,7 +289,10 @@
 // --------------------------------------
 - (void)removeObservations
 {
+	// subcontrollers
 	[self.subcontrollers makeObjectsPerformSelector:@selector(removeObservations)];
+	// layer controllers
+	[mLayerControllers makeObjectsPerformSelector:@selector(removeObservations)];
 }
 
 // --------------------------------------

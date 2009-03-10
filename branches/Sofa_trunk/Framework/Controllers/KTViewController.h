@@ -32,16 +32,20 @@
 
 #import <Cocoa/Cocoa.h>
 #import "KTViewProtocol.h"
+#import "KTController.h"
 
 @class KTWindowController;
+@class KTLayerController;
 
-@interface KTViewController : NSViewController 
+@interface KTViewController : NSViewController <KTController>
 {
 	@private
-		KTViewController *		_parent;
-		KTWindowController *	_windowController;
-		NSMutableArray *		_subcontrollers;
-		NSMutableArray *		_topLevelNibObjects;
+		KTViewController *			_parent;
+		KTWindowController *		_windowController;
+		NSMutableArray *			_subcontrollers;
+		NSMutableArray *			_topLevelNibObjects;
+		
+		NSMutableArray *			mLayerControllers;
 }
 
 @property(assign) KTWindowController *windowController;
@@ -69,9 +73,9 @@
 - (void)removeSubcontrollerAtIndex:(NSUInteger)index;
 - (void)removeAllSubcontrollers;
 
+#pragma mark Layer Controllers
+- (void)addLayerController:(KTLayerController*)theLayerController;
+- (void)removeLayerController:(KTLayerController*)theLayerController;
 
-
-#pragma mark KVO/Bindings
-- (void)removeObservations;
 
 @end

@@ -44,18 +44,41 @@
 	[super dealloc];
 }
 
-
+//----------------------------------------------------------------------------------------
+//	createTextureWithTextureInfo
+//----------------------------------------------------------------------------------------
+- (void)createTextureWithTextureInfo:(NSDictionary*)theTextureInfo
+{
+	[self performSelectorOnMainThread:@selector(uploadTextureWithTextureInfo:) withObject:theTextureInfo waitUntilDone:YES];
+}
 
 //----------------------------------------------------------------------------------------
 //	createTextureFromNSBitmapImageRep
 //----------------------------------------------------------------------------------------
-- (void)createTextureFromNSBitmapImageRep:(NSBitmapImageRep*)theNSBitmapImageRep
+- (void)createTextureFromNSBitmapImageRep:(NSBitmapImageRep*)theNSBitmapImageRep openGLContext:(NSOpenGLContext*)theContext
 {
-	if (	mTextureName == 0
-		&& theNSBitmapImageRep != nil) 
-	{
+	NSDictionary * anInfoDict = [NSDictionary dictionaryWithObjectsAndKeys:theNSBitmapImageRep, @"NSBitmapImageRepInfoKey", theContext, @"NSOpenGLContextInfoKey", nil];
+	[self performSelectorOnMainThread:@selector(uploadTextureWithTextureInfo:) withObject:anInfoDict waitUntilDone:YES];
 	
-		mBitmapSource = [theNSBitmapImageRep retain];
+}
+
+
+//----------------------------------------------------------------------------------------
+//	uploadTextureWithTextureInfo
+//----------------------------------------------------------------------------------------
+- (void)uploadTextureWithTextureInfo:(NSDictionary*)theInfoDict
+{
+	NSOpenGLContext * anOpenGLContext = [theInfoDict objectForKey:@"NSOpenGLContextInfoKey"];
+	NSBitmapImageRep *	anNSBitmapImageRep = [theInfoDict objectForKey:@"NSBitmapImageRepInfoKey"];
+	
+	if (	mTextureName == 0
+		&&	anNSBitmapImageRep != nil
+		&&	anOpenGLContext != nil) 
+	{
+		mOpenGLContext = [anOpenGLContext retain];
+		mBitmapSource = [anNSBitmapImageRep retain];
+		
+		[mOpenGLContext makeCurrentContext];
 		
 		BOOL				aHasAlpha;
 		GLenum				aFormat1;
@@ -64,13 +87,13 @@
 		NSInteger			aSamplesPerPixel;
 		unsigned char *		aBitmapData;
 		
-		aBitmapData = [theNSBitmapImageRep bitmapData];
-		mOriginalPixelsWide = [theNSBitmapImageRep pixelsWide];
-		mOriginalPixelsHigh = [theNSBitmapImageRep pixelsHigh];
+		aBitmapData = [mBitmapSource bitmapData];
+		mOriginalPixelsWide = [mBitmapSource pixelsWide];
+		mOriginalPixelsHigh = [mBitmapSource pixelsHigh];
 
-		NSLog(@"%@", theNSBitmapImageRep);
+//		NSLog(@"%@", mBitmapSource);
 
-		aHasAlpha = [theNSBitmapImageRep hasAlpha];
+		aHasAlpha = [mBitmapSource hasAlpha];
 		aFormat1 = aHasAlpha ? GL_RGBA8 : GL_RGB8;
 		aFormat2 = aHasAlpha ? GL_RGBA : GL_RGB;
 		aSamplesPerPixel = aHasAlpha ? 3 : 3;
@@ -87,8 +110,8 @@
 		
 		glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_STORAGE_HINT_APPLE, GL_STORAGE_CACHED_APPLE);
 		glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, GL_TRUE);
-		glPixelStorei(GL_UNPACK_ALIGNMENT, ([theNSBitmapImageRep bitsPerSample] >> aSamplesPerPixel));
-		glPixelStorei(GL_UNPACK_ROW_LENGTH, ([theNSBitmapImageRep bytesPerRow] / ([theNSBitmapImageRep bitsPerPixel]  >> aSamplesPerPixel)));
+		glPixelStorei(GL_UNPACK_ALIGNMENT, ([mBitmapSource bitsPerSample] >> aSamplesPerPixel));
+		glPixelStorei(GL_UNPACK_ROW_LENGTH, ([mBitmapSource bytesPerRow] / ([mBitmapSource bitsPerPixel]  >> aSamplesPerPixel)));
 		
 		glTexImage2D(GL_TEXTURE_RECTANGLE_EXT, 0, aFormat1, mOriginalPixelsWide, mOriginalPixelsHigh, 0, aFormat2, aType, aBitmapData);		
 		glBindTexture(GL_TEXTURE_RECTANGLE_EXT, 0);
@@ -105,6 +128,8 @@
 	if( mTextureName == 0 )
 		return;
 		
+	[mOpenGLContext makeCurrentContext];
+		
 	float aTextureWidth = mOriginalPixelsWide;
 	float aTextureHeight = mOriginalPixelsHigh;
 	float aTextureXPos = 0;
@@ -118,10 +143,9 @@
 
 	glColor4f(1.0, 1.0, 1.0, theAlpha);
 	glEnable(GL_TEXTURE_RECTANGLE_EXT);
-	glBindTexture( GL_TEXTURE_RECTANGLE_EXT, mTextureName );
+	glBindTexture( GL_TEXTURE_RECTANGLE_EXT, mTextureName);
 	
 	glPushMatrix();	
-	
 	glTranslatef(anXPosition, aYPosition, 0);
 	
 	glBegin( GL_QUADS );
@@ -135,8 +159,6 @@
 	glDisable(GL_TEXTURE_RECTANGLE_EXT);
 	
 	glPopMatrix();
-
-
 }
 
 //----------------------------------------------------------------------------------------
@@ -154,11 +176,14 @@
 {
 	if(mTextureName)
 	{
+		[mOpenGLContext makeCurrentContext];
 		glDeleteTextures(1,&mTextureName);
 		mTextureName = 0;
 	}
 	[mBitmapSource release];
 	mBitmapSource = nil;	
+	[mOpenGLContext release];
+	mOpenGLContext = nil;
 }
 
 

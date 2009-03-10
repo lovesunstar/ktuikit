@@ -25,7 +25,9 @@
 	KTStyleManager *			mStyleManager;
 	NSString *					mLabel;
 	KTOpenGLLayer *				mOpenGLLayer;
+	KTOpenGLLayer *				mCurrentMouseEventHandler;
 	BOOL						mShouldAcceptFirstResponder;
+	
 }
 
 @property (readwrite, retain) KTOpenGLLayer * openGLLayer;

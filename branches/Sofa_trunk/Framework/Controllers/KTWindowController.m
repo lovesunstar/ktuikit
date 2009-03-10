@@ -138,6 +138,7 @@
 		[flatViewControllers addObject:viewController];
 		[flatViewControllers addObjectsFromArray:[viewController descendants]];
 	}
+
 	[self setNextResponder:[flatViewControllers objectAtIndex:0]];
 	NSUInteger index = 0;
 	NSUInteger viewControllerCount = [flatViewControllers count] - 1;
