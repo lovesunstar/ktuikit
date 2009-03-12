@@ -152,11 +152,8 @@
 //=========================================================== 
 // - prepareOpenGL
 //=========================================================== 
-- (void) prepareOpenGL
+- (void)prepareOpenGL
 {
-    GLint parm = 1;
-    [[self openGLContext] setValues:&parm forParameter:NSOpenGLCPSwapInterval];
-
     glDisable (GL_ALPHA_TEST);
     glDisable (GL_DEPTH_TEST);
     glDisable (GL_SCISSOR_TEST);
@@ -180,6 +177,7 @@
 - (void) reshape
 {
 	[super reshape];
+	[self setup2DCamera];	
 	if(mOpenGLLayer)
 		[mOpenGLLayer notifiyLayersViewDidReshape];
 }
@@ -217,7 +215,7 @@
 	[[[[self styleManager] backgroundColor] colorUsingColorSpaceName:NSCalibratedRGBColorSpace] getRed:&aRed green:&aGreen blue:&aBlue alpha:&anAlpha];
 	glClearColor(aRed, aGreen, aBlue, anAlpha);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	[self setup2DCamera];
+
 	[self drawInContext:aCurrentContext];
 	[aCurrentContext flushBuffer];
 		
@@ -245,7 +243,7 @@
     // set viewing
 	glViewport (0, 0, aVisibleRectBounds.size.width, aVisibleRectBounds.size.height);
 	glMatrixMode (GL_PROJECTION);
-	glLoadIdentity ();
+	glLoadIdentity();
 	glOrtho(aVisibleRectBounds.origin.x, 
 			aVisibleRectBounds.origin.x+aVisibleRectBounds.size.width, 
 			aVisibleRectBounds.origin.y,

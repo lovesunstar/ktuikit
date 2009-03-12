@@ -91,8 +91,6 @@
 		mOriginalPixelsWide = [mBitmapSource pixelsWide];
 		mOriginalPixelsHigh = [mBitmapSource pixelsHigh];
 
-//		NSLog(@"%@", mBitmapSource);
-
 		aHasAlpha = [mBitmapSource hasAlpha];
 		aFormat1 = aHasAlpha ? GL_RGBA8 : GL_RGB8;
 		aFormat2 = aHasAlpha ? GL_RGBA : GL_RGB;
@@ -115,7 +113,6 @@
 		
 		glTexImage2D(GL_TEXTURE_RECTANGLE_EXT, 0, aFormat1, mOriginalPixelsWide, mOriginalPixelsHigh, 0, aFormat2, aType, aBitmapData);		
 		glBindTexture(GL_TEXTURE_RECTANGLE_EXT, 0);
-		
 	}
 }
 
@@ -147,6 +144,9 @@
 	
 	glPushMatrix();	
 	glTranslatef(anXPosition, aYPosition, 0);
+	glRotatef(0, 1, 0, 0);
+	glRotatef(0, 0, 1, 0);
+	glRotatef(0, 0, 0, 1);
 	
 	glBegin( GL_QUADS );
 		glTexCoord2f(aTextureXPos, aTextureYPos);			glVertex3f(aTextureXPos, aDrawingHeight, 0);

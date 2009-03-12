@@ -31,6 +31,7 @@
 		mLayoutManager = [[KTLayoutManager alloc] initWithView:self];
 		mAlpha = 1.0;
 		wView = nil;
+		mAnchorPoint = NSMakePoint(0.5, 0.5);
 	}
 	return self;
 }
@@ -257,6 +258,20 @@
 }
 
 
+#pragma mark Rotation
+- (void)setRotation:(CGFloat)theRotation
+{
+	mRotation = theRotation;
+	// do we rotate sublayers?
+}
+
+- (void)setAnchorPoint:(NSPoint)theAnchorPoint
+{
+	mAnchorPoint = theAnchorPoint;
+}
+
+
+
 
 #pragma mark Events
 //=========================================================== 
@@ -302,6 +317,18 @@
 //===========================================================
 - (NSRect)frame
 {
+	// our frame is dependent on our rotation
+	// and anchor point
+	/*
+		r = a * (1 - pow(2, E)) / (1 + E*cos(T))
+		-------
+		a: half width
+		b = half height
+		E = sqr( pow(2,a) - pow(2, b)) / a
+		or
+		E = sqr( 1 - ( pow(2, b) / pow(2, a)))
+	*/
+	
 	return mFrame;
 }
 

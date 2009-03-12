@@ -10,10 +10,10 @@
 
 typedef enum
 {
-	kKTAnimationType_Linear = 0,
+	kKTAnimationType_EaseInAndOut = 0,
 	kKTAnimationType_EaseIn,
 	kKTAnimationType_EaseOut,
-	kKTAnimationType_EaseInAndOut
+	kKTAnimationType_Linear
 	
 }KTAnimationType;
 
@@ -24,12 +24,12 @@ typedef enum
 	NSMutableArray *			mAnimationQueue;
 	id							wDelegate;
 	KTAnimationType				mAnimationType;
-	CGFloat						mFrameRate;
+	CGFloat						mFramesPerSecond;
 	BOOL						mDoubleDuration;
 }
 
 @property (readwrite, assign) KTAnimationType animationType;
-@property (readwrite, assign) CGFloat frameRate;
+@property (readwrite, assign) CGFloat framesPerSecond;
 @property (readwrite, assign) id delegate;
 - (void)animateObject:(NSMutableDictionary*)theAnimationProperties;
 - (void)removeAllAnimations;
