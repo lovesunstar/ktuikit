@@ -179,7 +179,7 @@
 	[super reshape];
 	[self setup2DCamera];	
 	if(mOpenGLLayer)
-		[mOpenGLLayer notifiyLayersViewDidReshape];
+		[mOpenGLLayer setFrame:[self bounds]];
 }
 
 //=========================================================== 
@@ -307,7 +307,7 @@
 	[theLayer setSuperlayer:nil];
 
 	mOpenGLLayer = theLayer;
-	
+	[mOpenGLLayer setFrame:[self bounds]];
 	[self setShouldAcceptFirstResponder:YES];
 }
 

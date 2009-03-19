@@ -26,6 +26,7 @@
 - (void)createTextureWithTextureInfo:(NSDictionary*)theTextureInfo;
 - (void)createTextureFromNSBitmapImageRep:(NSBitmapImageRep*)theNSBitmapImageRep openGLContext:(NSOpenGLContext*)theContext;
 - (void)drawInRect:(NSRect)theRect alpha:(CGFloat)theAlpha;
+- (void)drawInRect:(NSRect)theRect anchorPoint:(NSPoint)theAnchorPoint alpha:(CGFloat)theAlpha;
 - (void)deleteTexture;
 - (NSSize)size;
 @end

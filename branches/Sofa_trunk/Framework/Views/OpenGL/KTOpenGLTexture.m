@@ -127,16 +127,16 @@
 		
 	[mOpenGLContext makeCurrentContext];
 		
-	float aTextureWidth = mOriginalPixelsWide;
-	float aTextureHeight = mOriginalPixelsHigh;
-	float aTextureXPos = 0;
-	float aTextureYPos = 0;
+	CGFloat aTextureWidth = mOriginalPixelsWide;
+	CGFloat aTextureHeight = mOriginalPixelsHigh;
+	CGFloat aTextureXPos = 0;
+	CGFloat aTextureYPos = 0;
 	
-	float aDrawingWidth = floor(theRect.size.width);
-	float aDrawingHeight = floor(theRect.size.height);
+	CGFloat aDrawingWidth = floor(theRect.size.width);
+	CGFloat aDrawingHeight = floor(theRect.size.height);
 	
-	float anXPosition = floor(theRect.origin.x);
-	float aYPosition = floor(theRect.origin.y);
+	CGFloat anXPosition = floor(theRect.origin.x);
+	CGFloat aYPosition = floor(theRect.origin.y);
 
 	glColor4f(1.0, 1.0, 1.0, theAlpha);
 	glEnable(GL_TEXTURE_RECTANGLE_EXT);
@@ -149,16 +149,57 @@
 	glRotatef(0, 0, 0, 1);
 	
 	glBegin( GL_QUADS );
-		glTexCoord2f(aTextureXPos, aTextureYPos);			glVertex3f(aTextureXPos, aDrawingHeight, 0);
-		glTexCoord2f(aTextureWidth, aTextureYPos);			glVertex3f(aDrawingWidth, aDrawingHeight, 0);
-		glTexCoord2f(aTextureWidth, aTextureHeight);		glVertex3f(aDrawingWidth, aTextureYPos, 0);
-		glTexCoord2f(aTextureXPos, aTextureHeight);			glVertex3f(aTextureXPos, aTextureYPos, 0);
+		glTexCoord2i(aTextureXPos, aTextureYPos);			glVertex3i(aTextureXPos, aDrawingHeight, 0);
+		glTexCoord2i(aTextureWidth, aTextureYPos);			glVertex3i(aDrawingWidth, aDrawingHeight, 0);
+		glTexCoord2i(aTextureWidth, aTextureHeight);		glVertex3i(aDrawingWidth, aTextureYPos, 0);
+		glTexCoord2i(aTextureXPos, aTextureHeight);			glVertex3i(aTextureXPos, aTextureYPos, 0);
 	glEnd();
 	
 	glBindTexture(GL_TEXTURE_RECTANGLE_EXT, 0);
 	glDisable(GL_TEXTURE_RECTANGLE_EXT);
 	
 	glPopMatrix();
+}
+
+//----------------------------------------------------------------------------------------
+//	drawInRect:anchorPoint:alpha
+//----------------------------------------------------------------------------------------
+- (void)drawInRect:(NSRect)theRect anchorPoint:(NSPoint)theAnchorPoint alpha:(CGFloat)theAlpha
+{
+	if( mTextureName == 0 )
+		return;
+		
+	[mOpenGLContext makeCurrentContext];
+		
+	CGFloat aTextureWidth = mOriginalPixelsWide;
+	CGFloat aTextureHeight = mOriginalPixelsHigh;
+	CGFloat aTextureXPos = 0;
+	CGFloat aTextureYPos = 0;
+	
+	CGFloat aDrawingWidth = theRect.size.width;
+	CGFloat aDrawingHeight = theRect.size.height;
+	
+	CGFloat anXPosition = theRect.origin.x;
+	CGFloat aYPosition = theRect.origin.y;
+
+	glColor4f(1.0, 1.0, 1.0, theAlpha);
+	glEnable(GL_TEXTURE_RECTANGLE_EXT);
+	glBindTexture( GL_TEXTURE_RECTANGLE_EXT, mTextureName);
+	
+	glPushMatrix();	
+	glTranslatef(anXPosition, aYPosition, 0);
+	
+	glBegin( GL_QUADS );
+		glTexCoord2i(aTextureXPos, aTextureYPos);			glVertex3i(aTextureXPos, aDrawingHeight, 0);
+		glTexCoord2i(aTextureWidth, aTextureYPos);			glVertex3i(aDrawingWidth, aDrawingHeight, 0);
+		glTexCoord2i(aTextureWidth, aTextureHeight);		glVertex3i(aDrawingWidth, aTextureYPos, 0);
+		glTexCoord2i(aTextureXPos, aTextureHeight);			glVertex3i(aTextureXPos, aTextureYPos, 0);
+	glEnd();
+	
+	glBindTexture(GL_TEXTURE_RECTANGLE_EXT, 0);
+	glDisable(GL_TEXTURE_RECTANGLE_EXT);
+	
+	glPopMatrix();	
 }
 
 //----------------------------------------------------------------------------------------

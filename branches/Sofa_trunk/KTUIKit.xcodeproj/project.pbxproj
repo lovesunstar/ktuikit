@@ -42,6 +42,8 @@
 		4C3EAA4C0ECF5843004492C4 /* KTViewInspector.nib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3EAA430ECF5843004492C4 /* KTViewInspector.nib */; };
 		4C5CB27F0F4D9899002768CA /* KTOpenGLLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5CB27D0F4D9899002768CA /* KTOpenGLLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5CB2800F4D9899002768CA /* KTOpenGLLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5CB27E0F4D9899002768CA /* KTOpenGLLayer.m */; };
+		4C5F40800F716C55002F2A62 /* KTTabItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5F407E0F716C55002F2A62 /* KTTabItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C5F40810F716C55002F2A62 /* KTTabItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5F407F0F716C55002F2A62 /* KTTabItem.m */; };
 		4C6471DA0ED9617F00CE9208 /* KTUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53DF68FD067E5B5A0090B5B0 /* KTUIKit.framework */; };
 		4C64720C0ED962BA00CE9208 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD92D38A0106425D02CA0E72 /* Cocoa.framework */; };
 		4C6472190ED962DA00CE9208 /* KTUIKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 53DF68FD067E5B5A0090B5B0 /* KTUIKit.framework */; };
@@ -130,6 +132,8 @@
 		4CD98F9B0EBC7BBB008BD0EA /* KTScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD98F990EBC7BBB008BD0EA /* KTScrollView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD98F9C0EBC7BBB008BD0EA /* KTScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD98F9A0EBC7BBB008BD0EA /* KTScrollView.m */; };
 		4CD98F9F0EBC7C45008BD0EA /* KTScrollViewIntegration.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD98F9E0EBC7C45008BD0EA /* KTScrollViewIntegration.m */; };
+		4CDD2A7D0F70FCFC00B25D33 /* KTTabViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDD2A7B0F70FCFC00B25D33 /* KTTabViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CDD2A7E0F70FCFC00B25D33 /* KTTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDD2A7C0F70FCFC00B25D33 /* KTTabViewController.m */; };
 		4CF9D4330ECF5B100063DBE0 /* KTView.classdescription in Resources */ = {isa = PBXBuildFile; fileRef = 4CC1F4060DE940160035CE00 /* KTView.classdescription */; };
 		4CF9D4340ECF5B100063DBE0 /* KTButton.classdescription in Resources */ = {isa = PBXBuildFile; fileRef = 4CCA961D0EBC511B00CF9A03 /* KTButton.classdescription */; };
 		4CF9D4350ECF5B100063DBE0 /* KTTextField.classdescription in Resources */ = {isa = PBXBuildFile; fileRef = 4CD98F5E0EBC74C4008BD0EA /* KTTextField.classdescription */; };
@@ -249,6 +253,8 @@
 		4C3EAA440ECF5843004492C4 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/KTViewInspector.nib; sourceTree = "<group>"; };
 		4C5CB27D0F4D9899002768CA /* KTOpenGLLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTOpenGLLayer.h; sourceTree = "<group>"; };
 		4C5CB27E0F4D9899002768CA /* KTOpenGLLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTOpenGLLayer.m; sourceTree = "<group>"; };
+		4C5F407E0F716C55002F2A62 /* KTTabItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTTabItem.h; sourceTree = "<group>"; };
+		4C5F407F0F716C55002F2A62 /* KTTabItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTTabItem.m; sourceTree = "<group>"; };
 		4C6471C20ED9612400CE9208 /* TestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C6472620ED963F100CE9208 /* TestApp-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TestApp-Info.plist"; sourceTree = "<group>"; };
 		4C6472670ED9642600CE9208 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -362,6 +368,8 @@
 		4CD98F9A0EBC7BBB008BD0EA /* KTScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KTScrollView.m; path = NSViewSubclasses/KTScrollView.m; sourceTree = "<group>"; };
 		4CD98F9D0EBC7C2A008BD0EA /* KTScrollView.classdescription */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = KTScrollView.classdescription; path = "Plugin/Class Descriptions/KTScrollView.classdescription"; sourceTree = "<group>"; };
 		4CD98F9E0EBC7C45008BD0EA /* KTScrollViewIntegration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTScrollViewIntegration.m; sourceTree = "<group>"; };
+		4CDD2A7B0F70FCFC00B25D33 /* KTTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTTabViewController.h; sourceTree = "<group>"; };
+		4CDD2A7C0F70FCFC00B25D33 /* KTTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTTabViewController.m; sourceTree = "<group>"; };
 		4CE2FCCF0EC8BCF300002A64 /* KTViewControl.classdescription */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = KTViewControl.classdescription; path = "Plugin/Class Descriptions/KTViewControl.classdescription"; sourceTree = "<group>"; };
 		53DF68FD067E5B5A0090B5B0 /* KTUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KTUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; wrapsLines = 0; };
 		53DF68FE067E5B5A0090B5B0 /* KTUIKitFramework-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "KTUIKitFramework-Info.plist"; path = "../Framework/Resources/KTUIKitFramework-Info.plist"; sourceTree = "<group>"; };
@@ -663,6 +671,10 @@
 				4C9C5D8F0DE9F43400AE6913 /* KTViewController.m */,
 				4CD960580F5830CF007D7EAA /* KTLayerController.h */,
 				4CD960590F5830CF007D7EAA /* KTLayerController.m */,
+				4CDD2A7B0F70FCFC00B25D33 /* KTTabViewController.h */,
+				4CDD2A7C0F70FCFC00B25D33 /* KTTabViewController.m */,
+				4C5F407E0F716C55002F2A62 /* KTTabItem.h */,
+				4C5F407F0F716C55002F2A62 /* KTTabItem.m */,
 				4CD960680F583931007D7EAA /* KTController.h */,
 			);
 			path = Controllers;
@@ -832,6 +844,8 @@
 				4CD9605A0F5830CF007D7EAA /* KTLayerController.h in Headers */,
 				4CD960690F583931007D7EAA /* KTController.h in Headers */,
 				4C7981060F5C3BDB00F9BB10 /* KTAnimator.h in Headers */,
+				4CDD2A7D0F70FCFC00B25D33 /* KTTabViewController.h in Headers */,
+				4C5F40800F716C55002F2A62 /* KTTabItem.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1018,6 +1032,8 @@
 				4C2998150F4EC770000B1A8E /* KTOpenGLButton.m in Sources */,
 				4CD9605B0F5830CF007D7EAA /* KTLayerController.m in Sources */,
 				4C7981070F5C3BDB00F9BB10 /* KTAnimator.m in Sources */,
+				4CDD2A7E0F70FCFC00B25D33 /* KTTabViewController.m in Sources */,
+				4C5F40810F716C55002F2A62 /* KTTabItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

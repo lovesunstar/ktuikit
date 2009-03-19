@@ -246,6 +246,11 @@
 	[[self windowController] patchResponderChain];
 }
 
+- (NSArray*)layerControllers
+{
+	return mLayerControllers;
+}
+
 # pragma mark Utilities
 // ------------------------------------------
 // This method is not used in the example but does demonstrates an important point of our setup: the root controller in the tree should have parent = nil.  If you'd rather set the parent of the root node to the window controller, this method must be modified to check the class of the parent object.

@@ -76,6 +76,6 @@
 #pragma mark Layer Controllers
 - (void)addLayerController:(KTLayerController*)theLayerController;
 - (void)removeLayerController:(KTLayerController*)theLayerController;
-
+- (NSArray*)layerControllers;
 
 @end
