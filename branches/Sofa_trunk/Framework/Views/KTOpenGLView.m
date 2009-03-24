@@ -238,7 +238,7 @@
 //=========================================================== 
 - (void) setup2DCamera
 {
-	NSRect aVisibleRectBounds = [self visibleRect];
+	NSRect aVisibleRectBounds = [self bounds];
 
     // set viewing
 	glViewport (0, 0, aVisibleRectBounds.size.width, aVisibleRectBounds.size.height);
