@@ -13,11 +13,16 @@
 @synthesize label = mLabel;
 @synthesize identifier = mIdentifier;
 @synthesize tabViewController = wTabViewController;
-@synthesize viewController = wViewController;
+@synthesize viewController = mViewController;
+@synthesize representedObjectForViewController = mRepresentedObjectForViewController;
+
 - (void)dealloc
 {
 	[mLabel release];
 	[mIdentifier release];
+	[mViewController release];
+	[mRepresentedObjectForViewController release];
 	[super dealloc];
 }
+
 @end

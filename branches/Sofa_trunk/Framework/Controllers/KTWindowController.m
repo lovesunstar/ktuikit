@@ -70,6 +70,12 @@
 
 - (void)windowWillClose:(NSNotification *)notification;
 {
+	/*CS: I don't know if we want to actually do this in the framework
+	it only really truely works if the view controllers are actually released when the window closes
+	and they are re-initialized when the window is created.  You might have a window that you want
+	to open and close without releasing the controllers/views.  In this case, we would have the
+	controllers remove all their observations or bindings when the window closes and we don't have a way or hook to re-establish
+	the observations/bindings when the window opens again - needs to be balanced*/
 	[self.viewControllers makeObjectsPerformSelector:@selector(removeObservations)];
 }
 

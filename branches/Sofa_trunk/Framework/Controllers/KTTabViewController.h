@@ -16,41 +16,26 @@
 {
 	@private
 	KTView *				wContentView;
-	KTView *				wTabView;
-	NSInteger				mSelectedTabIndex;
-	id						wDelegate;
-	NSMutableArray *		mTabItems;
-	
 	NSArrayController *		mTabItemArrayController;
+	KTTabItem *				mCurrentSelectedTab;
+	BOOL					mReleaseViewControllersWhenNotSeletcted;
+	id						wDelegate;
 }
 
-@property (readwrite, assign) NSInteger selectedTabIndex;
+@property (readonly) NSArrayController * tabItemArrayController;
+@property (readwrite, assign) BOOL releaseViewControllersWhenNotSeletcted;
 @property (readwrite, assign) id delegate;
-@property (readonly) NSArrayController *	tabItemArrayController;
 
 // adding/removing tabs
-
 - (void)addTabItem:(KTTabItem*)theTabItem;
 - (void)removeTabItem:(KTTabItem*)theTabItem;
 - (void)insertTabItem:(KTTabItem*)theTabItem atIndex:(NSInteger)theIndex;
-
-
-
-- (void)addTabAtIndex:(NSInteger)theTabIndex forViewController:(KTViewController*)theViewController;
-- (void)addTabForViewController:(KTViewController*)theViewController;
-- (void)removeTabForViewController:(KTViewController*)theViewController;
-- (void)removeTabAtIndex:(NSInteger)theTabIndex;
-- (NSInteger)numberOfTabs;
-- (NSArray*)viewControllers;
 - (NSArray*)tabItems;
 
 // selection
-
 - (KTTabItem*)selectedTabItem;
-
 - (IBAction)selectTab:(id)theSender;
 - (void)selectTabAtIndex:(NSInteger)theTabIndex;
-- (void)selectTabForViewController:(KTViewController*)theViewController;
-
+- (void)selectTabItem:(KTTabItem*)theTabItem;
 
 @end

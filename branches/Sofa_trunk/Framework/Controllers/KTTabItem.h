@@ -16,11 +16,14 @@
 	NSString *				mLabel;
 	id						mIdentifier;
 	KTTabViewController *	wTabViewController;
-	KTViewController *		wViewController;
+	KTViewController *		mViewController;
+	id						mRepresentedObjectForViewController;
 }
 
 @property (readwrite, retain) NSString * label;
 @property (readwrite, retain) id identifier;
 @property (readwrite, assign) KTTabViewController * tabViewController;
-@property (readwrite, assign) KTViewController * viewController;
+@property (readwrite, retain) KTViewController * viewController;
+@property (readwrite, retain) id representedObjectForViewController;
+
 @end
