@@ -146,7 +146,7 @@
 
 - (void)dealloc;
 {
-	// NSLog(@"%@ dealloc", self);
+	//NSLog(@"%@ dealloc", self);
 	[self releaseNibObjects];
 	[_subcontrollers release];
 	[mLayerControllers release];

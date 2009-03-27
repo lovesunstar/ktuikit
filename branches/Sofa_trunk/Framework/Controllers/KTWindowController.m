@@ -137,19 +137,24 @@
 // ---------------------------------------------------
 - (void)patchResponderChain;
 {
-	if ([self.viewControllers count] == 0) // we're being called by view controllers at the beginning of creating the tree, most likely load time and the root of the tree hasn't been added to our list of controllers.
-		return;
+//	if ([self.viewControllers count] == 0) // we're being called by view controllers at the beginning of creating the tree, most likely load time and the root of the tree hasn't been added to our list of controllers.
+//		return;
+
+
 	NSMutableArray *flatViewControllers = [NSMutableArray array];
 	for (KTViewController *viewController in self.viewControllers) { // flatten the view controllers into an array
 		[flatViewControllers addObject:viewController];
 		[flatViewControllers addObjectsFromArray:[viewController descendants]];
 	}
-
-	[self setNextResponder:[flatViewControllers objectAtIndex:0]];
-	NSUInteger index = 0;
-	NSUInteger viewControllerCount = [flatViewControllers count] - 1;
-	for (index = 0; index < viewControllerCount ; index++) { // set the next responder of each controller to the next, the last in the array has no next responder.
-		[[flatViewControllers objectAtIndex:index] setNextResponder:[flatViewControllers objectAtIndex:index + 1]];
+	if([flatViewControllers count]>0)
+	{
+		[self setNextResponder:[flatViewControllers objectAtIndex:0]];
+		NSUInteger index = 0;
+		NSUInteger viewControllerCount = [flatViewControllers count] - 1;
+		for (index = 0; index < viewControllerCount ; index++) { // set the next responder of each controller to the next, the last in the array has no next responder.
+			[[flatViewControllers objectAtIndex:index] setNextResponder:[flatViewControllers objectAtIndex:index + 1]];
+		}
+		[[flatViewControllers lastObject] setNextResponder:nil];
 	}
 }
 

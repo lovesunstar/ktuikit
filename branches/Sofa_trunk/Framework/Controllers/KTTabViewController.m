@@ -12,6 +12,9 @@
 
 @interface NSObject (KTTabViewControllerDelegate)
 - (void)tabViewController:(KTTabViewController*)theTabViewController didSelectTabItem:(KTTabItem*)theTabItem;
+- (void)tabViewController:(KTTabViewController*)theTabViewController willRemoveTabItem:(KTTabItem*)theTabItem;
+- (void)tabViewControllerDidRemoveTabItem:(KTTabViewController*)theTabViewController;
+- (void)tabViewController:(KTTabViewController*)theTabViewController didAddTabItem:(KTTabItem*)theTabItem;
 @end
 
 @implementation KTTabViewController
@@ -51,6 +54,7 @@
 //===========================================================
 - (void)dealloc
 {
+	NSLog(@"%@ dealloc", self);
 	[mTabItemArrayController release];
 	[super dealloc];
 }
@@ -77,8 +81,7 @@
 			KTTabItem * aNewTabToSelect = nil;
 			if(aSelectedIndex!=NSNotFound)
 				aNewTabToSelect = [[mTabItemArrayController arrangedObjects] objectAtIndex:aSelectedIndex];
-			if(aNewTabToSelect)
-				[self selectTabItem:aNewTabToSelect];
+			[self selectTabItem:aNewTabToSelect];
 			mCurrentSelectedTab = aNewTabToSelect;
 		}
 	}
@@ -119,13 +122,30 @@
 			aNewTabToSelect = [[mTabItemArrayController arrangedObjects] objectAtIndex:aNewSelectionIndex];
 		}
 		
-		// the tab's view controller will only be in our list of
-		// view controllers if it is selected, in this case remove it as a subcontroller
-		if(aTabIsCurrentSelection)
+		
+		// let our delegate know that we will remove this tab item
+		if([[self delegate] respondsToSelector:@selector(tabViewController:willRemoveTabItem:)])
+			[[self delegate] tabViewController:self willRemoveTabItem:theTabItem];
+			
+		
+		if([theTabItem viewController])
+		{
+			[[[theTabItem viewController] view] removeFromSuperview];
 			[self removeSubcontroller:[theTabItem viewController]];
+		}
+		else
+			NSLog(@"removing tab item without a view controller");
+		
+			
+					
 		// clear out any reference to us and remove the tab item from our array controller
 		[theTabItem setTabViewController:nil];
+		[theTabItem setViewController:nil];
+		
 		[mTabItemArrayController removeObject:theTabItem];
+		if([[self delegate] respondsToSelector:@selector(tabViewControllerDidRemoveTabItem:)])
+			[[self delegate] tabViewControllerDidRemoveTabItem:self];
+		
 		
 		// adjust the selection if we need to 
 		if(aNewTabToSelect!=nil)
@@ -140,10 +160,15 @@
 //===========================================================
 - (void)insertTabItem:(KTTabItem*)theTabItem atIndex:(NSInteger)theIndex
 {
-	[self addSubcontroller:[theTabItem viewController]];
-	[theTabItem setTabViewController:self];
-	[mTabItemArrayController insertObject:theTabItem atArrangedObjectIndex:theIndex];
-//	[mTabItemArrayController setSelectedObjects:[NSArray arrayWithObject:theTabItem]];
+	if(theTabItem!=nil)
+	{
+		if([theTabItem viewController]!=nil)
+			[self addSubcontroller:[theTabItem viewController]];
+		else
+			NSLog(@"adding a tab item without a view controller");
+		[theTabItem setTabViewController:self];
+		[mTabItemArrayController insertObject:theTabItem atArrangedObjectIndex:theIndex];
+	}
 }
 
 
@@ -205,11 +230,12 @@
 		When we select a new view controller, we can re-set its represented object for bindings/kvo and also
 		add it as a subcontroller to put it in the responder chain.
 	*/
-	if([[mTabItemArrayController arrangedObjects] containsObject:theTabItem])
-	{
+
 		// deal with the current selection first
 		KTViewController * aCurrentViewController = [mCurrentSelectedTab viewController];
-		
+		if(aCurrentViewController == nil)
+			NSLog(@"de-selecting a tab with no view controller");
+			
 		// remove the current view controller's view from the view hierarchy
 		[[aCurrentViewController view] removeFromSuperview];
 		// remove the view controller from our list of subcontrollers to take it out of the responder chain
@@ -235,7 +261,7 @@
 		// finally send our delegate a message that we've selected a new tab item
 		if([wDelegate respondsToSelector:@selector(tabViewController:didSelectTabItem:)])
 			[wDelegate tabViewController:self didSelectTabItem:[self selectedTabItem]];
-	}
+
 }
 
 
