@@ -40,6 +40,7 @@
 //----------------------------------------------------------------------------------------
 - (void)dealloc
 {
+	NSLog(@"%@ dealloc", self);
 	[self performSelectorOnMainThread:@selector(deleteTexture) withObject:nil waitUntilDone:YES];
 	[super dealloc];
 }

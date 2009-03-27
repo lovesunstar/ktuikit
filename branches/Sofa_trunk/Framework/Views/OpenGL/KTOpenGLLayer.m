@@ -43,7 +43,7 @@
 		mLayoutManager = [[KTLayoutManager alloc] initWithView:self];
 		mAlpha = 1.0;
 		wView = nil;
-		mAnchorPoint = NSMakePoint(0.5, 0.5);
+		mAnchorPoint = NSMakePoint(0.0, 0.0);
 	}
 	return self;
 }
