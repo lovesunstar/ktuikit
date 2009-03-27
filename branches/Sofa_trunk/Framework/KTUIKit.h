@@ -24,5 +24,5 @@
 #import <KTUIKit/KTGradientPicker.h>
 #import <KTUIKit/KTColorWell.h>
 #import <KTUIKit/KTAnimator.h>
-#import <KTTUIKit/KTTabViewController.h>
+#import <KTUIKit/KTTabViewController.h>
 #import <KTUIKit/KTTabItem.h>
