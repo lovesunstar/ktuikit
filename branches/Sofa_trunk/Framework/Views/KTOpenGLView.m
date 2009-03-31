@@ -209,7 +209,7 @@
 //	if(mOpenGLViewType == kBW3DOpenGLView)
 //		[self setup3DCamera];
 //	else
-//		[self setup2DCamera];
+		[self setup2DCamera];
 
 	float aRed, aGreen, aBlue, anAlpha;
 	[[[[self styleManager] backgroundColor] colorUsingColorSpaceName:NSCalibratedRGBColorSpace] getRed:&aRed green:&aGreen blue:&aBlue alpha:&anAlpha];

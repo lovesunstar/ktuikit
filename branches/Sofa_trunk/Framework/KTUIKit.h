@@ -26,3 +26,4 @@
 #import <KTUIKit/KTAnimator.h>
 #import <KTUIKit/KTTabViewController.h>
 #import <KTUIKit/KTTabItem.h>
+#import <KTUIKit/KTSplitView.h>
