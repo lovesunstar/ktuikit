@@ -45,17 +45,19 @@
 	if(self = [super initWithFrame:theFrame])
 	{
 		
-		mDivider = [[KTSplitViewDivider alloc] initWithSplitView:self];
-		[self addSubview:mDivider];
+
 		mFirstView = [[KTView alloc] initWithFrame:NSZeroRect];
 		[self addSubview:mFirstView];
 		mSecondView = [[KTView alloc] initWithFrame:NSZeroRect];
 		[self addSubview:mSecondView];
-			
+		mDivider = [[KTSplitViewDivider alloc] initWithSplitView:self];
+		[self addSubview:mDivider];
+		
 		//	This flag won't change until the first time the split view has a width/height.
 		//	If the position is set before the flag changes, we'll cache the value and apply it later.
 		mCanSetDividerPosition = NO; 
 		[self setDividerOrientation:theDividerOrientation];
+		[self setAdjustable:YES];
 	}
 	return self;
 }
@@ -108,6 +110,9 @@
 		[self setDividerPosition:mDividerPositionToSet fromView:mPositionRelativeToViewFlag];
 		anOldDividerFrame = [[self divider] frame];
 	}
+	
+
+	
 			
 	// Now check the resize behavior and the orientation of the divider to set the divider's position within our new frame
 	switch([self resizeBehavior])
@@ -123,7 +128,7 @@
 					mResizeInformation = anOldDividerFrame.origin.y / anOldViewFrame.size.height;
 					mResetResizeInformation = NO;
 				}
-				[[self divider] setFrame:NSMakeRect( anOldDividerFrame.origin.x, floor(theFrame.size.height * mResizeInformation), theFrame.size.width, anOldDividerFrame.size.height)];
+				[[self divider] setFrame:NSMakeRect(anOldDividerFrame.origin.x, theFrame.size.height * mResizeInformation, theFrame.size.width, anOldDividerFrame.size.height)];
 			}
 			else
 			{
@@ -132,7 +137,7 @@
 					mResizeInformation = anOldDividerFrame.origin.x / anOldViewFrame.size.width;
 					mResetResizeInformation = NO;
 				}
-				[[self divider]  setFrame:NSMakeRect(floor(theFrame.size.width * mResizeInformation), anOldDividerFrame.origin.y, anOldDividerFrame.size.width, theFrame.size.height)];
+				[[self divider]  setFrame:NSMakeRect(theFrame.size.width * mResizeInformation, anOldDividerFrame.origin.y, anOldDividerFrame.size.width, theFrame.size.height)];
 			}
 		}
 		break;
@@ -187,6 +192,11 @@
 }
 
 
+- (void)drawRect:(NSRect)theRect
+{
+	[[NSColor yellowColor] set];
+	NSRectFill(theRect);
+}
 
 //=========================================================== 
 // - layoutViews
@@ -202,9 +212,9 @@
 	{
 				
 		[[self firstView] setFrame:NSMakeRect( aSplitViewBounds.origin.x,
-												aDividerFrame.origin.y+aDividerFrame.size.height,
+												aDividerFrame.origin.y + aDividerFrame.size.height,
 												aSplitViewBounds.size.width,
-												aSplitViewBounds.size.height - aDividerFrame.origin.y - aDividerFrame.size.height)];
+												aSplitViewBounds.size.height - aDividerFrame.origin.y)];
 		
 		
 		[[self secondView] setFrame:NSMakeRect( aSplitViewBounds.origin.x,
@@ -224,11 +234,15 @@
 												aWidth,
 												aHeight)];
 										 
-		[[self secondView] setFrame:NSMakeRect( aWidth+[[self divider] bounds].size.width,
+		[[self secondView] setFrame:NSMakeRect( aWidth+aDividerFrame.size.width,
 												aSplitViewBounds.origin.y,
-												aSplitViewBounds.size.width - aWidth - aDividerFrame.size.width,
+												aSplitViewBounds.size.width - NSMaxX(aDividerFrame),
 												aSplitViewBounds.size.height)];
 	}	
+	[self setNeedsDisplay:YES];
+//	[[self firstView] setNeedsDisplay:YES];
+//	[[self secondView] setNeedsDisplay:YES];
+//	[[self divider] setNeedsDisplay:YES];
 }
 
 
@@ -322,7 +336,6 @@
 					thePosition = [self bounds].size.width - thePosition;
 				[[self divider]  animateDividerToPosition:thePosition time:theTimeInSeconds];
 			}
-			[self resetResizeInformation];
 		}
 	}
 }

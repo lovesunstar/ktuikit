@@ -144,9 +144,13 @@
     [super renewGState];
 }
 
+
+//=========================================================== 
+// - isOpaque
+//=========================================================== 
 - (BOOL)isOpaque
 {
-	return NO;
+	return YES;
 }
 
 //=========================================================== 
@@ -177,7 +181,7 @@
 - (void) reshape
 {
 	[super reshape];
-	[self setup2DCamera];	
+	[self setup2DCamera];
 	if(mOpenGLLayer)
 		[mOpenGLLayer setFrame:[self bounds]];
 }
@@ -238,8 +242,7 @@
 //=========================================================== 
 - (void) setup2DCamera
 {
-	NSRect aVisibleRectBounds = [self bounds];
-
+	NSRect aVisibleRectBounds = [self visibleRect];
     // set viewing
 	glViewport (0, 0, aVisibleRectBounds.size.width, aVisibleRectBounds.size.height);
 	glMatrixMode (GL_PROJECTION);
