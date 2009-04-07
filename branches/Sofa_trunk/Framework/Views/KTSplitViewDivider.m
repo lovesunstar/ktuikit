@@ -27,6 +27,8 @@
 		wSplitView = theSplitView;
 		mAnimator = nil;
 		[[self styleManager] setBackgroundColor:[NSColor redColor]];
+		mKTAnimator = [[KTAnimator alloc] init];
+		[mKTAnimator setDelegate:self];
 	}
 	return self;
 }
@@ -37,6 +39,7 @@
 - (void)dealloc
 {
 	[mAnimator release];
+	[mKTAnimator release];
 	[super dealloc];
 }
 
@@ -55,6 +58,14 @@
 		NSRect aNewFrame = [self frame];
 		aNewFrame.origin = NSPointFromCGPoint(aPositionToSet);
 		
+//		NSMutableDictionary *	aFrameAnimation = [[[NSMutableDictionary alloc] init] autorelease];
+//		[aFrameAnimation setValue:self forKey:@"object"];
+//		[aFrameAnimation setValue:@"frame" forKey:@"keyPath"];
+//		[aFrameAnimation setValue:[NSValue valueWithRect:[self frame]] forKey:@"startValue"];
+//		[aFrameAnimation setValue:[NSValue valueWithRect:aNewFrame]forKey:@"endValue"];
+//		[aFrameAnimation setValue:[NSNumber numberWithFloat:theTimeInSeconds] forKey:@"duration"];
+//		[mKTAnimator animateObject:aFrameAnimation];
+											
 		NSArray * anAnimationArray = [NSArray arrayWithObject:[NSDictionary dictionaryWithObjectsAndKeys:self, NSViewAnimationTargetKey,
 																										 [NSValue valueWithRect:[self frame]], NSViewAnimationStartFrameKey,
 																										 [NSValue valueWithRect:aNewFrame], NSViewAnimationEndFrameKey, nil]];
@@ -67,6 +78,10 @@
 	}
 }
 
+- (void)animatorEnded
+{
+	[[self splitView] resetResizeInformation];	
+}
 
 //=========================================================== 
 // - animationDidEnd

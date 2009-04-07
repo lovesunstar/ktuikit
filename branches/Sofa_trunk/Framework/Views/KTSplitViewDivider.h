@@ -17,6 +17,7 @@
 	KTSplitView *		wSplitView;
 	BOOL				mIsInDrag;
 	NSViewAnimation *	mAnimator;
+	KTAnimator *		mKTAnimator;
 	
 }
 - (id)initWithSplitView:(KTSplitView*)theSplitView;
