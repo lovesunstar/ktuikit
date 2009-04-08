@@ -188,6 +188,27 @@
 		CGContextSetRGBFillColor(theContext, r, g, b, a);
 		CGContextFillRect(theContext, NSRectToCGRect(theRect));
 	}
+
+	if(mBackgroundImage != nil)
+	{
+		NSPoint anImagePoint = theRect.origin;
+		NSSize anImageSize = [mBackgroundImage size];
+		
+		NSData * anImageData = [NSBitmapImageRep TIFFRepresentationOfImageRepsInArray: [mBackgroundImage representations]];
+		CGImageSourceRef aCGImageSourceRef = CGImageSourceCreateWithData((CFDataRef)anImageData, NULL);
+		CGImageRef aCGBackgroundImage = CGImageSourceCreateImageAtIndex(aCGImageSourceRef, 0, NULL);
+		
+		if(mTileImage)
+			CGContextDrawTiledImage(theContext, CGRectMake(anImagePoint.x,anImagePoint.y, anImageSize.width, anImageSize.height), aCGBackgroundImage);
+		else 
+			CGContextDrawImage(theContext, CGRectMake(anImagePoint.x,anImagePoint.y, anImageSize.width, anImageSize.height), aCGBackgroundImage);	
+		
+		CFRelease(aCGImageSourceRef);
+		CGImageRelease(aCGBackgroundImage);		
+	
+	}
+	
+	
 	
 	// Stroke - we can control color & line thickness of individual sides of the rectangle
 
@@ -292,7 +313,13 @@
 //=========================================================== 
 - (void)setBackgroundImage:(NSImage*)theBackgroundImage tile:(BOOL)theBool
 {
-	// nothing yet
+	if(mBackgroundImage != theBackgroundImage)
+	{
+		[theBackgroundImage retain];
+		[mBackgroundImage release];
+		mBackgroundImage = theBackgroundImage;
+	}
+	mTileImage = theBool;
 }
 
 

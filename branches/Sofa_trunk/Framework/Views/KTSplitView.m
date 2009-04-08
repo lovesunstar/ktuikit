@@ -9,6 +9,9 @@
 #import "KTSplitView.h"
 #import "KTSplitViewDivider.h"
 
+@interface NSObject (KTSplitViewDelegate)
+- (void)splitViewDivderAnimationDidEnd:(KTSplitView*)theSplitView;
+@end
 
 @interface KTSplitView ()
 @property (nonatomic, readwrite, retain) KTSplitViewDivider * divider;
@@ -367,6 +370,14 @@
 }
 
 
+//=========================================================== 
+// - dividerAnimationDidEnd
+//===========================================================
+- (void)dividerAnimationDidEnd
+{
+	if([[self delegate] respondsToSelector:@selector(splitViewDivderAnimationDidEnd:)])
+		[[self delegate] splitViewDivderAnimationDidEnd:self];
+}
 
 
 

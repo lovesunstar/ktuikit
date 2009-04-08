@@ -11,6 +11,10 @@
 #import "KTAnimator.h"
 #import <Quartz/Quartz.h>
 
+@interface NSObject (KTSplitViewDividerSplitView)
+- (void)dividerAnimationDidEnd;
+@end
+
 @interface KTSplitViewDivider ()
 @property (nonatomic, readwrite, assign) KTSplitView * splitView;
 @end
@@ -78,9 +82,14 @@
 	}
 }
 
+
+//=========================================================== 
+// - animatorEnded
+//===========================================================
 - (void)animatorEnded
 {
 	[[self splitView] resetResizeInformation];	
+	[[self splitView] dividerAnimationDidEnd];
 }
 
 //=========================================================== 
@@ -93,6 +102,7 @@
 		[mAnimator release];
 		mAnimator = nil;	
 		[[self splitView] resetResizeInformation];	
+		[[self splitView] dividerAnimationDidEnd];
 	}
 }
 
