@@ -53,8 +53,8 @@ typedef enum
 	id									wDelegate;
 	
 	KTSplitViewDivider *				mDivider;
-	KTView *							mFirstView;
-	KTView *							mSecondView;
+	NSView<KTView>*						mFirstView;
+	NSView<KTView>*						mSecondView;
 	
 	KTSplitViewDividerOrientation		mDividerOrientation;
 	KTSplitViewResizeBehavior			mResizeBehavior;
@@ -77,9 +77,9 @@ typedef enum
 @property (readwrite, assign) CGFloat dividerThickness;
 
 - (id)initWithFrame:(NSRect)theFrame dividerOrientation:(KTSplitViewDividerOrientation)theDividerOrientation;
-- (void)addViewToFirstView:(KTView*)theView;
-- (void)addViewToSecondView:(KTView*)theView;
-- (void)addViewToFirstView:(KTView*)theFirstView secondView:(KTView*)theSecondView;
+- (void)addViewToFirstView:(NSView<KTView>*)theView;
+- (void)addViewToSecondView:(NSView<KTView>*)theView;
+- (void)addViewToFirstView:(NSView<KTView>*)theFirstView secondView:(NSView<KTView>*)theSecondView;
 - (void)setDividerPosition:(float)thePosition fromView:(KTSplitViewFocusedViewFlag)theView;
 - (void)setDividerPosition:(float)thePosition fromView:(KTSplitViewFocusedViewFlag)theView animate:(BOOL)theBool time:(float)theTimeInSeconds;
 - (float)dividerPositionFromView:(KTSplitViewFocusedViewFlag)theFocusedViewFlag;

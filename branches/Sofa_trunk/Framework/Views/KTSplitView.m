@@ -15,8 +15,8 @@
 
 @interface KTSplitView ()
 @property (nonatomic, readwrite, retain) KTSplitViewDivider * divider;
-@property (nonatomic, readwrite, retain) KTView * firstView;
-@property (nonatomic, readwrite, retain) KTView * secondView;
+@property (nonatomic, readwrite, retain) NSView<KTView>* firstView;
+@property (nonatomic, readwrite, retain) NSView<KTView>* secondView;
 @end
 
 
@@ -396,7 +396,7 @@
 //=========================================================== 
 // - addViewToFirstView
 //===========================================================
-- (void)addViewToFirstView:(KTView*)theView
+- (void)addViewToFirstView:(NSView<KTView>*)theView
 {
 	[[self firstView] addSubview:theView];
 }
@@ -406,7 +406,7 @@
 //=========================================================== 
 // - addViewToSecondView
 //===========================================================
-- (void)addViewToSecondView:(KTView*)theView
+- (void)addViewToSecondView:(NSView<KTView>*)theView
 {
 	[[self secondView] addSubview:theView];
 }
@@ -416,7 +416,7 @@
 //=========================================================== 
 // - addViewToFirstView:secondView:
 //===========================================================
-- (void)addViewToFirstView:(KTView*)theFirstView secondView:(KTView*)theSecondView
+- (void)addViewToFirstView:(NSView<KTView>*)theFirstView secondView:(NSView<KTView>*)theSecondView
 {
 	[self addViewToFirstView:theFirstView];
 	[self addViewToSecondView:theSecondView];
