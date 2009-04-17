@@ -202,17 +202,7 @@
 		break;
 	}
 	
-	// clip width
-	if(mMaxWidth > 0)
-	{
-		if(NSWidth(aCurrentViewFrame) > mMaxWidth)
-			aCurrentViewFrame.size.width = mMaxWidth;
-	}
-	if(mMinWidth > 0)
-	{
-		if(NSWidth(aCurrentViewFrame) < mMinWidth)
-			aCurrentViewFrame.size.width = mMinWidth;
-	}
+
 	
 	//----------------------------------------------------------------------------------------
 	// HEIGHT
@@ -226,18 +216,6 @@
 		case KTSizePercentage:
 			aCurrentViewFrame.size.height = aSuperviewFrame.size.height*mHeightPercentage - (mMarginTop + mMarginBottom);
 		break;
-	}
-	
-	// clip height
-	if(mMaxHeight > 0)
-	{
-		if(NSHeight(aCurrentViewFrame) > mMaxHeight)
-			aCurrentViewFrame.size.height = mMaxHeight;
-	}
-	if(mMinHeight > 0)
-	{
-		if(NSHeight(aCurrentViewFrame) < mMinHeight)
-			aCurrentViewFrame.size.height = mMinHeight;
 	}
 	
 
@@ -454,6 +432,32 @@
 		break;
 	}
 	
+	
+	
+	// clip width
+	if(mMaxWidth > 0)
+	{
+		if(NSWidth(aCurrentViewFrame) > mMaxWidth)
+			aCurrentViewFrame.size.width = mMaxWidth;
+	}
+	if(mMinWidth > 0)
+	{
+		if(NSWidth(aCurrentViewFrame) < mMinWidth)
+			aCurrentViewFrame.size.width = mMinWidth;
+	}
+	// clip height
+	if(mMaxHeight > 0)
+	{
+		if(NSHeight(aCurrentViewFrame) > mMaxHeight)
+			aCurrentViewFrame.size.height = mMaxHeight;
+	}
+	if(mMinHeight > 0)
+	{
+		if(NSHeight(aCurrentViewFrame) < mMinHeight)
+			aCurrentViewFrame.size.height = mMinHeight;
+	}
+		
+	
 	//----------------------------------------------------------------------------------------
 	// SET THE FRAME
 	//----------------------------------------------------------------------------------------	
@@ -477,8 +481,8 @@
 // - setMarginTop:right:bottom:left:
 //=========================================================== 
 - (void)setMarginTop:(float)theTopMargin 
-				right:(float)theRightMargin 
-				bottom:(float)theBottomMargin 
+			   right:(float)theRightMargin 
+			  bottom:(float)theBottomMargin 
 				left:(float)theLeftMargin
 {
 	mMarginTop = theTopMargin;

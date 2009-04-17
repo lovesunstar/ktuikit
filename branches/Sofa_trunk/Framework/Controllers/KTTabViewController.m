@@ -180,6 +180,23 @@
 	return [mTabItemArrayController arrangedObjects];
 }
 
+//=========================================================== 
+// - tabItemForIdentifier
+//===========================================================
+- (KTTabItem*)tabItemForIdentifier:(id)theIdentifier
+{
+	KTTabItem * aTabItemToReturn = nil;
+	for(KTTabItem * aTabItem in [mTabItemArrayController arrangedObjects])
+	{
+		if([[aTabItem identifier] isEqual:theIdentifier])
+		{
+			aTabItemToReturn = aTabItem;
+			break;
+		}
+	}
+	return aTabItemToReturn;
+}
+
 
 
 #pragma mark -

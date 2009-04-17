@@ -38,4 +38,5 @@
 - (void)selectTabAtIndex:(NSInteger)theTabIndex;
 - (void)selectTabItem:(KTTabItem*)theTabItem;
 
+- (KTTabItem*)tabItemForIdentifier:(id)theIdentifier;
 @end
