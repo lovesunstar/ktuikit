@@ -259,10 +259,17 @@
 		// this automatcally calls 'removeObservations'
 //		[self removeSubcontroller:aCurrentViewController];
 		
+		
+		
 		// now select the new view controller
 		KTViewController * aViewControllerToSelect = [theTabItem viewController];
 		KTView * aViewForTab = (KTView*)[aViewControllerToSelect view];
 		[wContentView addSubview:aViewForTab];
+		
+		
+		[aCurrentViewController setHidden:YES];
+		[aViewControllerToSelect setHidden:NO];
+		[[self windowController] patchResponderChain];
 		
 		// layout
 		[[aViewForTab viewLayoutManager] setWidthType:KTSizeFill];

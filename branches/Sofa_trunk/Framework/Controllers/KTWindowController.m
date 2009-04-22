@@ -143,8 +143,11 @@
 
 	NSMutableArray *flatViewControllers = [NSMutableArray array];
 	for (KTViewController *viewController in self.viewControllers) { // flatten the view controllers into an array
-		[flatViewControllers addObject:viewController];
-		[flatViewControllers addObjectsFromArray:[viewController descendants]];
+		if([viewController hidden]==NO)
+		{
+			[flatViewControllers addObject:viewController];
+			[flatViewControllers addObjectsFromArray:[viewController descendants]];
+		}
 	}
 	if([flatViewControllers count]>0)
 	{

@@ -118,6 +118,7 @@
 //@synthesize parent = _parent;
 @synthesize windowController = _windowController;
 @synthesize subcontrollers = _subcontrollers;
+@synthesize hidden = mHidden;
 
 @dynamic rootController;
 @dynamic descendants;
@@ -271,10 +272,14 @@
 - (NSArray *)descendants;
 {
 	NSMutableArray *array = [NSMutableArray array];
-	for (KTViewController *child in self.subcontrollers) {
-		[array addObject:child];
-		if ([child countOfSubcontrollers] > 0)
-			[array addObjectsFromArray:[child descendants]];
+	for (KTViewController *child in self.subcontrollers) 
+	{
+		if([child hidden]==NO)
+		{
+			[array addObject:child];
+			if ([child countOfSubcontrollers] > 0)
+				[array addObjectsFromArray:[child descendants]];
+		}
 	}
 	for(KTLayerController * aLayerController in mLayerControllers)
 	{

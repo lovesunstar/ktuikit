@@ -33,8 +33,8 @@
 #import <Cocoa/Cocoa.h>
 #import "KTViewProtocol.h"
 #import "KTController.h"
+#import "KTWindowController.h"
 
-@class KTWindowController;
 @class KTLayerController;
 
 @interface KTViewController : NSViewController <KTController>
@@ -46,6 +46,7 @@
 		NSMutableArray *			_topLevelNibObjects;
 		
 		NSMutableArray *			mLayerControllers;
+		BOOL						mHidden;
 }
 
 @property(assign) KTWindowController *windowController;
@@ -53,7 +54,7 @@
 
 @property(readonly) NSArray *descendants;
 @property(readonly) KTViewController *rootController;
-
+@property(readwrite, assign) BOOL hidden;
 + (id)viewControllerWithWindowController:(KTWindowController*)theWindowController;
 - (id)initWithNibName:(NSString *)name bundle:(NSBundle *)bundle windowController:(KTWindowController *)windowController;
 - (BOOL)loadNibNamed:(NSString*)theNibName bundle:(NSBundle*)theBundle;
