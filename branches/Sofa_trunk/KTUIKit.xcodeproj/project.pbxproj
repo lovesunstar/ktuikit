@@ -164,6 +164,12 @@
 		AB06FAC80EE973A5008A85C9 /* KTWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9C5D900DE9F43400AE6913 /* KTWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB06FAC90EE973A5008A85C9 /* KTWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9C5D910DE9F43400AE6913 /* KTWindowController.m */; };
 		AB68052C0EE41E090082FC43 /* KTUIKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 53DF68FD067E5B5A0090B5B0 /* KTUIKit.framework */; };
+		AB862A490F9F70490055EE4A /* KTScroller.h in Headers */ = {isa = PBXBuildFile; fileRef = ABEF1D490F9F684600C5915E /* KTScroller.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ABEF1D4D0F9F686100C5915E /* KTScroller.classdescription in Resources */ = {isa = PBXBuildFile; fileRef = ABEF1D4A0F9F685300C5915E /* KTScroller.classdescription */; };
+		ABEF1D4E0F9F686900C5915E /* KTScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = ABEF1D480F9F684600C5915E /* KTScroller.m */; };
+		ABEF1D6D0F9F688900C5915E /* KTScrollerIntegration.m in Sources */ = {isa = PBXBuildFile; fileRef = ABEF1D6C0F9F688900C5915E /* KTScrollerIntegration.m */; };
+		ABEF1D800F9F68F900C5915E /* KTLayoutDynamicImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = ABEF1D7E0F9F68F900C5915E /* KTLayoutDynamicImplementation.m */; };
+		ABEF1D810F9F68F900C5915E /* KTLayoutDynamicImplementation.h in Headers */ = {isa = PBXBuildFile; fileRef = ABEF1D7F0F9F68F900C5915E /* KTLayoutDynamicImplementation.h */; };
 		C08787290A49DE9A00E9B151 /* KTUIKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0259C576FE90428111CA0C5A /* KTUIKit.m */; };
 		C0D069560A49DF9100C95564 /* InterfaceBuilderKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0D069550A49DF9100C95564 /* InterfaceBuilderKit.framework */; };
 /* End PBXBuildFile section */
@@ -383,6 +389,12 @@
 		53DF68FE067E5B5A0090B5B0 /* KTUIKitFramework-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "KTUIKitFramework-Info.plist"; path = "../Framework/Resources/KTUIKitFramework-Info.plist"; sourceTree = "<group>"; };
 		8D1AC9730486D14A00FE50C9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1AC9740486D14A00FE50C9 /* KTUIKit.ibplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KTUIKit.ibplugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABEF1D480F9F684600C5915E /* KTScroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KTScroller.m; path = NSViewSubclasses/KTScroller.m; sourceTree = "<group>"; };
+		ABEF1D490F9F684600C5915E /* KTScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KTScroller.h; path = NSViewSubclasses/KTScroller.h; sourceTree = "<group>"; };
+		ABEF1D4A0F9F685300C5915E /* KTScroller.classdescription */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = KTScroller.classdescription; sourceTree = "<group>"; };
+		ABEF1D6C0F9F688900C5915E /* KTScrollerIntegration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTScrollerIntegration.m; sourceTree = "<group>"; };
+		ABEF1D7E0F9F68F900C5915E /* KTLayoutDynamicImplementation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KTLayoutDynamicImplementation.m; path = ../../../KTLayoutDynamicImplementation.m; sourceTree = "<group>"; };
+		ABEF1D7F0F9F68F900C5915E /* KTLayoutDynamicImplementation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KTLayoutDynamicImplementation.h; path = ../../../KTLayoutDynamicImplementation.h; sourceTree = "<group>"; };
 		C0D069550A49DF9100C95564 /* InterfaceBuilderKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InterfaceBuilderKit.framework; path = /Developer/Library/Frameworks/InterfaceBuilderKit.framework; sourceTree = "<absolute>"; };
 		DD92D38A0106425D02CA0E72 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -519,6 +531,8 @@
 		4C3EA96D0ECF492E004492C4 /* SharedCode */ = {
 			isa = PBXGroup;
 			children = (
+				ABEF1D7E0F9F68F900C5915E /* KTLayoutDynamicImplementation.m */,
+				ABEF1D7F0F9F68F900C5915E /* KTLayoutDynamicImplementation.h */,
 				4C3EA96E0ECF492E004492C4 /* KTViewLayoutSharedImplementation_ChildlessNSView.m */,
 				4C3EA96F0ECF492E004492C4 /* readme.txt */,
 			);
@@ -619,6 +633,8 @@
 				4C8123480F49740C007F2749 /* KTOpenGLView.m */,
 				4CD98F990EBC7BBB008BD0EA /* KTScrollView.h */,
 				4CD98F9A0EBC7BBB008BD0EA /* KTScrollView.m */,
+				ABEF1D490F9F684600C5915E /* KTScroller.h */,
+				ABEF1D480F9F684600C5915E /* KTScroller.m */,
 				4C9A7EE60EBDBC9600F8AA48 /* KTAppKitSplitView.h */,
 				4C9A7EE70EBDBC9600F8AA48 /* KTAppKitSplitView.m */,
 				4C9A80AE0EBDD33300F8AA48 /* KTProgressIndicator.h */,
@@ -694,6 +710,7 @@
 			children = (
 				4CC1F40D0DE940F70035CE00 /* KTViewIntegration.m */,
 				4CD98F9E0EBC7C45008BD0EA /* KTScrollViewIntegration.m */,
+				ABEF1D6C0F9F688900C5915E /* KTScrollerIntegration.m */,
 				4C9A7EED0EBDBD5000F8AA48 /* KTAppKitSplitViewIntegration.m */,
 				4CCA961B0EBC506C00CF9A03 /* KTButtonIntegration.m */,
 				4CD98F5F0EBC74DD008BD0EA /* KTTextFieldIntegration.m */,
@@ -791,6 +808,7 @@
 				4C9A801F0EBDC94C00F8AA48 /* KTSearchField.classdescription */,
 				4C9A807F0EBDD08C00F8AA48 /* KTSecureTextField.classdescription */,
 				4CD98F9D0EBC7C2A008BD0EA /* KTScrollView.classdescription */,
+				ABEF1D4A0F9F685300C5915E /* KTScroller.classdescription */,
 				4C9A7E600EBDB74500F8AA48 /* KTSegmentedControl.classdescription */,
 				4C9A7E970EBDB83800F8AA48 /* KTSlider.classdescription */,
 				4C9A7ED20EBDBA2500F8AA48 /* KTPopUpButton.classdescription */,
@@ -834,6 +852,7 @@
 				4C9C5D990DE9F47000AE6913 /* KTView.h in Headers */,
 				4C9C5E260DE9FAB100AE6913 /* KTUIKit.h in Headers */,
 				4CCA96180EBC4FD200CF9A03 /* KTButton.h in Headers */,
+				AB862A490F9F70490055EE4A /* KTScroller.h in Headers */,
 				4CD98F9B0EBC7BBB008BD0EA /* KTScrollView.h in Headers */,
 				4C9A7E5E0EBDB6D200F8AA48 /* KTSegmentedControl.h in Headers */,
 				4C9A7E8F0EBDB7AF00F8AA48 /* KTSlider.h in Headers */,
@@ -868,6 +887,7 @@
 				4C5F40800F716C55002F2A62 /* KTTabItem.h in Headers */,
 				4CE986180F80F5150092A12F /* KTSplitView.h in Headers */,
 				4CE986290F80F8660092A12F /* KTSplitViewDivider.h in Headers */,
+				ABEF1D810F9F68F900C5915E /* KTLayoutDynamicImplementation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1003,6 +1023,7 @@
 				4C180D880ECF699A00FB2123 /* KTScrollView.tif in Resources */,
 				4C7AE9FA0ECF9DCE00F79A75 /* TextView.tif in Resources */,
 				4C7AEA080ECFA3F500F79A75 /* WebKit.png in Resources */,
+				ABEF1D4D0F9F686100C5915E /* KTScroller.classdescription in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1058,6 +1079,8 @@
 				4C5F40810F716C55002F2A62 /* KTTabItem.m in Sources */,
 				4CE986190F80F5150092A12F /* KTSplitView.m in Sources */,
 				4CE9862A0F80F8660092A12F /* KTSplitViewDivider.m in Sources */,
+				ABEF1D4E0F9F686900C5915E /* KTScroller.m in Sources */,
+				ABEF1D800F9F68F900C5915E /* KTLayoutDynamicImplementation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1087,6 +1110,7 @@
 				4C14A38A0EC860EC00E94D88 /* KTImageKitBrowserViewIntegration.m in Sources */,
 				4CD463900ED04121009725B9 /* KTLayoutManagerControl.m in Sources */,
 				4CB23FE80ED9A40300486F39 /* KTColorWellIntegration.m in Sources */,
+				ABEF1D6D0F9F688900C5915E /* KTScrollerIntegration.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
