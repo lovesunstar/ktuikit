@@ -945,7 +945,7 @@
 
 - (void)controlTextDidBeginEditing:(NSNotification *)aNotification
 {
-	NSLog(@"hmmm...");
+//	NSLog(@"hmmm...");
 }
 
 @end

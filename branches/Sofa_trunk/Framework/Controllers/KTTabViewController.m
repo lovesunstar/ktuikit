@@ -133,8 +133,8 @@
 			[[[theTabItem viewController] view] removeFromSuperview];
 			[self removeSubcontroller:[theTabItem viewController]];
 		}
-		else
-			NSLog(@"removing tab item without a view controller");
+//		else
+//			NSLog(@"removing tab item without a view controller");
 		
 			
 					
@@ -164,8 +164,8 @@
 	{
 		if([theTabItem viewController]!=nil)
 			[self addSubcontroller:[theTabItem viewController]];
-		else
-			NSLog(@"adding a tab item without a view controller");
+//		else
+//			NSLog(@"adding a tab item without a view controller");
 		[theTabItem setTabViewController:self];
 		[mTabItemArrayController insertObject:theTabItem atArrangedObjectIndex:theIndex];
 	}
@@ -250,9 +250,9 @@
 
 		// deal with the current selection first
 		KTViewController * aCurrentViewController = [mCurrentSelectedTab viewController];
-		if(aCurrentViewController == nil)
-			NSLog(@"de-selecting a tab with no view controller");
-			
+//		if(aCurrentViewController == nil)
+//			NSLog(@"de-selecting a tab with no view controller");
+//			
 		// remove the current view controller's view from the view hierarchy
 		[[aCurrentViewController view] removeFromSuperview];
 		// remove the view controller from our list of subcontrollers to take it out of the responder chain

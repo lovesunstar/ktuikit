@@ -119,7 +119,7 @@
 	}
 	
 	
-	NSLog(@"#########################################################");
+	//NSLog(@"#########################################################");
 	if(anObjectToRemove!=nil)
 	{
 		[mAnimationQueue removeObject:anObjectToRemove];
@@ -292,7 +292,7 @@
 	// remove any objects that need to be removed
 	if([aListOfAnimationsToRemove count] > 0)
 	{
-		NSLog(@"removing %d animations from queue", [aListOfAnimationsToRemove count]);
+		//NSLog(@"removing %d animations from queue", [aListOfAnimationsToRemove count]);
 		[mAnimationQueue removeObjectsInArray:aListOfAnimationsToRemove];
 	}
 	[aListOfAnimationsToRemove release];
