@@ -8,6 +8,7 @@
 #import <KTUIKit/KTOpenGLTexture.h>
 #import <KTUIKit/KTOpenGLLayer.h>
 #import <KTUIKit/KTScrollView.h>
+#import "KTUIKit/KTScroller.h"
 #import <KTUIKit/KTAppKitSplitView.h>
 #import <KTUIKit/KTWebView.h>
 #import <KTUIKit/KTImageKitBrowserView.h>
