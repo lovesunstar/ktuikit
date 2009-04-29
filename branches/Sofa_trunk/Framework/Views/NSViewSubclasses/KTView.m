@@ -37,6 +37,11 @@
 
 @implementation KTView
 
+@synthesize mouseDownCanMoveWindow = mMouseDownCanMoveWindow;
+@synthesize opaque = mOpaque;
+@synthesize canBecomeKeyView = mCanBecomeKeyView;
+@synthesize canBecomeFirstResponder = mCanBecomeFirstResponder;
+
 //=========================================================== 
 // - initWithFrame:
 //=========================================================== 
@@ -104,6 +109,27 @@
 	[mStyleManager release];
 	[mLabel release];
 	[super dealloc];
+}
+
+
+- (BOOL)isOpaque
+{
+	return mOpaque;
+}
+
+- (BOOL)canBecomeKeyView
+{
+	return mCanBecomeKeyView;
+}
+
+- (BOOL)canBecomeFirstResponder
+{
+	return mCanBecomeFirstResponder;
+}
+
+- (BOOL)mouseDownCanMoveWindow
+{
+	return mMouseDownCanMoveWindow;
 }
 
 

@@ -41,8 +41,19 @@
 	KTLayoutManager *			mLayoutManager;
 	KTStyleManager *			mStyleManager;
 	NSString *					mLabel;
+
+	BOOL						mOpaque;
+	BOOL						mMouseDownCanMoveWindow;
+	BOOL						mCanBecomeKeyView;
+	BOOL						mCanBecomeFirstResponder;
 }
 
+@property (nonatomic, readwrite, assign) BOOL opaque;
+@property (nonatomic, readwrite, assign) BOOL mouseDownCanMoveWindow;
+@property (nonatomic, readwrite, assign) BOOL canBecomeKeyView;
+@property (nonatomic, readwrite, assign) BOOL canBecomeFirstResponder;
+
 - (void)drawInContext:(CGContextRef)theContext;
+
 
 @end
