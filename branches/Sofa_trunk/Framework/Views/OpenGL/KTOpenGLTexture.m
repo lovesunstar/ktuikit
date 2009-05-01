@@ -91,13 +91,22 @@
 		aBitmapData = [mBitmapSource bitmapData];
 		mOriginalPixelsWide = [mBitmapSource pixelsWide];
 		mOriginalPixelsHigh = [mBitmapSource pixelsHigh];
-
+		
+		
+		
 		aHasAlpha = [mBitmapSource hasAlpha];
 		aFormat1 = aHasAlpha ? GL_RGBA8 : GL_RGB8;
 		aFormat2 = aHasAlpha ? GL_RGBA : GL_RGB;
-		aSamplesPerPixel = aHasAlpha ? 3 : 3;
+		aSamplesPerPixel = ([mBitmapSource bitsPerPixel]/[mBitmapSource bitsPerSample]);
 		
 		aType = aHasAlpha ? ARGB_IMAGE_TYPE : GL_UNSIGNED_BYTE;
+		
+//		NSLog(@"pixels wide: %d high:%d", mOriginalPixelsWide, mOriginalPixelsHigh);
+//		NSLog(@"bits per sample: %d", [mBitmapSource bitsPerSample]);
+//		NSLog(@"bytes per row: %d", [mBitmapSource bytesPerRow]);
+//		NSLog(@"bits per pixels: %d", [mBitmapSource bitsPerPixel]);
+//		NSLog(@"samples per pixel: %d", [mBitmapSource bitsPerPixel]/[mBitmapSource bitsPerSample]);
+		
 		
 		glGenTextures(1, &mTextureName);
 		glBindTexture(GL_TEXTURE_RECTANGLE_EXT, mTextureName);
@@ -109,8 +118,7 @@
 		
 		glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_STORAGE_HINT_APPLE, GL_STORAGE_CACHED_APPLE);
 		glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, GL_TRUE);
-		glPixelStorei(GL_UNPACK_ALIGNMENT, ([mBitmapSource bitsPerSample] >> aSamplesPerPixel));
-		glPixelStorei(GL_UNPACK_ROW_LENGTH, ([mBitmapSource bytesPerRow] / ([mBitmapSource bitsPerPixel]  >> aSamplesPerPixel)));
+		glPixelStorei(GL_UNPACK_ROW_LENGTH, ([mBitmapSource bytesPerRow] / aSamplesPerPixel));//([mBitmapSource bytesPerRow] / ([mBitmapSource bitsPerPixel]  >> aSamplesPerPixel)));
 		
 		glTexImage2D(GL_TEXTURE_RECTANGLE_EXT, 0, aFormat1, mOriginalPixelsWide, mOriginalPixelsHigh, 0, aFormat2, aType, aBitmapData);		
 		glBindTexture(GL_TEXTURE_RECTANGLE_EXT, 0);
