@@ -51,6 +51,7 @@
 - (void)draw;
 - (void)drawOverlays;
 - (void)setNeedsDisplay:(BOOL)theBool;
+- (void)display;
 
 
 - (KTOpenGLLayer*)hitTest:(NSPoint)thePoint;
