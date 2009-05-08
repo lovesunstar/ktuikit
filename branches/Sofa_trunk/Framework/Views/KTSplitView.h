@@ -84,5 +84,7 @@ typedef enum
 - (void)setDividerPosition:(float)thePosition fromView:(KTSplitViewFocusedViewFlag)theView animate:(BOOL)theBool time:(float)theTimeInSeconds;
 - (float)dividerPositionFromView:(KTSplitViewFocusedViewFlag)theFocusedViewFlag;
 - (void)setDividerFillColor:(NSColor*)theColor;
-
+- (void)setDividerBackgroundGradient:(NSGradient*)theGradient;
+- (void)setDividerStrokeColor:(NSColor*)theColor;
+- (void)setDividerFirstStrokeColor:(NSColor*)theFirstColor secondColor:(NSColor*)theSecondColor;
 @end

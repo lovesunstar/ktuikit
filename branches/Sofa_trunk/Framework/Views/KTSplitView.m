@@ -131,7 +131,7 @@
 					mResizeInformation = anOldDividerFrame.origin.y / anOldViewFrame.size.height;
 					mResetResizeInformation = NO;
 				}
-				[[self divider] setFrame:NSMakeRect(anOldDividerFrame.origin.x, theFrame.size.height * mResizeInformation, theFrame.size.width, anOldDividerFrame.size.height)];
+				[[self divider] setFrame:NSMakeRect(anOldDividerFrame.origin.x, floor(theFrame.size.height * mResizeInformation), theFrame.size.width, anOldDividerFrame.size.height)];
 			}
 			else
 			{
@@ -140,7 +140,7 @@
 					mResizeInformation = anOldDividerFrame.origin.x / anOldViewFrame.size.width;
 					mResetResizeInformation = NO;
 				}
-				[[self divider]  setFrame:NSMakeRect(theFrame.size.width * mResizeInformation, anOldDividerFrame.origin.y, anOldDividerFrame.size.width, theFrame.size.height)];
+				[[self divider]  setFrame:NSMakeRect(floor(theFrame.size.width * mResizeInformation), anOldDividerFrame.origin.y, anOldDividerFrame.size.width, theFrame.size.height)];
 			}
 		}
 		break;
@@ -460,4 +460,50 @@
 	[[[self divider] styleManager] setBackgroundColor:theColor];
 }
 
+//=========================================================== 
+// - setDividerBackgroundGradient
+//===========================================================
+- (void)setDividerBackgroundGradient:(NSGradient*)theGradient
+{
+	
+	[[[self divider] styleManager] setBackgroundGradient:theGradient angle:180];	
+}
+
+//=========================================================== 
+// - setDividerStrokeColor
+//===========================================================
+- (void)setDividerStrokeColor:(NSColor*)theColor
+{
+	KTStyleManager * aDividerStyleManager = [mDivider styleManager];
+	if(mDividerOrientation == KTSplitViewDividerOrientation_Horizontal)
+	{
+		[aDividerStyleManager setBorderWidthTop:1 right:0 bottom:1 left:0];
+		[aDividerStyleManager setBorderColorTop:theColor right:nil bottom:theColor left:nil];
+	}
+	else
+	{
+		[aDividerStyleManager setBorderWidthTop:0 right:1 bottom:0 left:1];
+		[aDividerStyleManager setBorderColorTop:nil right:theColor bottom:nil left:theColor];	
+	}
+}
+
+
+
+//=========================================================== 
+// - setDividerFirstStrokeColor
+//===========================================================
+- (void)setDividerFirstStrokeColor:(NSColor*)theFirstColor secondColor:(NSColor*)theSecondColor
+{
+	KTStyleManager * aDividerStyleManager = [mDivider styleManager];
+	if(mDividerOrientation == KTSplitViewDividerOrientation_Horizontal)
+	{
+		[aDividerStyleManager setBorderWidthTop:1 right:0 bottom:1 left:0];
+		[aDividerStyleManager setBorderColorTop:theFirstColor right:nil bottom:theSecondColor left:nil];
+	}
+	else
+	{
+		[aDividerStyleManager setBorderWidthTop:0 right:1 bottom:0 left:1];
+		[aDividerStyleManager setBorderColorTop:nil right:theFirstColor bottom:nil left:theSecondColor];	
+	}
+}
 @end

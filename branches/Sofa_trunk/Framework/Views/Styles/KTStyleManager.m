@@ -216,7 +216,7 @@
 	NSPoint	aStrokePoint = theRect.origin;
 	
 	// move the point to the top left corner to begin
-	aStrokePoint.y = theRect.size.height;
+	aStrokePoint.y = theRect.size.height - .5;
 	
 	// Top
 	if(		mBorderWidthTop > 0 
@@ -224,7 +224,7 @@
 	{
 		CGContextBeginPath(theContext);
 		CGContextMoveToPoint(theContext, aStrokePoint.x,  aStrokePoint.y);
-		aStrokePoint.x+=theRect.size.width;
+		aStrokePoint.x+=theRect.size.width - .5;
 		CGContextAddLineToPoint(theContext, aStrokePoint.x,  aStrokePoint.y);
 		CGContextSetLineWidth(theContext, mBorderWidthTop);
 		[[mBorderColorTop colorUsingColorSpaceName:NSCalibratedRGBColorSpace] getRed:&r green:&g blue:&b alpha:&a];
@@ -233,7 +233,7 @@
 	}
 	else
 	{
-		aStrokePoint.x += theRect.size.width;
+		aStrokePoint.x += theRect.size.width - .5;
 	}
 	
 	// Right
@@ -251,7 +251,7 @@
 	}
 	else
 	{
-		aStrokePoint.y -= theRect.size.height;
+		aStrokePoint.y -= theRect.size.height - 1;
 	}
 	
 	// Bottom
@@ -260,7 +260,7 @@
 	{
 		CGContextBeginPath(theContext);
 		CGContextMoveToPoint(theContext, aStrokePoint.x,  aStrokePoint.y);
-		aStrokePoint.x-=theRect.size.width;     
+		aStrokePoint.x-=theRect.size.width - 1;     
 		CGContextAddLineToPoint(theContext, aStrokePoint.x,  aStrokePoint.y);
 		CGContextSetLineWidth(theContext, mBorderWidthBottom);
 		[[mBorderColorBottom colorUsingColorSpaceName:NSCalibratedRGBColorSpace] getRed:&r green:&g blue:&b alpha:&a];
@@ -269,7 +269,7 @@
 	}
 	else
 	{
-		aStrokePoint.x -= theRect.size.width;
+		aStrokePoint.x -= theRect.size.width - 1;
 	}
 	
 	// Left

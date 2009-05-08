@@ -343,11 +343,13 @@
 {
 	KTOpenGLLayer * aLayerToReturn = nil;
 	
-	for(KTOpenGLLayer * aSublayer in [self sublayers])
+	NSInteger aSublayerCount = [[self sublayers] count];
+	NSInteger i;
+	for(i = 0; i < aSublayerCount; i++)
 	{
-		aLayerToReturn = [aSublayer hitTest:thePoint];
-//		if(aLayerToReturn)
-//			break;
+		KTOpenGLLayer * aSublayer = [[self sublayers] objectAtIndex:i];
+		if([aSublayer hitTest:thePoint])
+			aLayerToReturn = aSublayer;
 	}
 	
 	if(aLayerToReturn == nil)

@@ -149,7 +149,9 @@
 {
 	//NSLog(@"%@ dealloc", self);
 	[self releaseNibObjects];
+	[_subcontrollers makeObjectsPerformSelector:@selector(removeObservations)];
 	[_subcontrollers release];
+	[mLayerControllers makeObjectsPerformSelector:@selector(removeObservations)];
 	[mLayerControllers release];
 	[super dealloc];
 }
