@@ -18,11 +18,12 @@
 	KTTabViewController *	wTabViewController;
 	KTViewController *		mViewController;
 }
+
 - (id)initWithViewController:(KTViewController*)theViewController;
 
-@property (readwrite, retain) NSString * label;
-@property (readwrite, assign) id identifier;
-@property (readwrite, assign) KTTabViewController * tabViewController;
-@property (readwrite, assign) KTViewController * viewController;
+@property (nonatomic, readwrite, retain) NSString * label;
+@property (nonatomic, readwrite, assign) id identifier;
+@property (nonatomic, readwrite, assign) KTTabViewController * tabViewController;
+@property (nonatomic, readwrite, assign) KTViewController * viewController;
 
 @end

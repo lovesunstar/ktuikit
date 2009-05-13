@@ -69,23 +69,17 @@
 @property(readwrite,assign) CGFloat borderWidthBottom;
 @property(readwrite,assign) CGFloat borderWidthLeft;
 
-
 - (id)initWithView:(id<KTStyle>)theView;
 - (void)setView:(id<KTStyle>)theView;
 
 // Extra configuration API
-
 - (void)setBackgroundImage:(NSImage*)theBackgroundImage tile:(BOOL)theBool;
 - (void)setBackgroundGradient:(NSGradient*)theGradient angle:(CGFloat)theAngle;
-
 - (void)setBorderColor:(NSColor*)theColor;
 - (void)setBorderColorTop:(NSColor*)TheTopColor right:(NSColor*)theRightColor bottom:(NSColor*)theBottomColor left:(NSColor*)theLeftColor;
 - (void)setBorderWidth:(CGFloat)theWidth;
 - (void)setBorderWidthTop:(CGFloat)theTopWidth right:(CGFloat)theRightWidth bottom:(CGFloat)theBottomWidth left:(CGFloat)theLeftWidth;
-
-
 - (void)drawStylesInRect:(NSRect)TheFrame context:(CGContextRef)theContext view:(id<KTStyle>)theView;
-
 
 
 @end

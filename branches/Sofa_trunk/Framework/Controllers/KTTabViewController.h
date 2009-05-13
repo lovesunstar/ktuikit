@@ -22,15 +22,16 @@
 	id						wDelegate;
 }
 
-@property (readonly) NSArrayController * tabItemArrayController;
-@property (readwrite, assign) BOOL releaseViewControllersWhenNotSeletcted;
-@property (readwrite, assign) id delegate;
+@property (nonatomic, readonly) NSArrayController * tabItemArrayController;
+@property (nonatomic, readwrite, assign) BOOL releaseViewControllersWhenNotSeletcted;
+@property (nonatomic, readwrite, assign) id delegate;
 
-// adding/removing tabs
+// adding/removing/getting tabs
 - (void)addTabItem:(KTTabItem*)theTabItem;
 - (void)removeTabItem:(KTTabItem*)theTabItem;
 - (void)insertTabItem:(KTTabItem*)theTabItem atIndex:(NSInteger)theIndex;
 - (NSArray*)tabItems;
+- (KTTabItem*)tabItemForIdentifier:(id)theIdentifier;
 
 // selection
 - (KTTabItem*)selectedTabItem;
@@ -38,5 +39,4 @@
 - (void)selectTabAtIndex:(NSInteger)theTabIndex;
 - (void)selectTabItem:(KTTabItem*)theTabItem;
 
-- (KTTabItem*)tabItemForIdentifier:(id)theIdentifier;
 @end

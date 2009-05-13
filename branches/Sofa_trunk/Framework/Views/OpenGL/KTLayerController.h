@@ -19,19 +19,14 @@
 	id						wRepresentedObject;
 }
 
-@property (readwrite, assign) KTViewController * viewController;
-@property (readwrite, retain) NSMutableArray * subcontrollers;
-@property (readwrite, retain) id layer;
-@property (readwrite, assign) id representedObject;
+@property (nonatomic, readwrite, assign) KTViewController * viewController;
+@property (nonatomic, readwrite, retain) NSMutableArray * subcontrollers;
+@property (nonatomic, readwrite, retain) id layer;
+@property (nonatomic, readwrite, assign) id representedObject;
 
 + (id)layerControllerWithViewController:(KTViewController*)theViewController;
 - (id)initWithViewController:(KTViewController*)theViewController;
-
-
-// layer controller hierarchy API
 - (void)addSubcontroller:(KTLayerController*)theSubcontroller;
 - (void)removeSubcontroller:(KTLayerController*)theSubcontroller;
-
-- (NSArray *)descendants;
 
 @end

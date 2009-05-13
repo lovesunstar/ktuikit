@@ -38,37 +38,38 @@
 #import "KTWindowController.h"
 #import "KTViewController.h"
 
-@interface KTWindowController () // class continuation allows us to redeclare the property as readwrite to we can privately use the setter
-@property(copy,readwrite) NSMutableArray *viewControllers;
-@end
 
 @implementation KTWindowController
-@synthesize viewControllers = _viewControllers; // using synthesize will make our getter, but we create our own setter to keep mutability of the array
 
-- (id)initWithWindowNibName:(NSString *)nibName;
+//=========================================================== 
+// - initWithWindowNibName:
+//=========================================================== 
+- (id)initWithWindowNibName:(NSString *)theNibName;
 {
-	if (![super initWithWindowNibName:nibName])
+	if (![super initWithWindowNibName:theNibName])
 		return nil;
-	self.viewControllers = [NSMutableArray array];
+	
+	mViewControllers = [[NSMutableArray alloc] init];
 	return self;
 }
 
-- (void)setViewControllers:(NSMutableArray *)newViewControllers;
-{
-	if (_viewControllers == newViewControllers)
-		return;
-	NSMutableArray *newViewControllersCopy = [newViewControllers mutableCopy];
-	[_viewControllers release];
-	_viewControllers = newViewControllersCopy;
-}
 
-- (void)dealloc;
+
+//=========================================================== 
+// - dealloc
+//=========================================================== 
+- (void)dealloc
 {
-	[_viewControllers release];
+	[mViewControllers release];
 	[super dealloc];
 }
 
-- (void)windowWillClose:(NSNotification *)notification;
+
+
+//=========================================================== 
+// - setViewControllers
+//=========================================================== 
+- (void)windowWillClose:(NSNotification *)theNotification
 {
 	/*CS: I don't know if we want to actually do this in the framework
 	it only really truely works if the view controllers are actually released when the window closes
@@ -76,70 +77,72 @@
 	to open and close without releasing the controllers/views.  In this case, we would have the
 	controllers remove all their observations or bindings when the window closes and we don't have a way or hook to re-establish
 	the observations/bindings when the window opens again - needs to be balanced*/
-	[self.viewControllers makeObjectsPerformSelector:@selector(removeObservations)];
+	[[self viewControllers] makeObjectsPerformSelector:@selector(removeObservations)];
 }
 
-- (NSUInteger)countOfViewControllers;
+
+//=========================================================== 
+// - setViewControllers
+//=========================================================== 
+- (void)setViewControllers:(NSArray *)theViewControllers
 {
-	return [self.viewControllers count];
+	if(mViewControllers != theViewControllers)
+	{
+		NSMutableArray * aNewViewControllers = [theViewControllers mutableCopy];
+		[mViewControllers release];
+		mViewControllers = aNewViewControllers;
+	}
 }
 
-- (KTViewController *)objectInViewControllersAtIndex:(NSUInteger)index;
+
+
+//=========================================================== 
+// - viewControllers
+//=========================================================== 
+- (NSArray*)viewControllers
 {
-	return [self.viewControllers objectAtIndex:index];
+	return mViewControllers;
 }
 
-- (void)addViewController:(KTViewController *)viewController;
+
+
+//=========================================================== 
+// - addViewController:
+//=========================================================== 
+- (void)addViewController:(KTViewController *)theViewController
 {
-	[self.viewControllers insertObject:viewController atIndex:[self.viewControllers count]];
+	[mViewControllers addObject:theViewController];
 	[self patchResponderChain];
 }
 
-- (void)insertObject:(KTViewController *)viewController inViewControllersAtIndex:(NSUInteger)index;
+
+
+//=========================================================== 
+// - removeViewController:
+//=========================================================== 
+- (void)removeViewController:(KTViewController *)theViewController
 {
-	[self.viewControllers insertObject:viewController atIndex:index];
+	[mViewControllers removeObject:theViewController];
 	[self patchResponderChain];
 }
 
-- (void)insertObjects:(NSArray *)viewControllers inViewControllersAtIndexes:(NSIndexSet *)indexes;
-{
-	[self.viewControllers insertObjects:viewControllers atIndexes:indexes];
-	[self patchResponderChain];
-}
 
-- (void)insertObjects:(NSArray *)viewControllers inViewControllersAtIndex:(NSUInteger)index;
-{
-	[self insertObjects:viewControllers inViewControllersAtIndexes:[NSIndexSet indexSetWithIndex:index]];
-}
 
-// ------------------------------------------
-// It should be noted that if we remove an object from the view controllers array then the whole tree that descends from it will go too.
-// ------------------------------------------
-- (void)removeViewController:(KTViewController *)viewController;
-{
-	[self.viewControllers removeObject:viewController];
-	[self patchResponderChain];
-}
-
-- (void)removeObjectFromViewControllersAtIndex:(NSUInteger)index;
-{
-	[self.viewControllers removeObjectAtIndex:index];
-	[self patchResponderChain];
-}
-
+//=========================================================== 
+// - removeAllViewControllers
+//=========================================================== 
 - (void)removeAllViewControllers
 {
-	[self.viewControllers removeAllObjects];
+	[mViewControllers removeAllObjects];
 }
 
-// ---------------------------------------------------
-// This method creates an array containing all the view controllers, then adds them to the responder chain in sequence. The last view controller in the array has nextResponder == nil.
-// ---------------------------------------------------
-- (void)patchResponderChain;
-{
-//	if ([self.viewControllers count] == 0) // we're being called by view controllers at the beginning of creating the tree, most likely load time and the root of the tree hasn't been added to our list of controllers.
-//		return;
 
+
+//=========================================================== 
+// - patchResponderChain
+//=========================================================== 
+- (void)patchResponderChain
+{
 
 	NSMutableArray *flatViewControllers = [NSMutableArray array];
 	for (KTViewController *viewController in self.viewControllers) { // flatten the view controllers into an array
@@ -160,5 +163,6 @@
 		[[flatViewControllers lastObject] setNextResponder:nil];
 	}
 }
+
 
 @end

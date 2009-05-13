@@ -33,22 +33,17 @@
 #import <Cocoa/Cocoa.h>
 
 @class KTViewController;
-@interface KTWindowController : NSWindowController {
-	NSMutableArray *_viewControllers;
+@interface KTWindowController : NSWindowController 
+{
+	@private
+	NSMutableArray *		mViewControllers;
 } 
-@property(copy,readonly)  NSMutableArray *viewControllers;
 
-- (NSUInteger)countOfViewControllers;
-- (KTViewController *)objectInViewControllersAtIndex:(NSUInteger)index;
-
-- (void)addViewController:(KTViewController *)viewController;
-- (void)insertObject:(KTViewController *)viewController inViewControllersAtIndex:(NSUInteger)index;
-- (void)insertObjects:(NSArray *)viewControllers inViewControllersAtIndexes:(NSIndexSet *)indexes;
-- (void)insertObjects:(NSArray *)viewControllers inViewControllersAtIndex:(NSUInteger)index;
-
-- (void)removeViewController:(KTViewController *)viewController;
-- (void)removeObjectFromViewControllersAtIndex:(NSUInteger)index;
+- (NSArray*)viewControllers;
+- (void)setViewControllers:(NSArray*)theViewControllers;
+- (void)addViewController:(KTViewController *)theViewController;
+- (void)removeViewController:(KTViewController *)theViewController;
 - (void)removeAllViewControllers;
-
 - (void)patchResponderChain;
+
 @end

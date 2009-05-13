@@ -40,38 +40,31 @@
 @interface KTViewController : NSViewController <KTController>
 {
 	@private
-		KTViewController *			_parent;
-		KTWindowController *		_windowController;
-		NSMutableArray *			_subcontrollers;
-		NSMutableArray *			_topLevelNibObjects;
-		
-		NSMutableArray *			mLayerControllers;
-		BOOL						mHidden;
+	KTWindowController *		wWindowController;
+	NSMutableArray *			mSubcontrollers;
+	NSMutableArray *			mTopLevelNibObjects;
+	NSMutableArray *			mLayerControllers;
+	BOOL						mHidden;
 }
 
-@property(assign) KTWindowController *windowController;
-@property(readonly,copy) NSMutableArray *subcontrollers; // there's no mutableCopy keyword so this will be @synthesized in the implementation to get the default getter, but we'll write our own setter, otherwise mutability is lost
+@property(nonatomic, assign) KTWindowController * windowController;
+@property(nonatomic, readonly) NSArray * descendants;
+@property(nonatomic, readwrite, assign) BOOL hidden;
 
-@property(readonly) NSArray *descendants;
-@property(readonly) KTViewController *rootController;
-@property(readwrite, assign) BOOL hidden;
 + (id)viewControllerWithWindowController:(KTWindowController*)theWindowController;
 - (id)initWithNibName:(NSString *)name bundle:(NSBundle *)bundle windowController:(KTWindowController *)windowController;
 - (BOOL)loadNibNamed:(NSString*)theNibName bundle:(NSBundle*)theBundle;
+
 
 #pragma mark View
 //- (NSView<KTView>*)view;
 //- (void)setView:(NSView<KTView>*)theView;
 
-
 #pragma mark Subcontrollers
-- (KTViewController *)subcontrollerAtIndex:(NSUInteger)index;
+- (void)setSubcontrollers:(NSArray*)theSubcontrollers;
+- (NSArray*)subcontrollers;
 - (void)addSubcontroller:(KTViewController *)viewController;
-- (void)insertSubcontroller:(KTViewController *)viewController atIndex:(NSUInteger)index;
-- (void)insertSubcontrollers:(NSArray *)viewControllers atIndexes:(NSIndexSet *)indexes;
-- (void)insertSubcontrollers:(NSArray *)viewControllers atIndex:(NSUInteger)index;
 - (void)removeSubcontroller:(KTViewController *)viewController;
-- (void)removeSubcontrollerAtIndex:(NSUInteger)index;
 - (void)removeAllSubcontrollers;
 
 #pragma mark Layer Controllers
