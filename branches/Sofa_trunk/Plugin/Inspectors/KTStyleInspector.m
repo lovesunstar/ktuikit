@@ -53,10 +53,15 @@
 	BOOL aFoundMultipleValuesForBackgroundColor = NO;
 	BOOL aFoundMultipleValuesForBackgroundGradient = NO;
 	
-//	BOOL aFoundMultipleValuesForDrawsBorders = NO;
-//	BOOL aFoundMultipleValuesForTopBorderColor = NO;
-//	BOOL aFoundMultipleValuesForTopBorderWidth = NO;
-	
+	BOOL aFoundMultipleValuesForDrawsBorders = NO;
+	BOOL aFoundMultipleValuesForTopBorderColor = NO;
+	BOOL aFoundMultipleValuesForTopBorderWidth = NO;
+	BOOL aFoundMultipleValuesForRightBorderColor = NO;
+	BOOL aFoundMultipleValuesForRightBorderWidth = NO;
+	BOOL aFoundMultipleValuesForBottomBorderColor = NO;
+	BOOL aFoundMultipleValuesForBottomBorderWidth = NO;
+	BOOL aFoundMultipleValuesForLeftBorderColor = NO;
+	BOOL aFoundMultipleValuesForLeftBorderWidth = NO;
 	
 	// inspect the first view
 	
@@ -64,14 +69,31 @@
 	KTStyleManager *	aFirstViewStyleManager = [[anInspectedViewList objectAtIndex:0] styleManager];
 	NSColor *			aFirstViewBackgroundColor = [aFirstViewStyleManager backgroundColor];
 	NSGradient *		aFirstViewBackgroundGradient = [aFirstViewStyleManager backgroundGradient];
-	BOOL				aFirstViewDrawsBackground = ((aFirstViewBackgroundColor!=[NSColor clearColor] && aFirstViewBackgroundColor!=nil)
-															|| aFirstViewBackgroundGradient!=nil);
+	BOOL				aFirstViewDrawsBackground = ((		aFirstViewBackgroundColor!=[NSColor clearColor] 
+														&&	aFirstViewBackgroundColor!=nil)
+													|| aFirstViewBackgroundGradient!=nil);
 	BOOL				aFirstViewBackgroundStyle = (aFirstViewBackgroundGradient==nil);
 	
-	int i;
+	// borders
+	CGFloat aFirstViewTopBorderWidth = [aFirstViewStyleManager borderWidthTop];
+	CGFloat aFirstViewRightBorderWidth = [aFirstViewStyleManager borderWidthRight];
+	CGFloat aFirstViewBottomBorderWidth = [aFirstViewStyleManager borderWidthBottom];
+	CGFloat aFirstViewLeftBorderWidth = [aFirstViewStyleManager borderWidthLeft];
+	NSColor * aFirstViewTopBorderColor = [aFirstViewStyleManager borderColorTop];
+	NSColor * aFirstViewRightBorderColor = [aFirstViewStyleManager borderColorRight];
+	NSColor * aFirstViewBottomBorderColor = [aFirstViewStyleManager borderColorBottom];
+	NSColor * aFirstViewLeftBorderColor = [aFirstViewStyleManager borderColorLeft];
+	BOOL	aFirstViewDrawsBorders = (	aFirstViewTopBorderWidth > 0
+									 ||	aFirstViewRightBorderWidth > 0
+									 ||	aFirstViewBottomBorderWidth > 0
+									 ||	aFirstViewLeftBorderWidth > 0);
+	
+	NSInteger i;
 	for(i = 1; i < aViewCount; i++)
 	{
 		KTStyleManager *	aStyleManager = [[anInspectedViewList objectAtIndex:i] styleManager];
+		
+		// background colors
 		NSColor *			aCompareViewBackgroundColor = [aStyleManager backgroundColor];
 		NSGradient *		aCompareViewGradient = [aStyleManager backgroundGradient];
 		BOOL				aCompareViewDrawsBackground = ((aCompareViewBackgroundColor!=[NSColor clearColor] && aCompareViewBackgroundColor!=nil)
@@ -87,25 +109,54 @@
 		if(aFirstViewBackgroundStyle!=aCompareViewBackgroundStyle)
 			aFoundMultipleValuesForBackgroundStyle = YES;
 			
-//		// do we still need to compare?
-//		if(		aFoundMultipleValuesForDrawsBackground
-//			&&	aFoundMultipleValuesForBackgroundColor
-//			&&	aFoundMultipleValuesForBackgroundGradient)
-//			break;
+			
+		// border colors
+		NSColor * aTopBorderColor = [aStyleManager borderColorTop];
+		NSColor * aRightBorderColor = [aStyleManager borderColorRight];
+		NSColor * aBottomBorderColor = [aStyleManager borderColorBottom];
+		NSColor * aLeftBorderColor = [aStyleManager borderColorLeft];
+		
+		// border widths
+		CGFloat aTopBorderWidth = [aStyleManager borderWidthTop];
+		CGFloat aRightBorderWidth = [aStyleManager borderWidthRight];
+		CGFloat aBottomBorderWidth = [aStyleManager borderWidthBottom];
+		CGFloat aLeftBorderWidth = [aStyleManager borderWidthLeft];
+		
+		BOOL	aCompareViewDrawsBorders = (   aTopBorderWidth > 0
+											|| aRightBorderWidth > 0
+											|| aBottomBorderWidth > 0
+											|| aLeftBorderWidth > 0 );
+		if(aFirstViewDrawsBorders != aCompareViewDrawsBorders)
+			aFoundMultipleValuesForDrawsBorders = YES;
+		if(aFirstViewTopBorderWidth != aTopBorderWidth)
+			aFoundMultipleValuesForTopBorderWidth = YES;
+		if([self isColor:aFirstViewTopBorderColor equalTo:aTopBorderColor] == NO)
+			aFoundMultipleValuesForTopBorderColor = YES;
+		if(aFirstViewRightBorderWidth != aRightBorderWidth)
+			aFoundMultipleValuesForRightBorderWidth = YES;
+		if([self isColor:aFirstViewRightBorderColor equalTo:aRightBorderColor] == NO)
+			aFoundMultipleValuesForRightBorderColor = YES;
+		if(aFirstViewBottomBorderWidth != aBottomBorderWidth)
+			aFoundMultipleValuesForBottomBorderWidth = YES;
+		if([self isColor:aFirstViewBottomBorderColor equalTo:aBottomBorderColor] == NO)
+			aFoundMultipleValuesForBottomBorderColor = YES;
+		if(aFirstViewLeftBorderWidth != aLeftBorderWidth)
+			aFoundMultipleValuesForLeftBorderWidth = YES;
+		if([self isColor:aFirstViewLeftBorderColor equalTo:aLeftBorderColor] == NO)
+			aFoundMultipleValuesForLeftBorderColor = YES;
+		
 	}
 	
-	
-			
-					
 	//----------------------------------------------------------------------------------------
 	// Background Colors
 	//----------------------------------------------------------------------------------------									
 	if(aFoundMultipleValuesForDrawsBackground) // some selected views draw background, some do not
 	{
 		// mixed state
+		[oDrawBackgroundCheckBox setAllowsMixedState:YES];
 		[oDrawBackgroundCheckBox setState:NSMixedState];
-	
-		// controls disabled in this case, i guess...
+		
+		// controls disabled in this case
 		[oBackgroundOptionsRadioButton deselectAllCells];
 		[oBackgroundOptionsRadioButton setEnabled:NO];
 		[oBackgroundColorWell setColor:[NSColor clearColor]];
@@ -187,9 +238,67 @@
 	//----------------------------------------------------------------------------------------
 	// Border Colors and Widths
 	//----------------------------------------------------------------------------------------
+	if(aFoundMultipleValuesForDrawsBorders)
+	{
+		// mixed state
+		[oDrawBordersCheckBox setAllowsMixedState:YES];
+		[oDrawBordersCheckBox setState:NSMixedState];
+		
+		// disable all the border controls in this case
+		[self setBorderControlsEnabled:NO];
+	}
+	else
+	{
+		[oDrawBordersCheckBox setAllowsMixedState:NO];
+		[oDrawBordersCheckBox setState:aFirstViewDrawsBorders];	
+		
+		// none of the views draw borders
+		// clear all the values in the color wells/text fields
+		if(aFirstViewDrawsBorders==NO)
+		{
+			[self setBorderControlsEnabled:NO];
+		}
+		else
+		{
+			[self setBorderControlsEnabled:YES];
+			// all the views draw some border, but we can still have mixed states now
+			if(aFoundMultipleValuesForTopBorderWidth)
+				[oTopBorderWidthTextField setStringValue:@"-"];
+			else
+				[oTopBorderWidthTextField setIntValue:aFirstViewTopBorderWidth];
+			if(aFoundMultipleValuesForTopBorderColor)
+				[oTopBorderColorWell setColor:[NSColor clearColor]];
+			else
+				[oTopBorderColorWell setColor:aFirstViewTopBorderColor];
+				
+			if(aFoundMultipleValuesForRightBorderWidth)
+				[oRightBorderWidthTextField setStringValue:@"-"];
+			else
+				[oRightBorderWidthTextField setIntValue:aFirstViewRightBorderWidth];
+			if(aFoundMultipleValuesForRightBorderColor)
+				[oRightBorderColorWell setColor:[NSColor clearColor]];
+			else
+				[oRightBorderColorWell setColor:aFirstViewRightBorderColor];
 	
-	
-	
+			if(aFoundMultipleValuesForBottomBorderWidth)
+				[oBottomBorderWidthTextField setStringValue:@"-"];
+			else
+				[oBottomBorderWidthTextField setIntValue:aFirstViewBottomBorderWidth];
+			if(aFoundMultipleValuesForBottomBorderColor)
+				[oBottomBorderColorWell setColor:[NSColor clearColor]];
+			else
+				[oBottomBorderColorWell setColor:aFirstViewBottomBorderColor];
+				
+			if(aFoundMultipleValuesForLeftBorderWidth)
+				[oLeftBorderWidthTextField setStringValue:@"-"];
+			else
+				[oLeftBorderWidthTextField setIntValue:aFirstViewLeftBorderWidth];
+			if(aFoundMultipleValuesForLeftBorderColor)
+				[oLeftBorderColorWell setColor:[NSColor clearColor]];
+			else
+				[oLeftBorderColorWell setColor:aFirstViewLeftBorderColor];
+		}
+	}
 	[super refresh];
 }
 
@@ -199,6 +308,7 @@
 
 - (IBAction)setDrawsBackground:(id)theSender
 {
+	[oDrawBackgroundCheckBox setAllowsMixedState:NO];
 	if([theSender intValue]==1)
 	{
 		[oBackgroundOptionsRadioButton setEnabled:YES];
@@ -292,14 +402,27 @@
 
 - (void)setBorderControlsEnabled:(BOOL)theBool
 {
+	NSColor * aColorToSet = nil;
+	if(theBool)
+		aColorToSet = [NSColor redColor];
+	else
+		aColorToSet = [NSColor clearColor];
 	[oTopBorderWidthTextField setEnabled:theBool];
+	[oTopBorderWidthTextField setIntValue:0];
 	[oTopBorderColorWell setEnabled:theBool];
+	[oTopBorderColorWell setColor:aColorToSet];
 	[oRightBorderWidthTextField setEnabled:theBool];
+	[oRightBorderWidthTextField setIntValue:0];
 	[oRightBorderColorWell setEnabled:theBool];
+	[oRightBorderColorWell setColor:aColorToSet];
 	[oBottomBorderWidthTextField setEnabled:theBool];
+	[oBottomBorderWidthTextField setIntValue:0];
 	[oBottomBorderColorWell setEnabled:theBool];
+	[oBottomBorderColorWell setColor:aColorToSet];
 	[oLeftBorderWidthTextField setEnabled:theBool];
+	[oLeftBorderWidthTextField setIntValue:0];
 	[oLeftBorderColorWell setEnabled:theBool];
+	[oLeftBorderColorWell setColor:aColorToSet];
 }
 
 - (IBAction)setBorderWidth:(id)theSender

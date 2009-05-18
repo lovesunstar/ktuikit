@@ -8,6 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 #import <KTUIKit/KTViewControl.h>
+#import <InterfaceBuilderKit/InterfaceBuilderKit.h>
+
+typedef enum
+{
+	KTLayoutControlStrutState_Fixed = 0,
+	KTLayoutControlStrutState_Flexible,
+	KTLayoutControlStrutState_Mixed
+	
+}KTLayoutControlStrutState;
 
 @protocol KTLayoutManagerControlDelegate
 - (NSArray*)inspectedViews;	
@@ -15,7 +24,7 @@
 
 @interface KTLayoutManagerControl : KTView 
 {
-	id							wDelegate;
+	IBInspector	*				wDelegate;
 	BOOL						mIsEnabled;
 	
 	NSTextField *				wTopMarginTextField;
@@ -31,18 +40,25 @@
 	NSRect						mCenterHorizontalRect;
 	NSRect						mCenterVerticalRect;
 	
-	CGFloat						mMarginTop;
-	CGFloat						mMarginRight;
-	CGFloat						mMarginBottom;
-	CGFloat						mMarginLeft;
+	NSNumber *					mMarginTop;
+	NSNumber *					mMarginRight;
+	NSNumber *					mMarginBottom;
+	NSNumber *					mMarginLeft;
 	
-	KTHorizontalPositionType	mHorizontalPositionType;
-	KTVerticalPositionType		mVerticalPositionType;
-	KTSizeType					mWidthType;
-	KTSizeType					mHeightType;
+	KTLayoutControlStrutState	mTopStrutState;
+	KTLayoutControlStrutState	mRightStrutState;
+	KTLayoutControlStrutState	mBottomStrutState;
+	KTLayoutControlStrutState	mLeftStrutState;
+	KTLayoutControlStrutState	mHeightStrutState;
+	KTLayoutControlStrutState	mWidthStrutState;
 }
 
-@property (readwrite,assign) id delegate;
-@property (readwrite,assign) BOOL isEnabled;
+@property (nonatomic, readwrite,assign) IBInspector * delegate;
+@property (nonatomic, readwrite,assign) BOOL isEnabled;
+@property (nonatomic, readwrite, retain) NSNumber * marginTop;
+@property (nonatomic, readwrite, retain) NSNumber * marginRight;
+@property (nonatomic, readwrite, retain) NSNumber * marginBottom;
+@property (nonatomic, readwrite, retain) NSNumber * marginLeft;
+- (void)refresh;
 
 @end

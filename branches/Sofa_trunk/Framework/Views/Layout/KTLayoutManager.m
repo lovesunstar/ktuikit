@@ -125,7 +125,23 @@
 //=========================================================== 
 - (NSArray *)keysForCoding
 {
-	return [NSArray arrayWithObjects:kKTLayoutManagerWidthTypeKey,kKTLayoutManagerHeightTypeKey,kKTLayoutManagerHorizontalPositionTypeKey,kKTLayoutManagerVerticalPositionTypeKey,kKTLayoutManagerMarginTopKey,kKTLayoutManagerMarginRightKey,kKTLayoutManagerMarginBottomKey,kKTLayoutManagerMarginLeftKey,kKTLayoutManagerWidthPercentageKey,kKTLayoutManagerHeightPercentageKey,kKTLayoutManagerHorizontalPercentageKey, kKTLayoutManagerVerticalPercentageKey, kKTLayoutManagerMinWidthKey,kKTLayoutManagerMaxWidthKey,kKTLayoutManagerMinHeightKey,kKTLayoutManagerMaxHeightKey,nil];
+	return [NSArray arrayWithObjects:kKTLayoutManagerWidthTypeKey,
+									 kKTLayoutManagerHeightTypeKey,
+									 kKTLayoutManagerHorizontalPositionTypeKey,
+									 kKTLayoutManagerVerticalPositionTypeKey,
+									 kKTLayoutManagerMarginTopKey,
+									 kKTLayoutManagerMarginRightKey,
+									 kKTLayoutManagerMarginBottomKey,
+									 kKTLayoutManagerMarginLeftKey,
+									 kKTLayoutManagerWidthPercentageKey,
+									 kKTLayoutManagerHeightPercentageKey,
+									 kKTLayoutManagerHorizontalPercentageKey, 
+									 kKTLayoutManagerVerticalPercentageKey, 
+									 kKTLayoutManagerMinWidthKey,
+									 kKTLayoutManagerMaxWidthKey,
+									 kKTLayoutManagerMinHeightKey,
+									 kKTLayoutManagerMaxHeightKey,
+									 nil];
 }
 
 //=========================================================== 

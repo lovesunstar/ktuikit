@@ -8,10 +8,16 @@
 
 #import "KTLayoutManagerInspector.h"
 #import "KTLayoutManagerControl.h"
-#import <KTUIKit/KTLayoutManager.h>
-#import <KTUIKit/KTViewLayout.h>
+#import <KTUIKit/KTUIKit.h>
 
 @implementation KTLayoutManagerInspector
+- (void)awakeFromNib
+{
+	[[oRow1View styleManager] setBackgroundColor:[NSColor colorWithCalibratedWhite:.8 alpha:.7]];
+	[[oRow1View styleManager] setBorderWidthTop:1 right:0 bottom:1 left:0];
+	[[oRow1View styleManager] setBorderColorTop:[NSColor colorWithCalibratedWhite:.5 alpha:1]];
+	[[oRow1View styleManager] setBorderColorBottom:[NSColor colorWithCalibratedWhite:.5 alpha:1]];
+}
 
 - (NSString *)viewNibName 
 {
@@ -27,36 +33,116 @@
 - (void)refresh 
 {
 	NSArray *	anInspectedObjectsList = [self inspectedObjects];
-	[oLayoutControl setNeedsDisplay:YES];
 	
-	for(id<KTViewLayout> anInspectedView in anInspectedObjectsList)
+	if([anInspectedObjectsList count] > 0)
 	{
-		id <KTViewLayout>		anInspectedView = [anInspectedObjectsList objectAtIndex:0];
-		NSRect					aViewFrame = [anInspectedView frame];
-								
-		// FRAME
-		[oWidth setFloatValue:aViewFrame.size.width];
-		[oHeight setFloatValue:aViewFrame.size.height];
-		[oXPosition setFloatValue:aViewFrame.origin.x];
-		[oYPosition setFloatValue:aViewFrame.origin.y];
+		id <KTViewLayout> aFirstView = [anInspectedObjectsList objectAtIndex:0];
 		
-		if(		[anInspectedView parent]!=nil
-			&&	[[anInspectedView parent] isKindOfClass:[NSSplitView class]]==NO)
+		CGFloat	aFirstViewXPosition = [aFirstView frame].origin.x;
+		CGFloat	aFirstViewYPosition = [aFirstView frame].origin.y;
+		CGFloat aFirstViewWidth = [aFirstView frame].size.width;
+		CGFloat aFirstViewHeight = [aFirstView frame].size.height;
+		
+		for(id<KTViewLayout> anInspectedView in anInspectedObjectsList)
 		{
-			[oWidth setEnabled:YES];
-			[oHeight setEnabled:YES];
-			[oXPosition setEnabled:YES];
-			[oYPosition setEnabled:YES];
-			[oLayoutControl setIsEnabled:YES];
+			NSRect aViewFrame = [anInspectedView frame];
+			
+			CGFloat	aViewXPosition = aViewFrame.origin.x;
+			CGFloat	aViewYPosition = aViewFrame.origin.y;
+			CGFloat aViewWidth = aViewFrame.size.width;
+			CGFloat aViewHeight = aViewFrame.size.height;	
+		
+			if(aViewWidth == aFirstViewWidth)
+			{
+				[oWidth setIntValue:aViewFrame.size.width];
+				if(aViewFrame.size.width <= 0)
+					[oWidth setTextColor:[NSColor redColor]];
+				else
+					[oWidth setTextColor:[NSColor blackColor]];
+			}
+			else
+			{
+				[oWidth setStringValue:@"---"];
+			}
+			
+			if(aViewHeight == aFirstViewHeight)
+			{
+				[oHeight setIntValue:aViewFrame.size.height];
+				if(aViewFrame.size.height <= 0)
+					[oHeight setTextColor:[NSColor redColor]];
+				else
+					[oHeight setTextColor:[NSColor blackColor]];
+			}
+			else
+			{
+				[oHeight setStringValue:@"---"];
+			}	
+			
+			if(aViewXPosition == aFirstViewXPosition)
+			{
+				[oXPosition setIntValue:aViewFrame.origin.x];	
+				if(		aViewFrame.origin.x < 0
+					||	aViewFrame.origin.x > NSMaxX([[anInspectedView parent]frame]))
+					[oXPosition setTextColor:[NSColor redColor]];
+				else
+					[oXPosition setTextColor:[NSColor blackColor]];
+			}
+			else
+			{
+				[oXPosition setStringValue:@"---"];
+			}	
+			
+			if(aViewYPosition == aFirstViewYPosition)
+			{
+				[oYPosition setIntValue:aViewFrame.origin.y];
+				if(		aViewFrame.origin.y < 0
+					||	aViewFrame.origin.y > NSMaxY([[anInspectedView parent]frame]))
+					[oYPosition setTextColor:[NSColor redColor]];
+				else
+					[oYPosition setTextColor:[NSColor blackColor]];	
+			}
+			else
+			{
+				[oYPosition setStringValue:@"---"];
+			}		
+			
+		
+						
+			if(		[anInspectedView parent]!=nil
+				&&	[[anInspectedView parent] isKindOfClass:[NSSplitView class]]==NO)
+			{
+				[oWidth setEnabled:YES];
+				[oHeight setEnabled:YES];
+				[oXPosition setEnabled:YES];
+				[oYPosition setEnabled:YES];
+				[oLayoutControl setIsEnabled:YES];
+				[oFillWidthButton setEnabled:YES];
+				[oFillHeightButton setEnabled:YES];
+				[oCenterVerticallyButton setEnabled:YES];
+				[oCenterHorizontallyButton setEnabled:YES];
+				[oFlushTopButton setEnabled:YES];
+				[oFlushRightButton setEnabled:YES];
+				[oFlushBottomButton setEnabled:YES];
+				[oFlushLeftButton setEnabled:YES];
+			}
+			else
+			{
+				[oWidth setEnabled:NO];
+				[oHeight setEnabled:NO];
+				[oXPosition setEnabled:NO];
+				[oYPosition setEnabled:NO];
+				[oLayoutControl setIsEnabled:NO];
+				[oFillWidthButton setEnabled:NO];
+				[oFillHeightButton setEnabled:NO];
+				[oCenterVerticallyButton setEnabled:NO];
+				[oCenterHorizontallyButton setEnabled:NO];
+				[oFlushTopButton setEnabled:NO];
+				[oFlushRightButton setEnabled:NO];
+				[oFlushBottomButton setEnabled:NO];
+				[oFlushLeftButton setEnabled:NO];
+			}
 		}
-		else
-		{
-			[oWidth setEnabled:NO];
-			[oHeight setEnabled:NO];
-			[oXPosition setEnabled:NO];
-			[oYPosition setEnabled:NO];
-			[oLayoutControl setIsEnabled:NO];
-		}
+		[oLayoutControl refresh];
 	}
 	[super refresh];
 }
@@ -138,26 +224,79 @@
 	}
 }
 
-- (IBAction)setKeepCenteredHorizontally:(id)theSender
+- (IBAction)centerHorizontally:(id)theSender
 {
 	for(id<KTViewLayout> anInspectedView in [self inspectedObjects])
 	{
-		[[anInspectedView viewLayoutManager] setHorizontalPositionType:KTHorizontalPositionKeepCentered];
-		[[anInspectedView viewLayoutManager] setWidthType:KTSizeAbsolute];
-		[[[anInspectedView parent] viewLayoutManager] refreshLayout];
+		NSRect aParentFrame = [[anInspectedView parent] frame];
+		NSRect aViewFrame = [anInspectedView frame];
+		
+		aViewFrame.origin.x = NSMidX(aParentFrame) - NSWidth(aViewFrame)*.5;
+		[anInspectedView setFrame:aViewFrame];
 	}
+	[self refresh];
 }
 
-- (IBAction)setKeepCenteredVertically:(id)theSender
+- (IBAction)centerVertically:(id)theSender
 {
 	for(id<KTViewLayout> anInspectedView in [self inspectedObjects])
 	{
-		[[anInspectedView viewLayoutManager] setVerticalPositionType:KTHorizontalPositionKeepCentered];
-		[[anInspectedView viewLayoutManager] setHeightType:KTSizeAbsolute];
-		[[[anInspectedView parent] viewLayoutManager] refreshLayout];
+		NSRect aParentFrame = [[anInspectedView parent] frame];
+		NSRect aViewFrame = [anInspectedView frame];
+		
+		aViewFrame.origin.y = NSMidY(aParentFrame) - NSHeight(aViewFrame)*.5;
+		[anInspectedView setFrame:aViewFrame];
 	}
+	[self refresh];
 }
 
+- (IBAction)flushTop:(id)theSender
+{
+	for(id<KTViewLayout> anInspectedView in [self inspectedObjects])
+	{
+		NSRect aParentFrame = [[anInspectedView parent] frame];
+		NSRect aViewFrame = [anInspectedView frame];
+		
+		aViewFrame.origin.y = NSMaxY(aParentFrame) - NSHeight(aViewFrame);
+		[anInspectedView setFrame:aViewFrame];
+	}
+	[self refresh];
+}
+
+- (IBAction)flushBottom:(id)theSender
+{
+	for(id<KTViewLayout> anInspectedView in [self inspectedObjects])
+	{
+		NSRect aViewFrame = [anInspectedView frame];
+		aViewFrame.origin.y = 0;
+		[anInspectedView setFrame:aViewFrame];
+	}
+	[self refresh];
+}
+
+- (IBAction)flushLeft:(id)theSender
+{
+	for(id<KTViewLayout> anInspectedView in [self inspectedObjects])
+	{
+		NSRect aViewFrame = [anInspectedView frame];
+		aViewFrame.origin.x = 0;
+		[anInspectedView setFrame:aViewFrame];
+	}
+	[self refresh];
+}
+
+- (IBAction)flushRight:(id)theSender
+{
+	for(id<KTViewLayout> anInspectedView in [self inspectedObjects])
+	{
+		NSRect aParentFrame = [[anInspectedView parent] frame];
+		NSRect aViewFrame = [anInspectedView frame];
+		
+		aViewFrame.origin.x = NSMaxX(aParentFrame) - NSWidth(aViewFrame);
+		[anInspectedView setFrame:aViewFrame];
+	}
+	[self refresh];
+}
 
 - (BOOL)control:(NSControl *)theControl textView:(NSTextView *)theTextView  doCommandBySelector:(SEL)theCommandSelector
 {

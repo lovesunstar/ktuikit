@@ -10,16 +10,15 @@
 #import "KTView.h"
 
 @class KTSplitView;
-@class KTAnimator;
 
 @interface KTSplitViewDivider : KTView 
 {
 	KTSplitView *		wSplitView;
 	BOOL				mIsInDrag;
 	NSViewAnimation *	mAnimator;
-	KTAnimator *		mKTAnimator;
-	
+	NSTrackingArea *	mTrackingArea;
 }
+@property (nonatomic, readwrite, assign) KTSplitView * splitView;
 - (id)initWithSplitView:(KTSplitView*)theSplitView;
 - (void)animateDividerToPosition:(float)thePosition time:(float)theTimeInSeconds;
 @end

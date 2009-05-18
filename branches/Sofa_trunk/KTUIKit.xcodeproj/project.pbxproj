@@ -32,6 +32,8 @@
 		4C14A33B0EC8606600E94D88 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C14A3300EC85FC200E94D88 /* Quartz.framework */; };
 		4C14A38A0EC860EC00E94D88 /* KTImageKitBrowserViewIntegration.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C14A3890EC860EC00E94D88 /* KTImageKitBrowserViewIntegration.m */; };
 		4C180D880ECF699A00FB2123 /* KTScrollView.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C180D870ECF699A00FB2123 /* KTScrollView.tif */; };
+		4C213CBA0FBB1CF90006362D /* KTSplitViewIntegration.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C213CB90FBB1CF90006362D /* KTSplitViewIntegration.m */; };
+		4C213E240FBC1B130006362D /* KTSplitViewDividerIntegration.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C213E230FBC1B130006362D /* KTSplitViewDividerIntegration.m */; };
 		4C2998100F4EC52A000B1A8E /* KTOpenGLControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C29980E0F4EC52A000B1A8E /* KTOpenGLControl.h */; };
 		4C2998110F4EC52A000B1A8E /* KTOpenGLControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C29980F0F4EC52A000B1A8E /* KTOpenGLControl.m */; };
 		4C2998140F4EC770000B1A8E /* KTOpenGLButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2998120F4EC770000B1A8E /* KTOpenGLButton.h */; };
@@ -123,9 +125,12 @@
 		4CCA96180EBC4FD200CF9A03 /* KTButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCA96160EBC4FD200CF9A03 /* KTButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CCA96190EBC4FD200CF9A03 /* KTButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCA96170EBC4FD200CF9A03 /* KTButton.m */; };
 		4CCA961C0EBC506C00CF9A03 /* KTButtonIntegration.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCA961B0EBC506C00CF9A03 /* KTButtonIntegration.m */; };
+		4CCA973E0FC0269D001B822A /* KTScroller.classdescription in Resources */ = {isa = PBXBuildFile; fileRef = 4CCA973D0FC0269D001B822A /* KTScroller.classdescription */; };
 		4CD4637E0ED03594009725B9 /* KTWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD4637C0ED03594009725B9 /* KTWindow.h */; settings = {ATTRIBUTES = (); }; };
 		4CD4637F0ED03594009725B9 /* KTWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD4637D0ED03594009725B9 /* KTWindow.m */; };
 		4CD463900ED04121009725B9 /* KTLayoutManagerControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD4638F0ED04121009725B9 /* KTLayoutManagerControl.m */; };
+		4CD54D4F0FBD6876003030FE /* KTSplitViewInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD54D4E0FBD6876003030FE /* KTSplitViewInspector.m */; };
+		4CD54D570FBD68E0003030FE /* KTSplitViewInspector.nib in Resources */ = {isa = PBXBuildFile; fileRef = 4CD54D550FBD68E0003030FE /* KTSplitViewInspector.nib */; };
 		4CD8FDDD0EBCAAF100B4DA52 /* KTViewInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD8FDDC0EBCAAF100B4DA52 /* KTViewInspector.m */; };
 		4CD9605A0F5830CF007D7EAA /* KTLayerController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD960580F5830CF007D7EAA /* KTLayerController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD9605B0F5830CF007D7EAA /* KTLayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD960590F5830CF007D7EAA /* KTLayerController.m */; };
@@ -167,7 +172,6 @@
 		AB06FAC90EE973A5008A85C9 /* KTWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9C5D910DE9F43400AE6913 /* KTWindowController.m */; };
 		AB68052C0EE41E090082FC43 /* KTUIKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 53DF68FD067E5B5A0090B5B0 /* KTUIKit.framework */; };
 		AB862A490F9F70490055EE4A /* KTScroller.h in Headers */ = {isa = PBXBuildFile; fileRef = ABEF1D490F9F684600C5915E /* KTScroller.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		ABEF1D4D0F9F686100C5915E /* KTScroller.classdescription in Resources */ = {isa = PBXBuildFile; fileRef = ABEF1D4A0F9F685300C5915E /* KTScroller.classdescription */; };
 		ABEF1D4E0F9F686900C5915E /* KTScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = ABEF1D480F9F684600C5915E /* KTScroller.m */; };
 		ABEF1D6D0F9F688900C5915E /* KTScrollerIntegration.m in Sources */ = {isa = PBXBuildFile; fileRef = ABEF1D6C0F9F688900C5915E /* KTScrollerIntegration.m */; };
 		ABEF1D800F9F68F900C5915E /* KTLayoutDynamicImplementation.m in Sources */ = {isa = PBXBuildFile; fileRef = ABEF1D7E0F9F68F900C5915E /* KTLayoutDynamicImplementation.m */; };
@@ -253,6 +257,9 @@
 		4C14A3870EC860BA00E94D88 /* KTImageKitBrowserView.classdescription */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = KTImageKitBrowserView.classdescription; path = "Plugin/Class Descriptions/KTImageKitBrowserView.classdescription"; sourceTree = "<group>"; };
 		4C14A3890EC860EC00E94D88 /* KTImageKitBrowserViewIntegration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTImageKitBrowserViewIntegration.m; sourceTree = "<group>"; };
 		4C180D870ECF699A00FB2123 /* KTScrollView.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = KTScrollView.tif; sourceTree = "<group>"; };
+		4C213CB80FBB1CD60006362D /* KTSplitView.classdescription */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = KTSplitView.classdescription; path = "Plugin/Class Descriptions/KTSplitView.classdescription"; sourceTree = "<group>"; };
+		4C213CB90FBB1CF90006362D /* KTSplitViewIntegration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTSplitViewIntegration.m; sourceTree = "<group>"; };
+		4C213E230FBC1B130006362D /* KTSplitViewDividerIntegration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTSplitViewDividerIntegration.m; sourceTree = "<group>"; };
 		4C29980E0F4EC52A000B1A8E /* KTOpenGLControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTOpenGLControl.h; sourceTree = "<group>"; };
 		4C29980F0F4EC52A000B1A8E /* KTOpenGLControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTOpenGLControl.m; sourceTree = "<group>"; };
 		4C2998120F4EC770000B1A8E /* KTOpenGLButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTOpenGLButton.h; sourceTree = "<group>"; };
@@ -366,11 +373,15 @@
 		4CCA96170EBC4FD200CF9A03 /* KTButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTButton.m; sourceTree = "<group>"; };
 		4CCA961B0EBC506C00CF9A03 /* KTButtonIntegration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTButtonIntegration.m; sourceTree = "<group>"; };
 		4CCA961D0EBC511B00CF9A03 /* KTButton.classdescription */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = KTButton.classdescription; path = "Plugin/Class Descriptions/KTButton.classdescription"; sourceTree = "<group>"; };
+		4CCA973D0FC0269D001B822A /* KTScroller.classdescription */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = KTScroller.classdescription; path = "Plugin/Class Descriptions/KTScroller.classdescription"; sourceTree = "<group>"; };
 		4CCF2AB50ECF615E005E3B8F /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
 		4CD4637C0ED03594009725B9 /* KTWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWindow.h; sourceTree = "<group>"; };
 		4CD4637D0ED03594009725B9 /* KTWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTWindow.m; sourceTree = "<group>"; };
 		4CD4638E0ED04121009725B9 /* KTLayoutManagerControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTLayoutManagerControl.h; sourceTree = "<group>"; };
 		4CD4638F0ED04121009725B9 /* KTLayoutManagerControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTLayoutManagerControl.m; sourceTree = "<group>"; };
+		4CD54D4D0FBD6876003030FE /* KTSplitViewInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSplitViewInspector.h; sourceTree = "<group>"; };
+		4CD54D4E0FBD6876003030FE /* KTSplitViewInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTSplitViewInspector.m; sourceTree = "<group>"; };
+		4CD54D560FBD68E0003030FE /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = Plugin/Resources/English.lproj/KTSplitViewInspector.nib; sourceTree = "<group>"; };
 		4CD8FDDB0EBCAAF100B4DA52 /* KTViewInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTViewInspector.h; sourceTree = "<group>"; };
 		4CD8FDDC0EBCAAF100B4DA52 /* KTViewInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTViewInspector.m; sourceTree = "<group>"; };
 		4CD960580F5830CF007D7EAA /* KTLayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KTLayerController.h; path = ../Views/OpenGL/KTLayerController.h; sourceTree = "<group>"; };
@@ -395,7 +406,6 @@
 		8D1AC9740486D14A00FE50C9 /* KTUIKit.ibplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KTUIKit.ibplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABEF1D480F9F684600C5915E /* KTScroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KTScroller.m; path = NSViewSubclasses/KTScroller.m; sourceTree = "<group>"; };
 		ABEF1D490F9F684600C5915E /* KTScroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KTScroller.h; path = NSViewSubclasses/KTScroller.h; sourceTree = "<group>"; };
-		ABEF1D4A0F9F685300C5915E /* KTScroller.classdescription */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = KTScroller.classdescription; sourceTree = "<group>"; };
 		ABEF1D6C0F9F688900C5915E /* KTScrollerIntegration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTScrollerIntegration.m; sourceTree = "<group>"; };
 		ABEF1D7E0F9F68F900C5915E /* KTLayoutDynamicImplementation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KTLayoutDynamicImplementation.m; path = ../../../KTLayoutDynamicImplementation.m; sourceTree = "<group>"; };
 		ABEF1D7F0F9F68F900C5915E /* KTLayoutDynamicImplementation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KTLayoutDynamicImplementation.h; path = ../../../KTLayoutDynamicImplementation.h; sourceTree = "<group>"; };
@@ -527,6 +537,8 @@
 				4CC1F41C0DE9418F0035CE00 /* KTLayoutManagerInspector.m */,
 				4CD4638E0ED04121009725B9 /* KTLayoutManagerControl.h */,
 				4CD4638F0ED04121009725B9 /* KTLayoutManagerControl.m */,
+				4CD54D4D0FBD6876003030FE /* KTSplitViewInspector.h */,
+				4CD54D4E0FBD6876003030FE /* KTSplitViewInspector.m */,
 			);
 			name = Inspectors;
 			path = Plugin/Inspectors;
@@ -547,6 +559,7 @@
 		4C3EAA3C0ECF5843004492C4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4CD54D550FBD68E0003030FE /* KTSplitViewInspector.nib */,
 				4C3EAA3D0ECF5843004492C4 /* KTLayoutManagerInspector.nib */,
 				4C3EAA3F0ECF5843004492C4 /* KTStyleInspector.nib */,
 				4C3EAA410ECF5843004492C4 /* KTUIKitLibrary.nib */,
@@ -740,6 +753,8 @@
 				4C14A3890EC860EC00E94D88 /* KTImageKitBrowserViewIntegration.m */,
 				4C9A877C0EBEF48700F8AA48 /* KTGradientPickerIntegration.m */,
 				4CB23FE70ED9A40300486F39 /* KTColorWellIntegration.m */,
+				4C213CB90FBB1CF90006362D /* KTSplitViewIntegration.m */,
+				4C213E230FBC1B130006362D /* KTSplitViewDividerIntegration.m */,
 			);
 			name = Integration;
 			path = Plugin/Integration;
@@ -822,7 +837,6 @@
 				4C9A801F0EBDC94C00F8AA48 /* KTSearchField.classdescription */,
 				4C9A807F0EBDD08C00F8AA48 /* KTSecureTextField.classdescription */,
 				4CD98F9D0EBC7C2A008BD0EA /* KTScrollView.classdescription */,
-				ABEF1D4A0F9F685300C5915E /* KTScroller.classdescription */,
 				4C9A7E600EBDB74500F8AA48 /* KTSegmentedControl.classdescription */,
 				4C9A7E970EBDB83800F8AA48 /* KTSlider.classdescription */,
 				4C9A7ED20EBDBA2500F8AA48 /* KTPopUpButton.classdescription */,
@@ -837,6 +851,8 @@
 				4CE2FCCF0EC8BCF300002A64 /* KTViewControl.classdescription */,
 				4C9A87580EBEF1ED00F8AA48 /* KTGradientPicker.classdescription */,
 				4CB23FE60ED9A3DD00486F39 /* KTColorWell.classdescription */,
+				4CCA973D0FC0269D001B822A /* KTScroller.classdescription */,
+				4C213CB80FBB1CD60006362D /* KTSplitView.classdescription */,
 			);
 			name = "Class Descriptions";
 			sourceTree = "<group>";
@@ -1038,7 +1054,8 @@
 				4C180D880ECF699A00FB2123 /* KTScrollView.tif in Resources */,
 				4C7AE9FA0ECF9DCE00F79A75 /* TextView.tif in Resources */,
 				4C7AEA080ECFA3F500F79A75 /* WebKit.png in Resources */,
-				ABEF1D4D0F9F686100C5915E /* KTScroller.classdescription in Resources */,
+				4CD54D570FBD68E0003030FE /* KTSplitViewInspector.nib in Resources */,
+				4CCA973E0FC0269D001B822A /* KTScroller.classdescription in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1127,6 +1144,9 @@
 				4CD463900ED04121009725B9 /* KTLayoutManagerControl.m in Sources */,
 				4CB23FE80ED9A40300486F39 /* KTColorWellIntegration.m in Sources */,
 				ABEF1D6D0F9F688900C5915E /* KTScrollerIntegration.m in Sources */,
+				4C213CBA0FBB1CF90006362D /* KTSplitViewIntegration.m in Sources */,
+				4C213E240FBC1B130006362D /* KTSplitViewDividerIntegration.m in Sources */,
+				4CD54D4F0FBD6876003030FE /* KTSplitViewInspector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1193,6 +1213,15 @@
 			name = KTViewInspector.nib;
 			sourceTree = "<group>";
 		};
+		4CD54D550FBD68E0003030FE /* KTSplitViewInspector.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CD54D560FBD68E0003030FE /* English */,
+			);
+			name = KTSplitViewInspector.nib;
+			path = ../..;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -1208,7 +1237,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "TestApp-Info.plist";
+				INFOPLIST_FILE = "Resources/TestApp-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -1232,7 +1261,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "TestApp-Info.plist";
+				INFOPLIST_FILE = "Resources/TestApp-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",

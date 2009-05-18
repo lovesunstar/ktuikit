@@ -13,10 +13,11 @@
 
 @interface NSObject (KTSplitViewDividerSplitView)
 - (void)dividerAnimationDidEnd;
+
 @end
 
-@interface KTSplitViewDivider ()
-@property (nonatomic, readwrite, assign) KTSplitView * splitView;
+@interface KTSplitViewDivider (Private)
+- (void)_resetTrackingArea;
 @end
 
 @implementation KTSplitViewDivider
@@ -26,13 +27,24 @@
 //===========================================================
 - (id)initWithSplitView:(KTSplitView*)theSplitView
 {
-	if(self = [super initWithFrame:NSZeroRect])
+	if(self = [self initWithFrame:NSZeroRect])
 	{
 		wSplitView = theSplitView;
+	}
+	return self;
+}
+
+
+//=========================================================== 
+// - initWithFrame
+//===========================================================
+- (id)initWithFrame:(NSRect)theFrame
+{
+	if(self = [super initWithFrame:theFrame])
+	{
 		mAnimator = nil;
-		[[self styleManager] setBackgroundColor:[NSColor redColor]];
-		mKTAnimator = [[KTAnimator alloc] init];
-		[mKTAnimator setDelegate:self];
+		[self _resetTrackingArea];
+
 	}
 	return self;
 }
@@ -43,8 +55,25 @@
 - (void)dealloc
 {
 	[mAnimator release];
-	[mKTAnimator release];
+	[mTrackingArea release];
 	[super dealloc];
+}
+
+
+//=========================================================== 
+// - _resetTrackingArea
+//===========================================================
+- (void)_resetTrackingArea
+{
+	if(mTrackingArea)
+	{
+		[self removeTrackingArea:mTrackingArea];
+		[mTrackingArea release];
+	}
+	mTrackingArea = [[NSTrackingArea alloc] initWithRect:[self frame] 
+												options:(NSTrackingActiveInActiveApp | NSTrackingCursorUpdate | NSTrackingAssumeInside) 
+												owner:self userInfo:nil];
+	[self addTrackingArea:mTrackingArea];	
 }
 
 //=========================================================== 
@@ -61,14 +90,6 @@
 			aPositionToSet.x = thePosition;
 		NSRect aNewFrame = [self frame];
 		aNewFrame.origin = NSPointFromCGPoint(aPositionToSet);
-		
-//		NSMutableDictionary *	aFrameAnimation = [[[NSMutableDictionary alloc] init] autorelease];
-//		[aFrameAnimation setValue:self forKey:@"object"];
-//		[aFrameAnimation setValue:@"frame" forKey:@"keyPath"];
-//		[aFrameAnimation setValue:[NSValue valueWithRect:[self frame]] forKey:@"startValue"];
-//		[aFrameAnimation setValue:[NSValue valueWithRect:aNewFrame]forKey:@"endValue"];
-//		[aFrameAnimation setValue:[NSNumber numberWithFloat:theTimeInSeconds] forKey:@"duration"];
-//		[mKTAnimator animateObject:aFrameAnimation];
 											
 		NSArray * anAnimationArray = [NSArray arrayWithObject:[NSDictionary dictionaryWithObjectsAndKeys:self, NSViewAnimationTargetKey,
 																										 [NSValue valueWithRect:[self frame]], NSViewAnimationStartFrameKey,
@@ -111,7 +132,7 @@
 //===========================================================
 - (void)setFrame:(NSRect)theFrame
 {	
-	
+	NSLog(@"%@ setFrame:", self);
 //	if([[self splitView] dividerOrientation] == KTSplitViewDividerOrientation_Vertical)
 //	{
 //		// clip min & max positions
@@ -154,23 +175,23 @@
 //				[[NSCursor resizeDownCursor] set];
 //		}
 //	}
-	
+	[self _resetTrackingArea];
 	[super setFrame:theFrame];
 	[[self splitView] layoutViews];
 }
 
 
 
-//
-//
-////=========================================================== 
-//// - mouseDown
-////===========================================================
-//- (void)mouseDown:(NSEvent*)theEvent
-//{
-//	if([[self splitView] adjustable] == NO)
-//		return;
-//}
+
+//=========================================================== 
+// - mouseDown
+//===========================================================
+- (void)mouseDown:(NSEvent*)theEvent
+{
+	NSLog(@"mouse down in split view divider");
+	if([[self splitView] adjustable] == NO)
+		return;
+}
 
 
 //=========================================================== 
@@ -180,6 +201,8 @@
 {
 	if([[self splitView] adjustable] == NO)
 		return;
+		
+	NSLog(@"mouse dragged in divider");	
 		
 	NSPoint	aMousePoint = [[self splitView] convertPoint:[theEvent locationInWindow] fromView:nil];
 	NSRect	aSplitViewBounds = [[self splitView] bounds];
@@ -213,6 +236,7 @@
 			
 		}
 	}
+	[[self splitView] layoutViews];
 	mIsInDrag = YES;
 }
 
@@ -221,11 +245,29 @@
 //===========================================================
 - (void)mouseUp:(NSEvent*)theEvent
 {
+	NSLog(@"%@ mouseUP", self);
 	[[NSCursor arrowCursor] set];
 	mIsInDrag = NO;
 	[[self splitView] resetResizeInformation];
 }
 
+- (void)mouseEntered:(NSEvent*)theEvent
+{
+	NSLog(@"%@ mouseEntered", self);
+}
 
+- (void)mouseExited:(NSEvent*)theEvent
+{
+	NSLog(@"%@ mouseExited", self);
+}
 
+- (void)mouseMoved:(NSEvent*)theEvent
+{
+	NSLog(@"%@ mouseMoved", self);
+}
+
+- (void)cursorUpdate:(NSEvent *)theEvent
+{
+	NSLog(@"%@ cursorUpdate", self);
+}
 @end

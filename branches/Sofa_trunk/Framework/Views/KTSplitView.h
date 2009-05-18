@@ -53,8 +53,8 @@ typedef enum
 	id									wDelegate;
 	
 	KTSplitViewDivider *				mDivider;
-	NSView<KTView>*						mFirstView;
-	NSView<KTView>*						mSecondView;
+	KTView *							mFirstView;
+	KTView *							mSecondView;
 	
 	KTSplitViewDividerOrientation		mDividerOrientation;
 	KTSplitViewResizeBehavior			mResizeBehavior;
@@ -65,9 +65,6 @@ typedef enum
 	CGFloat								mDividerPositionToSet;
 	BOOL								mResetResizeInformation;
 	CGFloat								mResizeInformation;
-	
-	
-	
 }
 
 @property (readwrite, assign) id delegate;
@@ -77,14 +74,19 @@ typedef enum
 @property (readwrite, assign) CGFloat dividerThickness;
 
 - (id)initWithFrame:(NSRect)theFrame dividerOrientation:(KTSplitViewDividerOrientation)theDividerOrientation;
+
 - (void)addViewToFirstView:(NSView<KTView>*)theView;
 - (void)addViewToSecondView:(NSView<KTView>*)theView;
 - (void)addViewToFirstView:(NSView<KTView>*)theFirstView secondView:(NSView<KTView>*)theSecondView;
+
 - (void)setDividerPosition:(float)thePosition fromView:(KTSplitViewFocusedViewFlag)theView;
 - (void)setDividerPosition:(float)thePosition fromView:(KTSplitViewFocusedViewFlag)theView animate:(BOOL)theBool time:(float)theTimeInSeconds;
 - (float)dividerPositionFromView:(KTSplitViewFocusedViewFlag)theFocusedViewFlag;
+
 - (void)setDividerFillColor:(NSColor*)theColor;
 - (void)setDividerBackgroundGradient:(NSGradient*)theGradient;
 - (void)setDividerStrokeColor:(NSColor*)theColor;
 - (void)setDividerFirstStrokeColor:(NSColor*)theFirstColor secondColor:(NSColor*)theSecondColor;
+
+- (void)setDivider:(KTSplitViewDivider*)theDivider;
 @end

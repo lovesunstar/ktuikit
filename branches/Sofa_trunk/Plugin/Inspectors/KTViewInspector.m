@@ -11,7 +11,8 @@
 
 @implementation KTViewInspector
 
-- (NSString *)viewNibName {
+- (NSString *)viewNibName 
+{
     return @"KTViewInspector";
 }
 
@@ -22,7 +23,6 @@
 
 - (void)refresh 
 {
-
 	NSArray *	anInspectedObjectsList = [self inspectedObjects];
 	KTView *    anInspectedView = [anInspectedObjectsList objectAtIndex:0];
 	[oLabelTextField setStringValue:[anInspectedView label]];

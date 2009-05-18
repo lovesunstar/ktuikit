@@ -138,7 +138,17 @@
 //=========================================================== 
 - (NSArray *)keysForCoding
 {
-	return [NSArray arrayWithObjects:kKTStyleManagerBackgroundColorKey,kKTStyleManagerBackgroundGradientKey, kKTStyleManagerBackgroundGradientAngleKey, kKTStyleManagerBorderWidthTopKey, kKTStyleManagerBorderWidthRightKey, kKTStyleManagerBorderWidthBottomKey, kKTStyleManagerBorderWidthLeftKey, kKTStyleManagerBorderColorTopKey, kKTStyleManagerBorderColorRightKey, kKTStyleManagerBorderColorBottomKey, kKTStyleManagerBorderColorLeftKey, nil];
+	return [NSArray arrayWithObjects:kKTStyleManagerBackgroundColorKey,
+									 kKTStyleManagerBackgroundGradientKey, 
+									 kKTStyleManagerBackgroundGradientAngleKey, 
+									 kKTStyleManagerBorderWidthTopKey, 
+									 kKTStyleManagerBorderWidthRightKey, 
+									 kKTStyleManagerBorderWidthBottomKey, 
+									 kKTStyleManagerBorderWidthLeftKey, 
+									 kKTStyleManagerBorderColorTopKey, 
+									 kKTStyleManagerBorderColorRightKey, 
+									 kKTStyleManagerBorderColorBottomKey, 
+									 kKTStyleManagerBorderColorLeftKey, nil];
 }
 
 //=========================================================== 
@@ -242,7 +252,7 @@
 	{
 		CGContextBeginPath(theContext);
 		CGContextMoveToPoint(theContext, aStrokePoint.x,  aStrokePoint.y);
-		aStrokePoint.y-=theRect.size.height;  
+		aStrokePoint.y-=theRect.size.height - 1;  
 		CGContextAddLineToPoint(theContext, aStrokePoint.x,  aStrokePoint.y);
 		CGContextSetLineWidth(theContext, mBorderWidthRight);
 		[[mBorderColorRight colorUsingColorSpaceName:NSCalibratedRGBColorSpace] getRed:&r green:&g blue:&b alpha:&a];

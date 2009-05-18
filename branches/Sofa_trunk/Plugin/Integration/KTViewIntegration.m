@@ -14,6 +14,9 @@
 // #import "KTViewInspector.h"
  #import "KTStyleInspector.h"
  #import "KTGradientPicker.h"
+ #import "KTSplitView.h"
+ #import "KTSplitViewDivider.h"
+ 
 @implementation KTView ( KTViewIntegration )
 //=========================================================== 
 // - ibPopulateKeyPaths:
@@ -32,9 +35,13 @@
 - (void)ibPopulateAttributeInspectorClasses:(NSMutableArray *)classes 
 {
     [super ibPopulateAttributeInspectorClasses:classes];
-	if([self isKindOfClass:[KTGradientPicker class]]==NO)
+	// style inspector
+	if(		[self isKindOfClass:[KTGradientPicker class]] == NO
+		&&	[self isKindOfClass:[KTSplitView class]] == NO)
 		[classes addObject:[KTStyleInspector class]];
-    [classes addObject:[KTLayoutManagerInspector class]];
+	// layout inspector	
+	if([self isKindOfClass:[KTSplitViewDivider class]] == NO)
+		[classes addObject:[KTLayoutManagerInspector class]];
 }
 
 //=========================================================== 
@@ -42,11 +49,51 @@
 //=========================================================== 
 - (void)drawInContext:(CGContextRef)theContext
 {
-	if(		[[self styleManager] backgroundColor] == [NSColor clearColor] 
+	NSWindow * aWindow = [self window];
+	if(self == [aWindow contentView]
+		&& (	[[self styleManager] backgroundColor] == [NSColor clearColor] 
+			&&	[[self styleManager] backgroundGradient] == nil))
+	{
+		NSRect aViewBounds = [self bounds];
+		[[NSColor colorWithCalibratedWhite:.9 alpha:1] set];
+		NSRectFill(aViewBounds);
+//		CGFloat aCheckerSize = 50;
+//		NSInteger aNumCols = ceil(aViewBounds.size.width / aCheckerSize);
+//		NSInteger aNumRows = ceil(aViewBounds.size.height / aCheckerSize);
+//		NSInteger i, j;
+//		NSPoint aMovingOrigin = NSMakePoint(0, 0);//aViewBounds.size.height-aCheckerSize);
+//		for(i = 0; i < aNumCols; i++)
+//		{
+//			for(j = 0; j < aNumRows; j++)
+//			{
+//				NSColor * aCheckerColor = nil;
+//				if(j % 2 == 0 && i % 2 == 0)
+//					aCheckerColor = [NSColor colorWithCalibratedWhite:.95 alpha:1];
+//				else if( j % 2 == 1 && i % 2 == 1)
+//					aCheckerColor = [NSColor colorWithCalibratedWhite:.95 alpha:1];
+//				else
+//					aCheckerColor = [NSColor colorWithCalibratedWhite:1 alpha:1];
+//				
+//				NSRect aCheckerRect;
+//				aCheckerRect.origin = aMovingOrigin;
+//				aCheckerRect.size = NSMakeSize(aCheckerSize, aCheckerSize);
+//				[aCheckerColor set];
+//				NSRectFill(aCheckerRect);
+//				aMovingOrigin.y+=aCheckerSize;
+//			}
+//			aMovingOrigin.y = 0;//aViewBounds.size.height-aCheckerSize;
+//			aMovingOrigin.x+=aCheckerSize;
+//		}
+	
+	}
+	else if([[self styleManager] backgroundColor] == [NSColor clearColor] 
 		&&	[[self styleManager] backgroundGradient] == nil)
 	{
-		[[NSColor colorWithDeviceRed:103.0/255.0 green:154.0/255.0 blue:255.0/255.0 alpha:.4] set];
+		[[NSColor colorWithDeviceRed:103.0/255.0 green:154.0/255.0 blue:255.0/255.0 alpha:.2] set];
 		[NSBezierPath fillRect:[self bounds]];
+//		NSRect aFirstViewRect = NSInsetRect([self bounds], 1.5, 1.5);
+//		[[NSColor colorWithCalibratedWhite:1 alpha:1] set];
+//		[NSBezierPath strokeRect:aFirstViewRect];
 	}
 }
 
