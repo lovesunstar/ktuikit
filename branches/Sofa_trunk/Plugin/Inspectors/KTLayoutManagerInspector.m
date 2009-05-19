@@ -124,6 +124,15 @@
 				[oFlushRightButton setEnabled:YES];
 				[oFlushBottomButton setEnabled:YES];
 				[oFlushLeftButton setEnabled:YES];
+				if([anInspectedObjectsList count] > 1)
+				{
+					[oAlignTopButton setEnabled:YES];
+					[oAlignVerticalCenterButton setEnabled:YES];
+					[oAlignBottomButton setEnabled:YES];
+					[oAlignLeftButton setEnabled:YES];
+					[oAlignHorizontalCenterButton setEnabled:YES];
+					[oAlignRightButton setEnabled:YES];
+				}
 			}
 			else
 			{
@@ -140,6 +149,13 @@
 				[oFlushRightButton setEnabled:NO];
 				[oFlushBottomButton setEnabled:NO];
 				[oFlushLeftButton setEnabled:NO];
+				[oAlignTopButton setEnabled:NO];
+				[oAlignVerticalCenterButton setEnabled:NO];
+				[oAlignBottomButton setEnabled:NO];
+				[oAlignLeftButton setEnabled:NO];
+				[oAlignHorizontalCenterButton setEnabled:NO];
+				[oAlignRightButton setEnabled:NO];
+				
 			}
 		}
 		[oLayoutControl refresh];
@@ -298,6 +314,85 @@
 	[self refresh];
 }
 
+
+- (IBAction)alignTop:(id)theSender
+{
+	id <KTViewLayout> aFirstView = [[self inspectedObjects] objectAtIndex:0];
+	CGFloat aTopPosition = NSMaxY([aFirstView frame]);
+	for(id<KTViewLayout> anInspectedView in [self inspectedObjects])
+	{
+		NSRect aViewFrame = [anInspectedView frame];
+		aViewFrame.origin.y = aTopPosition - NSHeight(aViewFrame);
+		[anInspectedView setFrame:aViewFrame];
+	}
+	[self refresh];
+}
+
+- (IBAction)alignVerticalCenter:(id)theSender
+{
+	id <KTViewLayout> aFirstView = [[self inspectedObjects] objectAtIndex:0];
+	CGFloat aCenterPosition = NSMidY([aFirstView frame]);
+	for(id<KTViewLayout> anInspectedView in [self inspectedObjects])
+	{
+		NSRect aViewFrame = [anInspectedView frame];
+		aViewFrame.origin.y = aCenterPosition - NSHeight(aViewFrame)*.5;
+		[anInspectedView setFrame:aViewFrame];
+	}
+	[self refresh];
+}
+
+- (IBAction)alignBottom:(id)theSender
+{
+	id <KTViewLayout> aFirstView = [[self inspectedObjects] objectAtIndex:0];
+	CGFloat aBottomPosition = NSMinY([aFirstView frame]);
+	for(id<KTViewLayout> anInspectedView in [self inspectedObjects])
+	{
+		NSRect aViewFrame = [anInspectedView frame];
+		aViewFrame.origin.y = aBottomPosition;
+		[anInspectedView setFrame:aViewFrame];
+	}
+	[self refresh];
+}
+
+- (IBAction)alignLeft:(id)theSender
+{
+	id <KTViewLayout> aFirstView = [[self inspectedObjects] objectAtIndex:0];
+	CGFloat aLeftPosition = NSMinX([aFirstView frame]);
+	for(id<KTViewLayout> anInspectedView in [self inspectedObjects])
+	{
+		NSRect aViewFrame = [anInspectedView frame];
+		aViewFrame.origin.x = aLeftPosition;
+		[anInspectedView setFrame:aViewFrame];
+	}
+	[self refresh];
+}
+
+- (IBAction)alignHorizontalCenter:(id)theSender
+{
+	id <KTViewLayout> aFirstView = [[self inspectedObjects] objectAtIndex:0];
+	CGFloat aCenterPosition = NSMidX([aFirstView frame]);
+	for(id<KTViewLayout> anInspectedView in [self inspectedObjects])
+	{
+		NSRect aViewFrame = [anInspectedView frame];
+		aViewFrame.origin.x = aCenterPosition - NSWidth(aViewFrame)*.5;
+		[anInspectedView setFrame:aViewFrame];
+	}
+	[self refresh];
+}
+
+- (IBAction)alignRight:(id)theSender
+{
+	id <KTViewLayout> aFirstView = [[self inspectedObjects] objectAtIndex:0];
+	CGFloat aRightPosition = NSMaxX([aFirstView frame]);
+	for(id<KTViewLayout> anInspectedView in [self inspectedObjects])
+	{
+		NSRect aViewFrame = [anInspectedView frame];
+		aViewFrame.origin.x = aRightPosition - NSWidth(aViewFrame);
+		[anInspectedView setFrame:aViewFrame];
+	}
+	[self refresh];
+}
+
 - (BOOL)control:(NSControl *)theControl textView:(NSTextView *)theTextView  doCommandBySelector:(SEL)theCommandSelector
 {
 	if(theCommandSelector==@selector(moveUp:))
@@ -336,12 +431,6 @@
 	}
 	else
 		return NO;
-}
-
-
-- (NSArray*)inspectedViews
-{
-	return [self inspectedObjects];
 }
 
 @end

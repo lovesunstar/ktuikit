@@ -21,4 +21,5 @@
 - (IBAction)setDividerFirstBorderColor:(id)theSender;
 - (IBAction)setDividerSecondBorderColor:(id)theSender;
 - (IBAction)setResizeBehavior:(id)theSender;
+
 @end

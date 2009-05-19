@@ -108,6 +108,18 @@
 		4C9A877D0EBEF48700F8AA48 /* KTGradientPickerIntegration.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9A877C0EBEF48700F8AA48 /* KTGradientPickerIntegration.m */; };
 		4C9A88A70EBF2E2D00F8AA48 /* KTViewControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9A88A50EBF2E2D00F8AA48 /* KTViewControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9A88A80EBF2E2D00F8AA48 /* KTViewControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9A88A60EBF2E2D00F8AA48 /* KTViewControl.m */; };
+		4C9C32C60FC1F88A009ECF6B /* placement_center_horizontal.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C32C50FC1F88A009ECF6B /* placement_center_horizontal.png */; };
+		4C9C32C90FC1FC5B009ECF6B /* placement_center_vertical.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C32C80FC1FC5B009ECF6B /* placement_center_vertical.png */; };
+		4C9C32CB0FC1FD43009ECF6B /* placement_top.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C32CA0FC1FD43009ECF6B /* placement_top.png */; };
+		4C9C32CD0FC1FD8A009ECF6B /* placement_bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C32CC0FC1FD8A009ECF6B /* placement_bottom.png */; };
+		4C9C32D00FC1FDFD009ECF6B /* placement_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C32CE0FC1FDFD009ECF6B /* placement_left.png */; };
+		4C9C32D10FC1FDFD009ECF6B /* placement_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C32CF0FC1FDFD009ECF6B /* placement_right.png */; };
+		4C9C32DD0FC20346009ECF6B /* align_bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C32D80FC20346009ECF6B /* align_bottom.png */; };
+		4C9C32DE0FC20346009ECF6B /* align_horizontal_center.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C32D90FC20346009ECF6B /* align_horizontal_center.png */; };
+		4C9C32DF0FC20346009ECF6B /* align_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C32DA0FC20346009ECF6B /* align_left.png */; };
+		4C9C32E00FC20346009ECF6B /* align_top.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C32DB0FC20346009ECF6B /* align_top.png */; };
+		4C9C32E10FC20346009ECF6B /* align_vertical_center.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C32DC0FC20346009ECF6B /* align_vertical_center.png */; };
+		4C9C32E30FC203AC009ECF6B /* align_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9C32E20FC203AC009ECF6B /* align_right.png */; };
 		4C9C5D990DE9F47000AE6913 /* KTView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9C5D890DE9F41800AE6913 /* KTView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9C5DA10DE9F49E00AE6913 /* KTView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9C5D8A0DE9F41800AE6913 /* KTView.m */; };
 		4C9C5E260DE9FAB100AE6913 /* KTUIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9C5E120DE9FA4400AE6913 /* KTUIKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -143,7 +155,7 @@
 		4CDD2A7E0F70FCFC00B25D33 /* KTTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDD2A7C0F70FCFC00B25D33 /* KTTabViewController.m */; };
 		4CE986180F80F5150092A12F /* KTSplitView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE986160F80F5150092A12F /* KTSplitView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CE986190F80F5150092A12F /* KTSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE986170F80F5150092A12F /* KTSplitView.m */; };
-		4CE986290F80F8660092A12F /* KTSplitViewDivider.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE986270F80F8660092A12F /* KTSplitViewDivider.h */; };
+		4CE986290F80F8660092A12F /* KTSplitViewDivider.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE986270F80F8660092A12F /* KTSplitViewDivider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CE9862A0F80F8660092A12F /* KTSplitViewDivider.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE986280F80F8660092A12F /* KTSplitViewDivider.m */; };
 		4CF9D4330ECF5B100063DBE0 /* KTView.classdescription in Resources */ = {isa = PBXBuildFile; fileRef = 4CC1F4060DE940160035CE00 /* KTView.classdescription */; };
 		4CF9D4340ECF5B100063DBE0 /* KTButton.classdescription in Resources */ = {isa = PBXBuildFile; fileRef = 4CCA961D0EBC511B00CF9A03 /* KTButton.classdescription */; };
@@ -346,6 +358,18 @@
 		4C9A877C0EBEF48700F8AA48 /* KTGradientPickerIntegration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTGradientPickerIntegration.m; sourceTree = "<group>"; };
 		4C9A88A50EBF2E2D00F8AA48 /* KTViewControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTViewControl.h; sourceTree = "<group>"; };
 		4C9A88A60EBF2E2D00F8AA48 /* KTViewControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTViewControl.m; sourceTree = "<group>"; };
+		4C9C32C50FC1F88A009ECF6B /* placement_center_horizontal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placement_center_horizontal.png; sourceTree = "<group>"; };
+		4C9C32C80FC1FC5B009ECF6B /* placement_center_vertical.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placement_center_vertical.png; sourceTree = "<group>"; };
+		4C9C32CA0FC1FD43009ECF6B /* placement_top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placement_top.png; sourceTree = "<group>"; };
+		4C9C32CC0FC1FD8A009ECF6B /* placement_bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placement_bottom.png; sourceTree = "<group>"; };
+		4C9C32CE0FC1FDFD009ECF6B /* placement_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placement_left.png; sourceTree = "<group>"; };
+		4C9C32CF0FC1FDFD009ECF6B /* placement_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placement_right.png; sourceTree = "<group>"; };
+		4C9C32D80FC20346009ECF6B /* align_bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = align_bottom.png; sourceTree = "<group>"; };
+		4C9C32D90FC20346009ECF6B /* align_horizontal_center.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = align_horizontal_center.png; sourceTree = "<group>"; };
+		4C9C32DA0FC20346009ECF6B /* align_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = align_left.png; sourceTree = "<group>"; };
+		4C9C32DB0FC20346009ECF6B /* align_top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = align_top.png; sourceTree = "<group>"; };
+		4C9C32DC0FC20346009ECF6B /* align_vertical_center.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = align_vertical_center.png; sourceTree = "<group>"; };
+		4C9C32E20FC203AC009ECF6B /* align_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = align_right.png; sourceTree = "<group>"; };
 		4C9C5D890DE9F41800AE6913 /* KTView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KTView.h; path = NSViewSubclasses/KTView.h; sourceTree = "<group>"; };
 		4C9C5D8A0DE9F41800AE6913 /* KTView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KTView.m; path = NSViewSubclasses/KTView.m; sourceTree = "<group>"; };
 		4C9C5D8E0DE9F43400AE6913 /* KTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTViewController.h; sourceTree = "<group>"; };
@@ -573,6 +597,18 @@
 		4C3EAA470ECF5843004492C4 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				4C9C32E20FC203AC009ECF6B /* align_right.png */,
+				4C9C32D80FC20346009ECF6B /* align_bottom.png */,
+				4C9C32D90FC20346009ECF6B /* align_horizontal_center.png */,
+				4C9C32DA0FC20346009ECF6B /* align_left.png */,
+				4C9C32DB0FC20346009ECF6B /* align_top.png */,
+				4C9C32DC0FC20346009ECF6B /* align_vertical_center.png */,
+				4C9C32CE0FC1FDFD009ECF6B /* placement_left.png */,
+				4C9C32CF0FC1FDFD009ECF6B /* placement_right.png */,
+				4C9C32CC0FC1FD8A009ECF6B /* placement_bottom.png */,
+				4C9C32CA0FC1FD43009ECF6B /* placement_top.png */,
+				4C9C32C80FC1FC5B009ECF6B /* placement_center_vertical.png */,
+				4C9C32C50FC1F88A009ECF6B /* placement_center_horizontal.png */,
 				4C7AEA070ECFA3F500F79A75 /* WebKit.png */,
 				4C7AE9F90ECF9DCE00F79A75 /* TextView.tif */,
 				4C180D870ECF699A00FB2123 /* KTScrollView.tif */,
@@ -1056,6 +1092,18 @@
 				4C7AEA080ECFA3F500F79A75 /* WebKit.png in Resources */,
 				4CD54D570FBD68E0003030FE /* KTSplitViewInspector.nib in Resources */,
 				4CCA973E0FC0269D001B822A /* KTScroller.classdescription in Resources */,
+				4C9C32C60FC1F88A009ECF6B /* placement_center_horizontal.png in Resources */,
+				4C9C32C90FC1FC5B009ECF6B /* placement_center_vertical.png in Resources */,
+				4C9C32CB0FC1FD43009ECF6B /* placement_top.png in Resources */,
+				4C9C32CD0FC1FD8A009ECF6B /* placement_bottom.png in Resources */,
+				4C9C32D00FC1FDFD009ECF6B /* placement_left.png in Resources */,
+				4C9C32D10FC1FDFD009ECF6B /* placement_right.png in Resources */,
+				4C9C32DD0FC20346009ECF6B /* align_bottom.png in Resources */,
+				4C9C32DE0FC20346009ECF6B /* align_horizontal_center.png in Resources */,
+				4C9C32DF0FC20346009ECF6B /* align_left.png in Resources */,
+				4C9C32E00FC20346009ECF6B /* align_top.png in Resources */,
+				4C9C32E10FC20346009ECF6B /* align_vertical_center.png in Resources */,
+				4C9C32E30FC203AC009ECF6B /* align_right.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

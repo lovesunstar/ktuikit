@@ -19,6 +19,7 @@
 	NSTrackingArea *	mTrackingArea;
 }
 @property (nonatomic, readwrite, assign) KTSplitView * splitView;
+@property (nonatomic, readonly) BOOL isInDrag;
 - (id)initWithSplitView:(KTSplitView*)theSplitView;
 - (void)animateDividerToPosition:(float)thePosition time:(float)theTimeInSeconds;
 @end

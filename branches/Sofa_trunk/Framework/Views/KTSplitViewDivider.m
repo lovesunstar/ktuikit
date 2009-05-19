@@ -22,6 +22,8 @@
 
 @implementation KTSplitViewDivider
 @synthesize splitView = wSplitView;
+@synthesize isInDrag = mIsInDrag;
+
 //=========================================================== 
 // - initWithSplitView
 //===========================================================
@@ -188,7 +190,6 @@
 //===========================================================
 - (void)mouseDown:(NSEvent*)theEvent
 {
-	NSLog(@"mouse down in split view divider");
 	if([[self splitView] adjustable] == NO)
 		return;
 }
@@ -201,8 +202,6 @@
 {
 	if([[self splitView] adjustable] == NO)
 		return;
-		
-	NSLog(@"mouse dragged in divider");	
 		
 	NSPoint	aMousePoint = [[self splitView] convertPoint:[theEvent locationInWindow] fromView:nil];
 	NSRect	aSplitViewBounds = [[self splitView] bounds];
@@ -240,6 +239,8 @@
 	mIsInDrag = YES;
 }
 
+
+
 //=========================================================== 
 // - mouseUp
 //===========================================================
@@ -259,11 +260,6 @@
 - (void)mouseExited:(NSEvent*)theEvent
 {
 	NSLog(@"%@ mouseExited", self);
-}
-
-- (void)mouseMoved:(NSEvent*)theEvent
-{
-	NSLog(@"%@ mouseMoved", self);
 }
 
 - (void)cursorUpdate:(NSEvent *)theEvent

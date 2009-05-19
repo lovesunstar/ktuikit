@@ -121,22 +121,30 @@
 	
 	// Top Strut
 	KTLayoutControlStrutState aTopStrutState = [self topStrutState];
-	if(		[mMarginTop intValue] >= 0
-		||	aTopStrutState == KTLayoutControlStrutState_Flexible)
+	[[NSColor colorWithCalibratedWhite:0 alpha:anEnabledAlpha] set];
+	if(aTopStrutState == KTLayoutControlStrutState_Flexible)
+	{
+		[[NSColor colorWithCalibratedWhite:.4 alpha:anEnabledAlpha] set];
+		[wTopMarginTextField setTextColor:[NSColor colorWithDeviceWhite:.4 alpha:anEnabledAlpha]];
+	}
+	else if([mMarginTop intValue] >= 0)
 		[wTopMarginTextField setTextColor:[NSColor colorWithDeviceWhite:0 alpha:anEnabledAlpha]];
 	else
 		[wTopMarginTextField setTextColor:[NSColor colorWithDeviceRed:1 green:0 blue:0 alpha:anEnabledAlpha]];
-	[[NSColor colorWithCalibratedWhite:0 alpha:anEnabledAlpha] set];
 	[self drawStrutInRect:mTopMarginRect state:aTopStrutState];
 	
 	// Bottom Strut
 	KTLayoutControlStrutState aBottomStrutState = [self bottomStrutState];
-	if(		[mMarginBottom intValue]  >= 0
-		||	aBottomStrutState == KTLayoutControlStrutState_Flexible)
+	[[NSColor colorWithCalibratedWhite:0 alpha:anEnabledAlpha] set];	
+	if(aBottomStrutState == KTLayoutControlStrutState_Flexible)
+	{
+		[wBottomMarginTextField setTextColor:[NSColor colorWithDeviceWhite:.4 alpha:anEnabledAlpha]];
+		[[NSColor colorWithCalibratedWhite:.4 alpha:anEnabledAlpha] set];
+	}
+	else if([mMarginBottom intValue]  >= 0)
 		[wBottomMarginTextField setTextColor:[NSColor colorWithDeviceWhite:0 alpha:anEnabledAlpha]];
 	else
 		[wBottomMarginTextField setTextColor:[NSColor colorWithDeviceRed:1 green:0 blue:0 alpha:anEnabledAlpha]];
-	[[NSColor colorWithCalibratedWhite:0 alpha:anEnabledAlpha] set];
 	[self drawStrutInRect:mBottomMarginRect state:aBottomStrutState];
 
 	// draw the fill height indicator
@@ -147,23 +155,31 @@
 
 	// right Strut
 	KTLayoutControlStrutState aRightStrutState = [self rightStrutState];
-	if(		[mMarginRight intValue]  >= 0
-		||	aRightStrutState == KTLayoutControlStrutState_Flexible)
+	[[NSColor colorWithCalibratedWhite:0 alpha:anEnabledAlpha] set];
+	if(aRightStrutState == KTLayoutControlStrutState_Flexible)
+	{
+		[wRightMarginTextField setTextColor:[NSColor colorWithCalibratedWhite:.4 alpha:anEnabledAlpha]];
+		[[NSColor colorWithCalibratedWhite:.4 alpha:anEnabledAlpha] set];
+	}
+	else if( [mMarginRight intValue]  >= 0)
 		[wRightMarginTextField setTextColor:[NSColor colorWithDeviceWhite:0 alpha:anEnabledAlpha]];
 	else
 		[wRightMarginTextField setTextColor:[NSColor colorWithDeviceRed:1 green:0 blue:0 alpha:anEnabledAlpha]];
-	[[NSColor colorWithCalibratedWhite:0 alpha:anEnabledAlpha] set];
 	[self drawStrutInRect:mRightMarginRect state:aRightStrutState];
 		
 	
 	// left Strut
 	KTLayoutControlStrutState aLeftStrutState = [self leftStrutState];	
-	if(		[mMarginLeft intValue]  >= 0
-		||	aLeftStrutState == KTLayoutControlStrutState_Flexible)
+	[[NSColor colorWithCalibratedWhite:0 alpha:anEnabledAlpha] set];
+	if(aLeftStrutState == KTLayoutControlStrutState_Flexible)
+	{
+		[wLeftMarginTextField setTextColor:[NSColor colorWithDeviceWhite:.4 alpha:anEnabledAlpha]];	
+		[[NSColor colorWithCalibratedWhite:.4 alpha:anEnabledAlpha] set];
+	}
+	else if([mMarginLeft intValue]  >= 0)
 		[wLeftMarginTextField setTextColor:[NSColor colorWithDeviceWhite:0 alpha:anEnabledAlpha]];
 	else
 		[wLeftMarginTextField setTextColor:[NSColor colorWithDeviceRed:1 green:0 blue:0 alpha:anEnabledAlpha]];
-	[[NSColor colorWithCalibratedWhite:0 alpha:anEnabledAlpha] set];
 	[self drawStrutInRect:mLeftMarginRect state:aLeftStrutState];
 
 	// draw the fill width indicator
@@ -579,6 +595,7 @@
 		[self setNeedsDisplay:YES];
 	}
 }
+
 
 //=========================================================== 
 // - setMarginTop

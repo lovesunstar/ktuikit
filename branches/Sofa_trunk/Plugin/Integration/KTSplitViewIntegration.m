@@ -7,8 +7,10 @@
 //
 
 #import <InterfaceBuilderKit/InterfaceBuilderKit.h>
-#import <KTUIKit/KTSplitVIew.h>
+#import <KTUIKit/KTUIKit.h>
+#import <KTUIKit/KTSplitViewDivider.h>
 #import "KTSplitViewInspector.h"
+ 
  
 @implementation KTSplitView ( KTSplitViewIntegration )
 
@@ -29,80 +31,47 @@
 
 - (void)ibDidAddToDesignableDocument:(IBDocument *)theDocument
 {
-	NSLog(@"%@ ibDidAddToDesignableDocument", self);
 	[self setDividerOrientation:KTSplitViewDividerOrientation_Vertical];
-	[self setDividerFillColor:[NSColor colorWithCalibratedWhite:.3 alpha:1]];
-	[self setDividerThickness:1];
+	[self setDividerThickness:8];
 	[self setDividerPosition:[self frame].size.width*.5 fromView:KTSplitViewFocusedViewFlag_FirstView];
+	[[mFirstView styleManager] setBorderColor:[NSColor whiteColor]];
+	[[mFirstView styleManager] setBorderWidth:1];
+	[[mFirstView styleManager] setBackgroundColor:[NSColor colorWithCalibratedWhite:.8 alpha:1]];
+	[[mSecondView styleManager] setBorderColor:[NSColor whiteColor]];
+	[[mSecondView styleManager] setBorderWidth:1];
+	[[mSecondView styleManager] setBackgroundColor:[NSColor colorWithCalibratedWhite:.8 alpha:1]];
 	[super ibDidAddToDesignableDocument:theDocument];
 }
 
 
+- (NSView*)hitTest:(NSPoint)thePoint
+{
+	if(NSPointInRect([self convertPoint:thePoint fromView:nil], [mDivider frame]))
+	{
+		if([[NSApp currentEvent] type]==NSLeftMouseDown)
+			[mDivider mouseDown:[NSApp currentEvent]];
+	}
+	return [super hitTest:thePoint];
+}
 
-//
-////=========================================================== 
-//// - drawInContext:
-////=========================================================== 
-//- (void)drawInContext:(CGContextRef)theContext
-//{
-////	[[NSColor colorWithCalibratedWhite:.5 alpha:1]set];
-////	[NSBezierPath strokeRect:[self bounds]];
-////	[[NSColor colorWithCalibratedWhite:.5 alpha:1] set];
-////	[NSBezierPath strokeRect:[mFirstView frame]];
-////	[NSBezierPath strokeRect:[mSecondView frame]];
-////	NSRect aFirstViewRect = NSInsetRect([mFirstView frame], 1.5, 1.5);
-////	NSRect aSecondViewRect = NSInsetRect([mSecondView frame], 1.5, 1.5);
-////	[[NSColor colorWithCalibratedWhite:1 alpha:1] set];
-////	[NSBezierPath strokeRect:aFirstViewRect];
-////	[NSBezierPath strokeRect:aSecondViewRect];
-//}
-//
-
-
-//
-//- (NSView*)hitTest:(NSPoint)thePoint
-//{
-//	NSLog(@"split view hit test");
-//	if([mDivider hitTest:[self convertPoint:thePoint fromView:nil]] == (NSView*)mDivider)
-//	{
-//		NSLog(@"hit test hit divider!!!!!!!!!!!!");
-//		return (NSView*)mDivider;
-//	}
-//	return self;
-//}
-//
-//- (void)mouseDown:(NSEvent*)theEvent
-//{
-//	NSLog(@"mouse down in split view");
-//}
-
-//=========================================================== 
-// - ibDesignableContentView
-//=========================================================== 
 - (NSView*)ibDesignableContentView
 {
-	return self;
+	return nil;
 }
-//
-//- (BOOL)ibIsChildViewUserMovable:(NSView *)theChildView
-//{
-////	if(theChildView == (NSView*)mDivider)
-////		return YES;
-//	return NO;
-//}
-//
-//- (BOOL)ibIsChildViewUserSizable:(NSView *)theChildView
-//{
-////	if(theChildView == (NSView*)mDivider)
-////		return YES;
-//	return NO;
-//}
-//
-//- (NSArray*)ibDefaultChildren
-//{
-//	return nil;//[NSArray arrayWithObjects:mDivider, mFirstView, mSecondView, nil];
-//}
-//
 
+- (BOOL)ibIsChildViewUserMovable:(NSView *)theChildView
+{
+	return NO;
+}
+
+- (BOOL)ibIsChildViewUserSizable:(NSView *)theChildView
+{
+	return NO;
+}
+
+- (NSArray*)ibDefaultChildren
+{
+	return [NSArray arrayWithObjects:mFirstView, mSecondView, nil];
+}
 
 @end

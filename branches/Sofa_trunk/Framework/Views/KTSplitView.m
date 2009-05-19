@@ -54,7 +54,7 @@
 //===========================================================
 - (id)initWithFrame:(NSRect)theFrame
 {
-	NSLog(@"Split View initWithFrame:%@", NSStringFromRect(theFrame));
+//	NSLog(@"Split View initWithFrame:%@", NSStringFromRect(theFrame));
 	if(self = [super initWithFrame:theFrame])
 	{
 		mFirstView = [[KTView alloc] initWithFrame:NSZeroRect];
@@ -78,22 +78,22 @@
 //=========================================================== 
 - (id)initWithCoder:(NSCoder*)theCoder
 {
-	NSLog(@"Split View initWithCoder");
+//	NSLog(@"Split View initWithCoder");
 	
 	if (![super initWithCoder:theCoder])
 		return nil;
-	NSLog(@"subviews: %@", [self subviews]);
+//	NSLog(@"subviews: %@", [self subviews]);
 		
 	mCanSetDividerPosition = NO; 
 	mFirstView = [[theCoder decodeObjectForKey:@"firstView"] retain];
-	NSLog(@"mFirstView: %@", mFirstView);
+//	NSLog(@"mFirstView: %@", mFirstView);
 	
 	mSecondView = [[theCoder decodeObjectForKey:@"secondView"] retain];
-	NSLog(@"mSecondView: %@", mSecondView);
+//	NSLog(@"mSecondView: %@", mSecondView);
 	
 	mDivider = [[theCoder decodeObjectForKey:@"divider"] retain];
 	[mDivider setSplitView:self];
-	NSLog(@"mDivider: %@", mDivider);
+//	NSLog(@"mDivider: %@", mDivider);
 		
 	[self setDividerOrientation:[[theCoder decodeObjectForKey:@"dividerOrienation"] intValue]];	
 	[self setAdjustable:[[theCoder decodeObjectForKey:@"adjustableFlag"] boolValue]];
@@ -148,7 +148,7 @@
 //===========================================================
 - (void)setFrame:(NSRect)theFrame
 {
-	NSLog(@"setFrame: %@", self);
+//	NSLog(@"%@ setFrame", self);
 	// when the split view's frame is set, we need to 
 	// check the desired resizing behavior to determine where to position the divider
 	// after the frame is set, we'll refresh our layout so that all the views are sized/positioned correctly
@@ -262,7 +262,7 @@
 - (void)layoutViews
 {
 
-	NSLog(@"split view layout views");
+//	NSLog(@"split view layout views");
 	// this gets called by the divider whenever it's position changes
 	NSRect aSplitViewBounds = [self bounds];
 	NSRect aDividerFrame = [[self divider] frame];
@@ -501,7 +501,7 @@
 //===========================================================
 - (void)setDividerOrientation:(KTSplitViewDividerOrientation)theOrientation
 {
-	NSLog(@"set divider orientation:%d", theOrientation);
+//	NSLog(@"set divider orientation:%d", theOrientation);
 	CGFloat aCurrentDividerThickness = [self dividerThickness];
 	mDividerOrientation = theOrientation;
 	if(mDividerOrientation==KTSplitViewDividerOrientation_Horizontal)

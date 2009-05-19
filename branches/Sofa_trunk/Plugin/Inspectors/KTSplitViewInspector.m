@@ -23,36 +23,53 @@
 
 - (IBAction)setOrientation:(id)theSender
 {
+	if([[self inspectedObjects] count] < 1)
+		return;
 	KTSplitView * aSplitView = [[self inspectedObjects] objectAtIndex:0];
 	[aSplitView setDividerOrientation:[[theSender selectedItem] tag]];
 }
 
 - (IBAction)setDividerThickness:(id)theSender
 {
+	if([[self inspectedObjects] count] < 1)
+		return;
+		
 	KTSplitView * aSplitView = [[self inspectedObjects] objectAtIndex:0];
 	[aSplitView setDividerThickness:[theSender floatValue]];
 }
 
 - (IBAction)setDividerBackgroundColor:(id)theSender
 {
+	if([[self inspectedObjects] count] < 1)
+		return;
+		
 	KTSplitView * aSplitView = [[self inspectedObjects] objectAtIndex:0];
 	[aSplitView setDividerFillColor:[mBackgroundColorWell color]];
 }
 
 - (IBAction)setDividerFirstBorderColor:(id)theSender
 {
+	if([[self inspectedObjects] count] < 1)
+		return;
+		
 	KTSplitView * aSplitView = [[self inspectedObjects] objectAtIndex:0];
 	[aSplitView setDividerFirstStrokeColor:[mFirstStrokeColorWell color] secondColor:[mSecondStrokeColorWell color]];
 }
 
 - (IBAction)setDividerSecondBorderColor:(id)theSender
 {
+	if([[self inspectedObjects] count] < 1)
+		return;
+		
 	KTSplitView * aSplitView = [[self inspectedObjects] objectAtIndex:0];
 	[aSplitView setDividerFirstStrokeColor:[mFirstStrokeColorWell color] secondColor:[mSecondStrokeColorWell color]];
 }
 
 - (IBAction)setResizeBehavior:(id)theSender
 {
+	if([[self inspectedObjects] count] < 1)
+		return;
+		
 	KTSplitView * aSplitView = [[self inspectedObjects] objectAtIndex:0];
 	[aSplitView setResizeBehavior:[[theSender selectedItem] tag]];	
 }

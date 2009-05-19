@@ -21,12 +21,22 @@
 	IBOutlet NSTextField *		oHeight;
 	IBOutlet NSButton *			oFillWidthButton;
 	IBOutlet NSButton *			oFillHeightButton;
+	
+	// placement contrls
 	IBOutlet NSButton *			oCenterVerticallyButton;
 	IBOutlet NSButton *			oCenterHorizontallyButton;
 	IBOutlet NSButton *			oFlushTopButton;
 	IBOutlet NSButton *			oFlushBottomButton;
 	IBOutlet NSButton *			oFlushRightButton;
 	IBOutlet NSButton *			oFlushLeftButton;
+	
+	// alignment controls
+	IBOutlet NSButton *			oAlignTopButton;
+	IBOutlet NSButton *			oAlignVerticalCenterButton;
+	IBOutlet NSButton *			oAlignBottomButton;
+	IBOutlet NSButton *			oAlignLeftButton;
+	IBOutlet NSButton *			oAlignHorizontalCenterButton;
+	IBOutlet NSButton *			oAlignRightButton;
 	
 	// Autoresizing
 	IBOutlet KTLayoutManagerControl *		oLayoutControl;
@@ -46,4 +56,10 @@
 - (IBAction)flushLeft:(id)theSender;
 - (IBAction)flushRight:(id)theSender;
 
+- (IBAction)alignTop:(id)theSender;
+- (IBAction)alignVerticalCenter:(id)theSender;
+- (IBAction)alignBottom:(id)theSender;
+- (IBAction)alignLeft:(id)theSender;
+- (IBAction)alignHorizontalCenter:(id)theSender;
+- (IBAction)alignRight:(id)theSender;
 @end
