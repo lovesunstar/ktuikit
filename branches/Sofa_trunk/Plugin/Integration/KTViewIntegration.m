@@ -17,6 +17,9 @@
  #import "KTSplitView.h"
  #import "KTSplitViewDivider.h"
  
+ 
+
+
 @implementation KTView ( KTViewIntegration )
 //=========================================================== 
 // - ibPopulateKeyPaths:
@@ -45,6 +48,9 @@
 	if(		[self isKindOfClass:[KTSplitViewDivider class]] == NO
 		&&	[[self parent] isKindOfClass:[KTSplitView class]] == NO)
 		[classes addObject:[KTLayoutManagerInspector class]];
+		
+	if([[self parent] isKindOfClass:[KTSplitView class]])
+		[classes removeAllObjects];
 }
 
 //=========================================================== 
@@ -108,4 +114,33 @@
 	return self;
 }
 
+//
+//- (void)setFrame:(NSRect)theFrame
+//{
+//	[super setFrame:theFrame];
+//}
+//
+//- (void)setFrameSize:(NSSize)theSize
+//{
+//	NSLog(@"setFrameSize:");
+//	[super setFrameSize:theSize];
+//	
+//	NSArray * aSubviewList = [self children];
+//	int aSubviewCount = [aSubviewList count];
+//	int i;
+//	for(i = 0; i < aSubviewCount; i++)
+//	{
+//		NSView * aSubview = [aSubviewList objectAtIndex:i];
+//		
+//		// if the subview conforms to the layout protocol, tell its layout
+//		// manager to refresh its layout
+//		if( [aSubview conformsToProtocol:@protocol(KTViewLayout)] )
+//		{
+//			[[(KTView*)aSubview viewLayoutManager] refreshLayout];
+//		}
+//	}
+//}
 @end
+
+
+

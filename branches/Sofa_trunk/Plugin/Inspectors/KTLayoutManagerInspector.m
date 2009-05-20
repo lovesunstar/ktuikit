@@ -251,7 +251,7 @@
 	{
 		NSRect aParentFrame = [[anInspectedView parent] frame];
 		NSRect aViewFrame = [anInspectedView frame];
-		
+		aParentFrame.origin = NSZeroPoint;
 		aViewFrame.origin.x = NSMidX(aParentFrame) - NSWidth(aViewFrame)*.5;
 		[anInspectedView setFrame:aViewFrame];
 	}
@@ -264,7 +264,7 @@
 	{
 		NSRect aParentFrame = [[anInspectedView parent] frame];
 		NSRect aViewFrame = [anInspectedView frame];
-		
+		aParentFrame.origin = NSZeroPoint;
 		aViewFrame.origin.y = NSMidY(aParentFrame) - NSHeight(aViewFrame)*.5;
 		[anInspectedView setFrame:aViewFrame];
 	}
@@ -277,7 +277,7 @@
 	{
 		NSRect aParentFrame = [[anInspectedView parent] frame];
 		NSRect aViewFrame = [anInspectedView frame];
-		
+		aParentFrame.origin = NSZeroPoint;
 		aViewFrame.origin.y = NSMaxY(aParentFrame) - NSHeight(aViewFrame);
 		[anInspectedView setFrame:aViewFrame];
 	}
@@ -312,7 +312,7 @@
 	{
 		NSRect aParentFrame = [[anInspectedView parent] frame];
 		NSRect aViewFrame = [anInspectedView frame];
-		
+		aParentFrame.origin = NSZeroPoint;
 		aViewFrame.origin.x = NSMaxX(aParentFrame) - NSWidth(aViewFrame);
 		[anInspectedView setFrame:aViewFrame];
 	}

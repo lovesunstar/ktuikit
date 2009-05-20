@@ -180,8 +180,32 @@
 //===========================================================
 - (void)setFrame:(NSRect)theFrame
 {
+	//NSLog(@"------------------>>>>setFrame:");
 	[super setFrame:theFrame];
 	
+//	NSArray * aSubviewList = [self children];
+//	int aSubviewCount = [aSubviewList count];
+//	int i;
+//	for(i = 0; i < aSubviewCount; i++)
+//	{
+//		NSView * aSubview = [aSubviewList objectAtIndex:i];
+//		
+//		// if the subview conforms to the layout protocol, tell its layout
+//		// manager to refresh its layout
+//		if( [aSubview conformsToProtocol:@protocol(KTViewLayout)] )
+//		{
+//			[[(KTView*)aSubview viewLayoutManager] refreshLayout];
+//		}
+//	}
+}
+
+
+//=========================================================== 
+// - setFrameSize:
+//===========================================================
+- (void)setFrameSize:(NSSize)theSize
+{
+	[super setFrameSize:theSize];
 	NSArray * aSubviewList = [self children];
 	int aSubviewCount = [aSubviewList count];
 	int i;
@@ -195,7 +219,7 @@
 		{
 			[[(KTView*)aSubview viewLayoutManager] refreshLayout];
 		}
-	}
+	}	
 }
 
 //=========================================================== 

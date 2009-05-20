@@ -145,7 +145,7 @@
 //===========================================================
 - (void)setFrame:(NSRect)theFrame
 {	
-	NSLog(@"%@ setFrame:", self);
+	//NSLog(@"%@ setFrame:", self);
 	if([[self splitView] dividerOrientation] == KTSplitViewDividerOrientation_Vertical)
 	{
 		// clip min & max positions

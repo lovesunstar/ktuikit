@@ -10,7 +10,8 @@
 #import <KTUIKit/KTUIKit.h>
 #import <KTUIKit/KTSplitViewDivider.h>
 #import "KTSplitViewInspector.h"
- 
+
+//[[[[NSDocumentController sharedDocumentController] documents] lastObject] editorManager]
  
 @implementation KTSplitView ( KTSplitViewIntegration )
 
@@ -41,6 +42,8 @@
 	[[mSecondView styleManager] setBorderWidth:1];
 	[[mSecondView styleManager] setBackgroundColor:[NSColor colorWithCalibratedWhite:.8 alpha:1]];
 	[super ibDidAddToDesignableDocument:theDocument];
+	
+	NSLog(@"%@", NSApp);
 }
 
 

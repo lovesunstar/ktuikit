@@ -26,9 +26,9 @@
 typedef enum
 {
 	KTSplitViewResizeBehavior_MaintainProportions = 0,
-	KTSplitViewResizeBehavior_MaintainFirstViewPosition,
+	KTSplitViewResizeBehavior_MaintainFirstViewPosition, // will delete
 	KTSplitViewResizeBehavior_MaintainFirstViewSize,
-	KTSplitViewResizeBehavior_MaintainSecondViewPosition,
+	KTSplitViewResizeBehavior_MaintainSecondViewPosition, // will delete
 	KTSplitViewResizeBehavior_MaintainSecondViewSize
 	
 }KTSplitViewResizeBehavior;
