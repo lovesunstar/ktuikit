@@ -37,10 +37,13 @@
     [super ibPopulateAttributeInspectorClasses:classes];
 	// style inspector
 	if(		[self isKindOfClass:[KTGradientPicker class]] == NO
-		&&	[self isKindOfClass:[KTSplitView class]] == NO)
+		&&	[self isKindOfClass:[KTSplitView class]] == NO
+		&&	[[self parent] isKindOfClass:[KTSplitView class]] == NO)
 		[classes addObject:[KTStyleInspector class]];
+		
 	// layout inspector	
-	if([self isKindOfClass:[KTSplitViewDivider class]] == NO)
+	if(		[self isKindOfClass:[KTSplitViewDivider class]] == NO
+		&&	[[self parent] isKindOfClass:[KTSplitView class]] == NO)
 		[classes addObject:[KTLayoutManagerInspector class]];
 }
 
@@ -104,4 +107,5 @@
 {
 	return self;
 }
+
 @end

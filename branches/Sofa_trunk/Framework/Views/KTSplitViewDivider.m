@@ -72,7 +72,18 @@
 		[self removeTrackingArea:mTrackingArea];
 		[mTrackingArea release];
 	}
-	mTrackingArea = [[NSTrackingArea alloc] initWithRect:[self frame] 
+	NSRect aTrackingRect = [self frame];
+	if([[self splitView] dividerOrientation] == KTSplitViewDividerOrientation_Horizontal)
+	{
+		if(aTrackingRect.size.height<3)
+			aTrackingRect.size.height = 3;
+	}
+	else
+	{
+		if(aTrackingRect.size.width < 3)
+			aTrackingRect.size.width = 3;
+	}
+	mTrackingArea = [[NSTrackingArea alloc] initWithRect:aTrackingRect
 												options:(NSTrackingActiveInActiveApp | NSTrackingCursorUpdate | NSTrackingAssumeInside) 
 												owner:self userInfo:nil];
 	[self addTrackingArea:mTrackingArea];	
@@ -135,48 +146,48 @@
 - (void)setFrame:(NSRect)theFrame
 {	
 	NSLog(@"%@ setFrame:", self);
-//	if([[self splitView] dividerOrientation] == KTSplitViewDividerOrientation_Vertical)
-//	{
-//		// clip min & max positions
-//		float aPositionToCheck = 0;//[self minPosition];
-//		
-//		if(		aPositionToCheck > 0
-//			&&	theFrame.origin.x <= aPositionToCheck)
-//		{
-//			theFrame.origin.x = aPositionToCheck;
-//			if(mIsInDrag == YES)
-//				[[NSCursor resizeRightCursor] set];
-//		}
-//		
-//		aPositionToCheck = 0;//[self maxPosition];
-//		if(		aPositionToCheck > 0
-//			&&	theFrame.origin.x >= aPositionToCheck)
-//		{
-//			theFrame.origin.x = aPositionToCheck;
-//			if(mIsInDrag == YES)
-//				[[NSCursor resizeLeftCursor] set];
-//		}
-//	}
-//	else if([[self splitView] dividerOrientation] == KTSplitViewDividerOrientation_Horizontal)
-//	{
-//		float aPositionToCheck = 0;//[self minPosition];
-//		if(		aPositionToCheck > 0
-//			&&	theFrame.origin.y < aPositionToCheck)
-//		{
-//			theFrame.origin.y = aPositionToCheck;
-//			if(mIsInDrag == YES)
-//				[[NSCursor resizeUpCursor] set];
-//		}	
-//		
-//		aPositionToCheck = 0;//[self maxPosition];
-//		if(		aPositionToCheck > 0
-//			&&	theFrame.origin.y >= aPositionToCheck)
-//		{
-//			theFrame.origin.y = aPositionToCheck;
-//			if(mIsInDrag == YES)
-//				[[NSCursor resizeDownCursor] set];
-//		}
-//	}
+	if([[self splitView] dividerOrientation] == KTSplitViewDividerOrientation_Vertical)
+	{
+		// clip min & max positions
+		float aPositionToCheck = 0;//[self minPosition];
+		
+		if(		aPositionToCheck > 0
+			&&	theFrame.origin.x <= aPositionToCheck)
+		{
+			theFrame.origin.x = aPositionToCheck;
+			if(mIsInDrag == YES)
+				[[NSCursor resizeRightCursor] set];
+		}
+		
+		aPositionToCheck = 0;//[self maxPosition];
+		if(		aPositionToCheck > 0
+			&&	theFrame.origin.x >= aPositionToCheck)
+		{
+			theFrame.origin.x = aPositionToCheck;
+			if(mIsInDrag == YES)
+				[[NSCursor resizeLeftCursor] set];
+		}
+	}
+	else if([[self splitView] dividerOrientation] == KTSplitViewDividerOrientation_Horizontal)
+	{
+		float aPositionToCheck = 0;//[self minPosition];
+		if(		aPositionToCheck > 0
+			&&	theFrame.origin.y < aPositionToCheck)
+		{
+			theFrame.origin.y = aPositionToCheck;
+			if(mIsInDrag == YES)
+				[[NSCursor resizeUpCursor] set];
+		}	
+		
+		aPositionToCheck = 0;//[self maxPosition];
+		if(		aPositionToCheck > 0
+			&&	theFrame.origin.y >= aPositionToCheck)
+		{
+			theFrame.origin.y = aPositionToCheck;
+			if(mIsInDrag == YES)
+				[[NSCursor resizeDownCursor] set];
+		}
+	}
 	[self _resetTrackingArea];
 	[super setFrame:theFrame];
 	[[self splitView] layoutViews];
@@ -247,7 +258,7 @@
 - (void)mouseUp:(NSEvent*)theEvent
 {
 	NSLog(@"%@ mouseUP", self);
-	[[NSCursor arrowCursor] set];
+//	[[NSCursor arrowCursor] set];
 	mIsInDrag = NO;
 	[[self splitView] resetResizeInformation];
 }
@@ -265,5 +276,6 @@
 - (void)cursorUpdate:(NSEvent *)theEvent
 {
 	NSLog(@"%@ cursorUpdate", self);
+	
 }
 @end

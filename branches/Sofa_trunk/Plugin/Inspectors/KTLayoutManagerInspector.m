@@ -19,6 +19,11 @@
 	[[oRow1View styleManager] setBorderColorBottom:[NSColor colorWithCalibratedWhite:.5 alpha:1]];
 }
 
+- (NSString *)label
+{
+	return @"Layout";
+}
+
 - (NSString *)viewNibName 
 {
     return @"KTLayoutManagerInspector";
