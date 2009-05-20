@@ -201,7 +201,7 @@
 //===========================================================
 - (void)mouseDown:(NSEvent*)theEvent
 {
-	if([[self splitView] adjustable] == NO)
+	if([[self splitView] userInteractionEnabled] == NO)
 		return;
 }
 
@@ -211,7 +211,7 @@
 //===========================================================
 - (void)mouseDragged:(NSEvent*)theEvent
 {
-	if([[self splitView] adjustable] == NO)
+	if([[self splitView] userInteractionEnabled] == NO)
 		return;
 		
 	NSPoint	aMousePoint = [[self splitView] convertPoint:[theEvent locationInWindow] fromView:nil];

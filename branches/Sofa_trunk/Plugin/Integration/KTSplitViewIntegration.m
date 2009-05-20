@@ -33,7 +33,7 @@
 {
 	[self setDividerOrientation:KTSplitViewDividerOrientation_Vertical];
 	[self setDividerThickness:8];
-	[self setDividerPosition:[self frame].size.width*.5 fromView:KTSplitViewFocusedViewFlag_FirstView];
+	[self setDividerPosition:[self frame].size.width*.5 relativeToView:KTSplitViewFocusedViewFlag_FirstView];
 	[[mFirstView styleManager] setBorderColor:[NSColor whiteColor]];
 	[[mFirstView styleManager] setBorderWidth:1];
 	[[mFirstView styleManager] setBackgroundColor:[NSColor colorWithCalibratedWhite:.8 alpha:1]];

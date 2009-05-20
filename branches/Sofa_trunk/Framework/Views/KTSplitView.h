@@ -27,7 +27,9 @@ typedef enum
 {
 	KTSplitViewResizeBehavior_MaintainProportions = 0,
 	KTSplitViewResizeBehavior_MaintainFirstViewPosition,
-	KTSplitViewResizeBehavior_MaintainSecondViewPosition
+	KTSplitViewResizeBehavior_MaintainFirstViewSize,
+	KTSplitViewResizeBehavior_MaintainSecondViewPosition,
+	KTSplitViewResizeBehavior_MaintainSecondViewSize
 	
 }KTSplitViewResizeBehavior;
 
@@ -60,6 +62,7 @@ typedef enum
 	KTSplitViewDividerOrientation		mDividerOrientation;
 	KTSplitViewResizeBehavior			mResizeBehavior;
 	BOOL								mAdjustable;
+	BOOL								mUserInteractionEnabled;
 	
 	KTSplitViewFocusedViewFlag			mPositionRelativeToViewFlag;
 	BOOL								mCanSetDividerPosition;
@@ -71,26 +74,25 @@ typedef enum
 @property (nonatomic, readwrite, assign) IBOutlet id <KTSplitViewDelegate> delegate;
 @property (nonatomic, readwrite, assign) KTSplitViewDividerOrientation dividerOrientation;
 @property (nonatomic, readwrite, assign) KTSplitViewResizeBehavior resizeBehavior;
-@property (nonatomic, readwrite, assign) BOOL adjustable;
+@property (nonatomic, readwrite, assign) BOOL adjustable DEPRECATED_ATTRIBUTE;
+@property (nonatomic, readwrite, assign) BOOL userInteractionEnabled;
 @property (nonatomic, readwrite, assign) CGFloat dividerThickness;
 
 - (id)initWithFrame:(NSRect)theFrame dividerOrientation:(KTSplitViewDividerOrientation)theDividerOrientation;
-
-- (void)setFirstView:(NSView<KTView>*)theView;
-- (void)setSecondView:(NSView<KTView>*)theView;
-- (void)setFirstView:(NSView<KTView>*)theFirstView secondView:(NSView<KTView>*)theSecondView;
 
 - (void)addViewToFirstView:(NSView<KTView>*)theView DEPRECATED_ATTRIBUTE;
 - (void)addViewToSecondView:(NSView<KTView>*)theView DEPRECATED_ATTRIBUTE;
 - (void)addViewToFirstView:(NSView<KTView>*)theFirstView secondView:(NSView<KTView>*)theSecondView DEPRECATED_ATTRIBUTE;
 
+- (void)setFirstView:(NSView<KTView>*)theView;
+- (void)setSecondView:(NSView<KTView>*)theView;
+- (void)setFirstView:(NSView<KTView>*)theFirstView secondView:(NSView<KTView>*)theSecondView;
+
 - (void)setDividerPosition:(CGFloat)thePosition fromView:(KTSplitViewFocusedViewFlag)theView DEPRECATED_ATTRIBUTE;
 - (void)setDividerPosition:(CGFloat)thePosition fromView:(KTSplitViewFocusedViewFlag)theView animate:(BOOL)theBool time:(float)theTimeInSeconds DEPRECATED_ATTRIBUTE;
 
-
 - (void)setDividerPosition:(CGFloat)thePosition relativeToView:(KTSplitViewFocusedViewFlag)theView;
 - (void)setDividerPosition:(CGFloat)thePosition relativeToView:(KTSplitViewFocusedViewFlag)theView animate:(BOOL)theBool animationDuration:(float)theTimeInSeconds;
-
 
 - (CGFloat)dividerPositionFromView:(KTSplitViewFocusedViewFlag)theFocusedViewFlag DEPRECATED_ATTRIBUTE;
 - (CGFloat)dividerPositionRelativeToView:(KTSplitViewFocusedViewFlag)theFocusedViewFlag;

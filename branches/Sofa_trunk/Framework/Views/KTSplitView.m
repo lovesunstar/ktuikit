@@ -16,7 +16,6 @@
 @end
 
 @interface KTSplitView (Private)
-- (void)buildSplitView;
 - (KTView*)firstView;
 - (KTView*)secondView;
 @end
@@ -29,6 +28,7 @@
 @synthesize dividerOrientation = mDividerOrientation;
 @synthesize resizeBehavior = mResizeBehavior;
 @synthesize adjustable = mAdjustable;
+@synthesize userInteractionEnabled = mUserInteractionEnabled;
 @synthesize divider = mDivider;
 
 
@@ -63,7 +63,7 @@
 		//	This flag won't change until the first time the split view has a width/height.
 		//	If the position is set before the flag changes, we'll cache the value and apply it later.
 		mCanSetDividerPosition = NO; 
-		[self setAdjustable:YES];
+		[self setUserInteractionEnabled:YES];
 	}
 	return self;
 }
@@ -92,7 +92,7 @@
 //	NSLog(@"mDivider: %@", mDivider);
 		
 	[self setDividerOrientation:[[theCoder decodeObjectForKey:@"dividerOrienation"] intValue]];	
-	[self setAdjustable:[[theCoder decodeObjectForKey:@"adjustableFlag"] boolValue]];
+	[self setUserInteractionEnabled:[[theCoder decodeObjectForKey:@"userInteractionEnabled"] boolValue]];
 	
 			
 	return self;
@@ -117,7 +117,7 @@
 	[theCoder encodeObject:mDivider forKey:@"divider"];
 	//[self addSubview:mDivider];
 
-	[theCoder encodeObject:[NSNumber numberWithBool:[self adjustable]] forKey:@"adjustableFlag"];
+	[theCoder encodeObject:[NSNumber numberWithBool:[self userInteractionEnabled]] forKey:@"userInteractionEnabled"];
 	[theCoder encodeObject:[NSNumber numberWithInt:[self dividerOrientation]] forKey:@"dividerOrientation"];
 }
 
@@ -167,7 +167,7 @@
 	if(	mCanSetDividerPosition == NO )
 	{
 		mCanSetDividerPosition = YES;
-		[self setDividerPosition:mDividerPositionToSet fromView:mPositionRelativeToViewFlag];
+		[self setDividerPosition:mDividerPositionToSet relativeToView:mPositionRelativeToViewFlag];
 		anOldDividerFrame = [[self divider] frame];
 	}
 	
@@ -223,6 +223,29 @@
 		}
 		break;
 		
+		case KTSplitViewResizeBehavior_MaintainFirstViewSize:
+		{
+			if([self dividerOrientation] == KTSplitViewDividerOrientation_Horizontal)
+			{
+				if(mResetResizeInformation == YES)
+				{
+					mResizeInformation = [[self firstView] frame].size.height;
+					mResetResizeInformation = NO;
+				}
+				[[self divider] setFrame:NSMakeRect(anOldDividerFrame.origin.x, theFrame.size.height-mResizeInformation-anOldDividerFrame.size.height, theFrame.size.width, anOldDividerFrame.size.height)];
+			}
+			else
+			{
+				if(mResetResizeInformation == YES)
+				{
+					mResizeInformation = [[self firstView] frame].origin.x+[[self firstView]  frame].size.width;
+					mResetResizeInformation = NO;
+				}
+				[[self divider] setFrame:NSMakeRect(mResizeInformation, anOldDividerFrame.origin.y, anOldDividerFrame.size.width, theFrame.size.height)];
+			}
+		}		
+		break;
+		
 		case KTSplitViewResizeBehavior_MaintainSecondViewPosition:
 			if([self dividerOrientation] == KTSplitViewDividerOrientation_Horizontal)
 			{
@@ -242,6 +265,31 @@
 				}
 				[[self divider] setFrame:NSMakeRect(theFrame.size.width-mResizeInformation-anOldDividerFrame.size.width, anOldDividerFrame.origin.y, anOldDividerFrame.size.width, theFrame.size.height)];
 			}
+		break;
+		
+		case KTSplitViewResizeBehavior_MaintainSecondViewSize:
+			if([self dividerOrientation] == KTSplitViewDividerOrientation_Horizontal)
+			{
+				if(mResetResizeInformation == YES)
+				{
+					mResizeInformation = [[self secondView] frame].size.height;
+					mResetResizeInformation = NO;
+				}
+				[[self divider] setFrame:NSMakeRect(anOldDividerFrame.origin.x, mResizeInformation, theFrame.size.width, anOldDividerFrame.size.height)];
+			}
+			else
+			{
+				if(mResetResizeInformation == YES)
+				{
+					mResizeInformation = [[self secondView] frame].size.width;
+					mResetResizeInformation = NO;
+				}
+				[[self divider] setFrame:NSMakeRect(theFrame.size.width-mResizeInformation-anOldDividerFrame.size.width, anOldDividerFrame.origin.y, anOldDividerFrame.size.width, theFrame.size.height)];
+			}		
+		
+		break;
+		
+		default:
 		break;
 	}
 	
@@ -319,8 +367,8 @@
 	This allows users to specify a divider position relative to any side of the split view
 	We'll take care of calculating what that position is really
 */
-
-
+#pragma mark -
+#pragma mark DEPRECATED
 //=========================================================== 
 // - setDividerPosition:fromView
 //===========================================================
@@ -363,7 +411,7 @@
 - (void)setDividerPosition:(float)thePosition fromView:(KTSplitViewFocusedViewFlag)theView animate:(BOOL)theBool time:(float)theTimeInSeconds
 {
 	if(theBool == NO)
-		[self setDividerPosition:thePosition fromView:theView];
+		[self setDividerPosition:thePosition relativeToView:theView];
 	else
 	{
 		if(mCanSetDividerPosition == NO) // we can't set the divider's position until the split view has a width & height
@@ -420,7 +468,21 @@
 	return aDividerPosition;
 }
 
+- (void)setAdjustable:(BOOL)theBool
+{
+	[self setUserInteractionEnabled:theBool];
+}
 
+- (BOOL)adjustable
+{
+	return [self userInteractionEnabled];
+}
+
+#pragma mark -
+
+//=========================================================== 
+// - setDividerPosition:relativeToView
+//===========================================================
 - (void)setDividerPosition:(CGFloat)thePosition relativeToView:(KTSplitViewFocusedViewFlag)theView
 {
 	if(mCanSetDividerPosition == NO) // we can't set the divider's position until the split view has a width & height
@@ -451,6 +513,11 @@
 	[self layoutViews];
 
 }
+
+
+//=============================================================== 
+// - setDividerPosition:relativeToView:animate:animationDuration
+//===============================================================
 - (void)setDividerPosition:(CGFloat)thePosition relativeToView:(KTSplitViewFocusedViewFlag)theView animate:(BOOL)theBool animationDuration:(float)theTimeInSeconds;
 {
 	if(theBool == NO)
@@ -485,6 +552,10 @@
 	[self layoutViews];
 }
 
+
+//=============================================================== 
+// - dividerPositionRelativeToView
+//===============================================================
 - (CGFloat)dividerPositionRelativeToView:(KTSplitViewFocusedViewFlag)theFocusedViewFlag
 {
 	float aDividerPosition = 0;
@@ -506,6 +577,8 @@
 	return aDividerPosition;	
 }
 
+
+
 //=========================================================== 
 // - dividerAnimationDidEnd
 //===========================================================
@@ -519,15 +592,9 @@
 
 #pragma mark -
 #pragma mark Building the SplitView
-//=========================================================== 
-// - buildSplitView
-//===========================================================
-- (void)buildSplitView
-{
-}
 
-
-
+#pragma mark -
+#pragma mark DEPRECATED
 //=========================================================== 
 // - addViewToFirstView
 //===========================================================
@@ -546,8 +613,6 @@
 	[[self secondView] addSubview:theView];
 }
 
-
-
 //=========================================================== 
 // - addViewToFirstView:secondView:
 //===========================================================
@@ -556,34 +621,51 @@
 	[self setFirstView:theFirstView];
 	[self setSecondView:theSecondView];
 }
+#pragma mark -
 
 
-- (KTView*)firstView
-{
-	return mFirstView;
-}
 
-- (KTView*)secondView
-{
-	return mSecondView;
-}
 
+//=========================================================== 
+// - setFirstView
+//===========================================================
 - (void)setFirstView:(NSView<KTView>*)theView
 {
 	[[self firstView] addSubview:theView];	
 }
 
+//=========================================================== 
+// - setSecondView
+//===========================================================
 - (void)setSecondView:(NSView<KTView>*)theView
 {
 	[[self secondView] addSubview:theView];	
 }
 
+//=========================================================== 
+// - setFirstView:secondView:
+//===========================================================
 - (void)setFirstView:(NSView<KTView>*)theFirstView secondView:(NSView<KTView>*)theSecondView
 {
 	[self setFirstView:theFirstView];
 	[self setSecondView:theSecondView];
 }
 
+//=========================================================== 
+// - firstView
+//===========================================================
+- (KTView*)firstView
+{
+	return mFirstView;
+}
+
+//=========================================================== 
+// - secondView
+//===========================================================
+- (KTView*)secondView
+{
+	return mSecondView;
+}
 
 //=========================================================== 
 // - setDivider:
