@@ -269,7 +269,6 @@
 		
 		[aCurrentViewController setHidden:YES];
 		[aViewControllerToSelect setHidden:NO];
-		[[self windowController] patchResponderChain];
 		
 		// layout
 		[[aViewForTab viewLayoutManager] setWidthType:KTSizeFill];

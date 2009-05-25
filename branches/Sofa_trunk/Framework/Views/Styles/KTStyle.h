@@ -10,9 +10,10 @@
 @class KTStyleManager;
 @class NSWindow;
 
-@protocol KTStyle
+@protocol KTStyle<NSObject>
 - (KTStyleManager*)styleManager;
 - (void)setStyleManager:(KTStyleManager*)theStyleManager;
 - (void)setNeedsDisplay:(BOOL)theBool;
+- (void)setOpaque:(BOOL)theBool;
 - (NSWindow *)window;
 @end

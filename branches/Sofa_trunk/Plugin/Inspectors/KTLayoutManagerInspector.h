@@ -40,6 +40,7 @@
 	
 	// Autoresizing
 	IBOutlet KTLayoutManagerControl *		oLayoutControl;
+	IBOutlet NSButton *			oShouldDoLiveResizingCheckBox;
 }
 
 - (IBAction)setXPosition:(id)theSender;
@@ -62,4 +63,7 @@
 - (IBAction)alignLeft:(id)theSender;
 - (IBAction)alignHorizontalCenter:(id)theSender;
 - (IBAction)alignRight:(id)theSender;
+
+- (IBAction)setShouldDoLiveResizing:(id)theSender;
+
 @end

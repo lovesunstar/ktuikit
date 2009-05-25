@@ -9,69 +9,75 @@
 #import "KTSplitViewInspector.h"
 #import <KTUIKit/KTUIKit.h>
 
+@interface KTSplitViewInspector (Private)
+- (KTSplitView*)inspectedSplitView;
+@end
+
 @implementation KTSplitViewInspector
 
-- (NSString *)viewNibName {
+- (NSString *)viewNibName 
+{
     return @"KTSplitViewInspector";
+}
+
++ (BOOL)supportsMultipleObjectInspection
+{
+	return NO;
 }
 
 - (void)refresh 
 {
-	// Synchronize your inspector's content view with the currently selected objects
+	KTSplitView * anInspectedSplitView = [self inspectedSplitView];
+	[oDividerThicknessTextField setIntValue:[anInspectedSplitView dividerThickness]];
+	[oOrientationPopUpButton selectItemWithTag:[anInspectedSplitView dividerOrientation]];
+	[oResizeBehaviorPopUpButton selectItemWithTag:[anInspectedSplitView resizeBehavior]];
+	
+//	[oBackgroundColorWell setColor:[anInspectedSplitView fillColor]];
 	[super refresh];
 }
 
 - (IBAction)setOrientation:(id)theSender
 {
-	if([[self inspectedObjects] count] < 1)
-		return;
-	KTSplitView * aSplitView = [[self inspectedObjects] objectAtIndex:0];
-	[aSplitView setDividerOrientation:[[theSender selectedItem] tag]];
+	[[self inspectedSplitView] setDividerOrientation:[[theSender selectedItem] tag]];
 }
 
 - (IBAction)setDividerThickness:(id)theSender
 {
-	if([[self inspectedObjects] count] < 1)
-		return;
-		
-	KTSplitView * aSplitView = [[self inspectedObjects] objectAtIndex:0];
-	[aSplitView setDividerThickness:[theSender floatValue]];
+	[[self inspectedSplitView] setDividerThickness:[theSender floatValue]];
 }
 
 - (IBAction)setDividerBackgroundColor:(id)theSender
 {
-	if([[self inspectedObjects] count] < 1)
-		return;
-		
-	KTSplitView * aSplitView = [[self inspectedObjects] objectAtIndex:0];
-	[aSplitView setDividerFillColor:[mBackgroundColorWell color]];
+	[[self inspectedSplitView] setDividerFillColor:[oBackgroundColorWell color]];
 }
 
 - (IBAction)setDividerFirstBorderColor:(id)theSender
 {
-	if([[self inspectedObjects] count] < 1)
-		return;
-		
-	KTSplitView * aSplitView = [[self inspectedObjects] objectAtIndex:0];
-	[aSplitView setDividerFirstStrokeColor:[mFirstStrokeColorWell color] secondColor:[mSecondStrokeColorWell color]];
+	[[self inspectedSplitView] setDividerFirstStrokeColor:[oFirstStrokeColorWell color] secondColor:[oSecondStrokeColorWell color]];
 }
 
 - (IBAction)setDividerSecondBorderColor:(id)theSender
 {
-	if([[self inspectedObjects] count] < 1)
-		return;
-		
-	KTSplitView * aSplitView = [[self inspectedObjects] objectAtIndex:0];
-	[aSplitView setDividerFirstStrokeColor:[mFirstStrokeColorWell color] secondColor:[mSecondStrokeColorWell color]];
+	[[self inspectedSplitView] setDividerFirstStrokeColor:[oFirstStrokeColorWell color] secondColor:[oSecondStrokeColorWell color]];
 }
 
 - (IBAction)setResizeBehavior:(id)theSender
 {
-	if([[self inspectedObjects] count] < 1)
-		return;
-		
-	KTSplitView * aSplitView = [[self inspectedObjects] objectAtIndex:0];
-	[aSplitView setResizeBehavior:[[theSender selectedItem] tag]];	
+	[[self inspectedSplitView] setResizeBehavior:[[theSender selectedItem] tag]];	
+}
+
+- (KTSplitView*)inspectedSplitView
+{
+	KTSplitView * aSplitViewToReturn = nil;
+	if([[self inspectedObjects] count] > 0)
+	{
+		id anInspectedView = [[self inspectedObjects] objectAtIndex:0];
+		if([anInspectedView isKindOfClass:[KTSplitView class]])
+			aSplitViewToReturn = anInspectedView;
+//		else if([[anInspectedView superview] isKindOfClass:[KTSplitView class]])
+//			aSplitViewToReturn = (KTSplitView*)[anInspectedView superview];
+	}
+	return aSplitViewToReturn;
 }
 
 @end

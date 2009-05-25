@@ -48,7 +48,6 @@
 }
 
 @property(nonatomic, assign) KTWindowController * windowController;
-@property(nonatomic, readonly) NSArray * descendants;
 @property(nonatomic, readwrite, assign) BOOL hidden;
 
 + (id)viewControllerWithWindowController:(KTWindowController*)theWindowController;

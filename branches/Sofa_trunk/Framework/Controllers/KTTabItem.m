@@ -13,7 +13,7 @@
 @synthesize label = mLabel;
 @synthesize identifier = mIdentifier;
 @synthesize tabViewController = wTabViewController;
-@synthesize viewController = mViewController;
+@synthesize viewController = wViewController;
 
 
 - (id)initWithViewController:(KTViewController*)theViewController
@@ -26,16 +26,14 @@
 	
 	if(self = [super init])
 	{
-		mViewController = theViewController;
+		wViewController = theViewController;
 	}
 	return self;
 }
+
 - (void)dealloc
 {
-	NSLog(@"%@ dealloc", self);
 	[mLabel release];
-//	[mIdentifier release];
-//	[mViewController release];
 	[super dealloc];
 }
 

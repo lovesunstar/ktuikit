@@ -325,9 +325,9 @@
 							<string key="NSKeyEquivalent"/>
 							<int key="NSPeriodicDelay">400</int>
 							<int key="NSPeriodicInterval">75</int>
-							<object class="NSMenuItem" key="NSMenuItem" id="630510621">
+							<object class="NSMenuItem" key="NSMenuItem" id="209014573">
 								<reference key="NSMenu" ref="996736867"/>
-								<string key="NSTitle">Maintain Second View Size</string>
+								<string key="NSTitle">Maintain Proportions</string>
 								<string key="NSKeyEquiv"/>
 								<int key="NSKeyEquivModMask">1048576</int>
 								<int key="NSMnemonicLoc">2147483647</int>
@@ -335,7 +335,6 @@
 								<reference key="NSOnImage" ref="489111758"/>
 								<reference key="NSMixedImage" ref="610254329"/>
 								<string key="NSAction">_popUpItemAction:</string>
-								<int key="NSTag">2</int>
 								<reference key="NSTarget" ref="894006548"/>
 							</object>
 							<bool key="NSMenuItemRespectAlignment">YES</bool>
@@ -343,17 +342,7 @@
 								<string key="NSTitle">OtherViews</string>
 								<object class="NSMutableArray" key="NSMenuItems">
 									<bool key="EncodedWithXMLCoder">YES</bool>
-									<object class="NSMenuItem" id="209014573">
-										<reference key="NSMenu" ref="996736867"/>
-										<string key="NSTitle">Maintain Proportions</string>
-										<string key="NSKeyEquiv"/>
-										<int key="NSKeyEquivModMask">1048576</int>
-										<int key="NSMnemonicLoc">2147483647</int>
-										<reference key="NSOnImage" ref="489111758"/>
-										<reference key="NSMixedImage" ref="610254329"/>
-										<string key="NSAction">_popUpItemAction:</string>
-										<reference key="NSTarget" ref="894006548"/>
-									</object>
+									<reference ref="209014573"/>
 									<object class="NSMenuItem" id="797788538">
 										<reference key="NSMenu" ref="996736867"/>
 										<string key="NSTitle">Maintain First View Size</string>
@@ -366,10 +355,20 @@
 										<int key="NSTag">1</int>
 										<reference key="NSTarget" ref="894006548"/>
 									</object>
-									<reference ref="630510621"/>
+									<object class="NSMenuItem" id="630510621">
+										<reference key="NSMenu" ref="996736867"/>
+										<string key="NSTitle">Maintain Second View Size</string>
+										<string key="NSKeyEquiv"/>
+										<int key="NSKeyEquivModMask">1048576</int>
+										<int key="NSMnemonicLoc">2147483647</int>
+										<reference key="NSOnImage" ref="489111758"/>
+										<reference key="NSMixedImage" ref="610254329"/>
+										<string key="NSAction">_popUpItemAction:</string>
+										<int key="NSTag">2</int>
+										<reference key="NSTarget" ref="894006548"/>
+									</object>
 								</object>
 							</object>
-							<int key="NSSelectedIndex">2</int>
 							<int key="NSPreferredEdge">3</int>
 							<bool key="NSUsesItemFromMenu">YES</bool>
 							<bool key="NSAltersState">YES</bool>
@@ -480,6 +479,54 @@
 						<reference key="destination" ref="732984876"/>
 					</object>
 					<int key="connectionID">140</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oDividerThicknessTextField</string>
+						<reference key="source" ref="762632889"/>
+						<reference key="destination" ref="610376949"/>
+					</object>
+					<int key="connectionID">142</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oOrientationPopUpButton</string>
+						<reference key="source" ref="762632889"/>
+						<reference key="destination" ref="653463101"/>
+					</object>
+					<int key="connectionID">143</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oResizeBehaviorPopUpButton</string>
+						<reference key="source" ref="762632889"/>
+						<reference key="destination" ref="732984876"/>
+					</object>
+					<int key="connectionID">144</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oBackgroundColorWell</string>
+						<reference key="source" ref="762632889"/>
+						<reference key="destination" ref="189570994"/>
+					</object>
+					<int key="connectionID">145</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oFirstStrokeColorWell</string>
+						<reference key="source" ref="762632889"/>
+						<reference key="destination" ref="133446959"/>
+					</object>
+					<int key="connectionID">146</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oSecondStrokeColorWell</string>
+						<reference key="source" ref="762632889"/>
+						<reference key="destination" ref="567193364"/>
+					</object>
+					<int key="connectionID">147</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -788,7 +835,7 @@
 					<string>com.apple.InterfaceBuilderKit</string>
 					<string>com.apple.InterfaceBuilderKit</string>
 					<reference ref="9"/>
-					<string>{{2054, 316}, {272, 296}}</string>
+					<string>{{716, 416}, {272, 296}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSMutableArray">
 						<bool key="EncodedWithXMLCoder">YES</bool>
@@ -851,7 +898,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{2159, 396}, {204, 54}}</string>
+					<string>{{821, 496}, {204, 54}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{117, 885}, {186, 54}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -886,7 +933,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">140</int>
+			<int key="maxID">147</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -919,27 +966,26 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSMutableArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>mBackgroundColorWell</string>
-							<string>mFirstStrokeColorWell</string>
-							<string>mSecondStrokeColorWell</string>
+							<string>oBackgroundColorWell</string>
+							<string>oDividerThicknessTextField</string>
+							<string>oFirstStrokeColorWell</string>
+							<string>oOrientationPopUpButton</string>
+							<string>oResizeBehaviorPopUpButton</string>
+							<string>oSecondStrokeColorWell</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>NSColorWell</string>
+							<string>NSTextField</string>
 							<string>NSColorWell</string>
+							<string>NSPopUpButton</string>
+							<string>NSPopUpButton</string>
 							<string>NSColorWell</string>
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">Plugin/Inspectors/KTSplitViewInspector.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Framework/Views/KTSplitView.h</string>
 					</object>
 				</object>
 			</object>

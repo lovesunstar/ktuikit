@@ -43,38 +43,48 @@
 	}
 }
 
-
-- (NSView*)hitTest:(NSPoint)thePoint
-{
-	if(NSPointInRect([self convertPoint:thePoint fromView:nil], [self bounds]))
-	{
-		if([[NSApp currentEvent] type]==NSLeftMouseDown)
-			[self mouseDown:[NSApp currentEvent]];
-		return self;
-	}
-	else
-		return [super hitTest:thePoint];
-}
-
+//
+//- (NSView*)hitTest:(NSPoint)thePoint
+//{
+//	if(NSPointInRect([self convertPoint:thePoint fromView:nil], [self bounds]))
+//	{
+//		if([[NSApp currentEvent] type]==NSLeftMouseDown)
+//			[self mouseDown:[NSApp currentEvent]];
+//		return self;
+//	}
+//	else
+//		return [super hitTest:thePoint];
+//}
+//
 
 - (void) mouseDown:(NSEvent *)theEvent
 {		
+
+
+	
    NSEvent * aNextEvent = nil;
-   while ((aNextEvent = [NSApp nextEventMatchingMask:NSLeftMouseUpMask | NSLeftMouseDraggedMask 
-										   untilDate:[NSDate distantFuture] 
-											  inMode:NSDefaultRunLoopMode dequeue:YES]))
+   while ((aNextEvent = [[self window] nextEventMatchingMask:NSLeftMouseUpMask | NSLeftMouseDraggedMask | NSMouseMovedMask
+												   untilDate:[NSDate distantFuture] 
+													  inMode:NSDefaultRunLoopMode dequeue:YES]))
    {
        switch ([aNextEvent type])
        {
-		   case NSLeftMouseDragged:
+			case NSLeftMouseDragged:
 			  [self mouseDragged:aNextEvent];
 			break;
-		   
-		   case NSLeftMouseUp:
-				[self mouseUp:aNextEvent];
-			return;
-			default:
+			
+			case NSMouseMovedMask:
 			break;
+					   
+			case NSLeftMouseUp:
+				[self mouseUp:aNextEvent];
+//				[[NSCursor arrowCursor] set];
+			return;
+			
+
+			
+			default:
+			return;
        }
    }
 }

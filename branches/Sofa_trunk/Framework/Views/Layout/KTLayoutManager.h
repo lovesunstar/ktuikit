@@ -75,6 +75,8 @@ typedef enum
 {
 	id<KTViewLayout>			wView;
 	
+	BOOL						mShouldDoLayout;
+	
 	KTSizeType					mWidthType;
 	KTSizeType					mHeightType;
 	KTHorizontalPositionType	mHorizontalPositionType;
@@ -95,24 +97,25 @@ typedef enum
 	CGFloat						mMinHeight;
 	CGFloat						mMaxHeight;
 }
-
-@property(readwrite,assign) KTSizeType heightType;
-@property(readwrite,assign) KTSizeType widthType;
-@property(readwrite,assign) KTHorizontalPositionType horizontalPositionType;
-@property(readwrite,assign) KTVerticalPositionType verticalPositionType;
-@property(readwrite,assign) CGFloat marginTop;
-@property(readwrite,assign) CGFloat marginBottom;
-@property(readwrite,assign) CGFloat marginLeft;
-@property(readwrite,assign) CGFloat marginRight;
-@property(readwrite,assign) CGFloat heightPercentage;
-@property(readwrite,assign) CGFloat widthPercentage;
-@property(readwrite,assign) CGFloat horizontalPositionPercentage;
-@property(readwrite,assign) CGFloat verticalPositionPercentage;
-@property(readwrite,assign) CGFloat minWidth;
-@property(readwrite,assign) CGFloat maxWidth;
-@property(readwrite,assign) CGFloat minHeight;
-@property(readwrite,assign) CGFloat maxHeight;
-@property(readwrite,assign) id <KTViewLayout> view;
+@property(nonatomic, readwrite, assign) BOOL shouldDoLayout;
+@property(nonatomic, readwrite, assign) KTSizeType heightType;
+@property(nonatomic, readwrite, assign) KTSizeType widthType;
+@property(nonatomic, readwrite, assign) KTHorizontalPositionType horizontalPositionType;
+@property(nonatomic, readwrite, assign) KTVerticalPositionType verticalPositionType;
+@property(nonatomic, readwrite, assign) CGFloat marginTop;
+@property(nonatomic, readwrite, assign) CGFloat marginBottom;
+@property(nonatomic, readwrite, assign) CGFloat marginLeft;
+@property(nonatomic, readwrite, assign) CGFloat marginRight;
+@property(nonatomic, readwrite, assign) CGFloat heightPercentage;
+@property(nonatomic, readwrite, assign) CGFloat widthPercentage;
+@property(nonatomic, readwrite, assign) CGFloat horizontalPositionPercentage;
+@property(nonatomic, readwrite, assign) CGFloat verticalPositionPercentage;
+@property(nonatomic, readwrite, assign) CGFloat minWidth;
+@property(nonatomic, readwrite, assign) CGFloat maxWidth;
+@property(nonatomic, readwrite, assign) CGFloat minHeight;
+@property(nonatomic, readwrite, assign) CGFloat maxHeight;
+@property(nonatomic, readwrite, assign) id <KTViewLayout> view;
+- (NSArray *)keysForCoding;
 
 - (id)initWithView:(id<KTViewLayout>)theView;
 - (void)setMargin:(float)theMargin;

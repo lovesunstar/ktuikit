@@ -16,7 +16,7 @@
  #import "KTGradientPicker.h"
  #import "KTSplitView.h"
  #import "KTSplitViewDivider.h"
- 
+ #import "KTSplitViewInspector.h"
  
 
 
@@ -50,7 +50,10 @@
 		[classes addObject:[KTLayoutManagerInspector class]];
 		
 	if([[self parent] isKindOfClass:[KTSplitView class]])
+	{
 		[classes removeAllObjects];
+//		[classes addObject:[KTSplitViewInspector class]];
+	}
 }
 
 //=========================================================== 
@@ -113,33 +116,34 @@
 {
 	return self;
 }
-
 //
-//- (void)setFrame:(NSRect)theFrame
-//{
-//	[super setFrame:theFrame];
-//}
+- (IBInset)ibLayoutInset
+{
+	IBInset anInsetToReturn;
+	anInsetToReturn.top = 0;
+	anInsetToReturn.right = 0;
+	anInsetToReturn.bottom = 0;
+	anInsetToReturn.left = 0;
+	if(		[[self parent] isKindOfClass:[KTSplitView class]]
+		&&	[[NSApp currentEvent] type] == NSLeftMouseUp)
+	{	
+		anInsetToReturn.top = NSWidth([self frame])*.5;
+		anInsetToReturn.right = NSWidth([self frame])*.5;
+		anInsetToReturn.bottom = NSWidth([self frame])*.5;
+		anInsetToReturn.left = NSWidth([self frame])*.5;
+	}
+	return anInsetToReturn;
+}
 //
-//- (void)setFrameSize:(NSSize)theSize
+//- (BOOL)ibIsChildInitiallySelectable:(id)theChild
 //{
-//	NSLog(@"setFrameSize:");
-//	[super setFrameSize:theSize];
-//	
-//	NSArray * aSubviewList = [self children];
-//	int aSubviewCount = [aSubviewList count];
-//	int i;
-//	for(i = 0; i < aSubviewCount; i++)
+//	if([[self parent] isKindOfClass:[KTSplitView class]])
 //	{
-//		NSView * aSubview = [aSubviewList objectAtIndex:i];
-//		
-//		// if the subview conforms to the layout protocol, tell its layout
-//		// manager to refresh its layout
-//		if( [aSubview conformsToProtocol:@protocol(KTViewLayout)] )
-//		{
-//			[[(KTView*)aSubview viewLayoutManager] refreshLayout];
-//		}
+//		return YES;
 //	}
+//	return NO;
 //}
+
 @end
 
 

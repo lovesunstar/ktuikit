@@ -62,6 +62,7 @@
 	// For Debugging
 	[self setLabel:@"KTView"];
 	
+	[self setOpaque:NO];
 	return self;
 }
 
@@ -95,7 +96,7 @@
 	KTStyleManager * aStyleManager = [theCoder decodeObjectForKey:@"styleManager"];
 	[aStyleManager setView:self];
 	[self setStyleManager:aStyleManager];
-	
+	[self setOpaque:NO];
 	[self setLabel:[theCoder decodeObjectForKey:@"label"]];
 	return self;
 }
@@ -111,22 +112,34 @@
 	[super dealloc];
 }
 
-
+//=========================================================== 
+// - isOpaque
+//=========================================================== 
 - (BOOL)isOpaque
 {
 	return mOpaque;
 }
 
+//=========================================================== 
+// - canBecomeKeyView
+//=========================================================== 
 - (BOOL)canBecomeKeyView
 {
 	return mCanBecomeKeyView;
 }
 
+//=========================================================== 
+// - canBecomeFirstResponder
+//=========================================================== 
 - (BOOL)canBecomeFirstResponder
 {
 	return mCanBecomeFirstResponder;
 }
 
+
+//=========================================================== 
+// - mouseDownCanMoveWindow
+//=========================================================== 
 - (BOOL)mouseDownCanMoveWindow
 {
 	return mMouseDownCanMoveWindow;
@@ -141,7 +154,7 @@
 - (void)drawRect:(NSRect)theRect
 {	
 	CGContextRef aContext = [[NSGraphicsContext currentContext] graphicsPort];
-	[mStyleManager drawStylesInRect:[self bounds] context:aContext view:self];
+	[mStyleManager drawStylesInRect:theRect context:aContext view:self];
 	[self drawInContext:aContext];
 }
 
@@ -152,6 +165,7 @@
 {
 	// subclasses can override this to do custom drawing over the styles
 }
+
 
 #pragma mark -
 #pragma mark Layout protocol
@@ -180,23 +194,7 @@
 //===========================================================
 - (void)setFrame:(NSRect)theFrame
 {
-	//NSLog(@"------------------>>>>setFrame:");
 	[super setFrame:theFrame];
-	
-//	NSArray * aSubviewList = [self children];
-//	int aSubviewCount = [aSubviewList count];
-//	int i;
-//	for(i = 0; i < aSubviewCount; i++)
-//	{
-//		NSView * aSubview = [aSubviewList objectAtIndex:i];
-//		
-//		// if the subview conforms to the layout protocol, tell its layout
-//		// manager to refresh its layout
-//		if( [aSubview conformsToProtocol:@protocol(KTViewLayout)] )
-//		{
-//			[[(KTView*)aSubview viewLayoutManager] refreshLayout];
-//		}
-//	}
 }
 
 

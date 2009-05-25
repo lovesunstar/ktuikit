@@ -10,9 +10,12 @@
 
 @interface KTSplitViewInspector : IBInspector 
 {
-	IBOutlet NSColorWell *	mBackgroundColorWell;
-	IBOutlet NSColorWell *	mFirstStrokeColorWell;
-	IBOutlet NSColorWell *	mSecondStrokeColorWell;
+	IBOutlet NSColorWell *		oBackgroundColorWell;
+	IBOutlet NSColorWell *		oFirstStrokeColorWell;
+	IBOutlet NSColorWell *		oSecondStrokeColorWell;
+	IBOutlet NSPopUpButton *	oOrientationPopUpButton;
+	IBOutlet NSPopUpButton *	oResizeBehaviorPopUpButton;
+	IBOutlet NSTextField *		oDividerThicknessTextField;
 }
 
 - (IBAction)setOrientation:(id)theSender;

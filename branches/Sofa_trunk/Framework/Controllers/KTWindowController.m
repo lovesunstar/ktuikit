@@ -30,14 +30,8 @@
 // If you use it, acknowledgement in an About Page or other appropriate place would be nice.
 // For example, "Contains "View Controllers" by Jonathan Dann and Cathy Shive" will do.
 
-
-/* (Jon 6/12/08) NOTE:
-	• Udpated -dealloc to release the ivars themselves rather than calling the accessors. This should always be done incase the get accessor returns an autoreleased copy of the ivar. For example a class that stores stuff internally in a mutable array but returns an (immutable) autoreleased copy of said array. In -dealloc if one calls [self.array release], in this case the returned object would be overreleased and the ivar itself would leak.
- */
-
 #import "KTWindowController.h"
 #import "KTViewController.h"
-
 
 @implementation KTWindowController
 
@@ -77,7 +71,7 @@
 	to open and close without releasing the controllers/views.  In this case, we would have the
 	controllers remove all their observations or bindings when the window closes and we don't have a way or hook to re-establish
 	the observations/bindings when the window opens again - needs to be balanced*/
-	[[self viewControllers] makeObjectsPerformSelector:@selector(removeObservations)];
+	//[[self viewControllers] makeObjectsPerformSelector:@selector(removeObservations)];
 }
 
 
@@ -144,23 +138,26 @@
 - (void)patchResponderChain
 {
 
-	NSMutableArray *flatViewControllers = [NSMutableArray array];
-	for (KTViewController *viewController in self.viewControllers) { // flatten the view controllers into an array
-		if([viewController hidden]==NO)
+	NSMutableArray * aFlatViewControllersList = [NSMutableArray array];
+	for (KTViewController * aViewController in mViewControllers) { // flatten the view controllers into an array
+		if([aViewController hidden]==NO)
 		{
-			[flatViewControllers addObject:viewController];
-			[flatViewControllers addObjectsFromArray:[viewController descendants]];
+			[aFlatViewControllersList addObject:aViewController];
+			[aFlatViewControllersList addObjectsFromArray:[aViewController descendants]];
 		}
 	}
-	if([flatViewControllers count]>0)
+	
+	if([aFlatViewControllersList count]>0)
 	{
-		[self setNextResponder:[flatViewControllers objectAtIndex:0]];
-		NSUInteger index = 0;
-		NSUInteger viewControllerCount = [flatViewControllers count] - 1;
-		for (index = 0; index < viewControllerCount ; index++) { // set the next responder of each controller to the next, the last in the array has no next responder.
-			[[flatViewControllers objectAtIndex:index] setNextResponder:[flatViewControllers objectAtIndex:index + 1]];
+		[self setNextResponder:[aFlatViewControllersList objectAtIndex:0]];
+		NSUInteger i = 0;
+		NSUInteger viewControllerCount = [aFlatViewControllersList count] - 1;
+		for (i = 0; i < viewControllerCount ; i++) 
+		{ 
+			// set the next responder of each controller to the next, the last in the array has no next responder.
+			[[aFlatViewControllersList objectAtIndex:i] setNextResponder:[aFlatViewControllersList objectAtIndex:i + 1]];
 		}
-		[[flatViewControllers lastObject] setNextResponder:nil];
+		[[aFlatViewControllersList lastObject] setNextResponder:nil];
 	}
 }
 

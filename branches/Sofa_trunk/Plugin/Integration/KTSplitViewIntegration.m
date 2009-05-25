@@ -15,19 +15,22 @@
  
 @implementation KTSplitView ( KTSplitViewIntegration )
 
-- (void)ibPopulateKeyPaths:(NSMutableDictionary *)keyPaths {
-    [super ibPopulateKeyPaths:keyPaths];
-
-	// Remove the comments and replace "MyFirstProperty" and "MySecondProperty" 
-	// in the following line with a list of your view's KVC-compliant properties.
-    [[keyPaths objectForKey:IBAttributeKeyPaths] addObjectsFromArray:[NSArray arrayWithObjects:/* @"MyFirstProperty", @"MySecondProperty",*/ nil]];
+- (void)ibPopulateKeyPaths:(NSMutableDictionary *)theKeyPaths 
+{
+	[super ibPopulateKeyPaths:theKeyPaths];
+	NSArray * aKeyPathsToAdd = [NSArray arrayWithObjects:@"dividerOrientation", 
+														 @"dividerThickness", 
+														 @"resizeBehavior", 
+														 nil];
+    [[theKeyPaths objectForKey:IBAttributeKeyPaths] addObjectsFromArray:aKeyPathsToAdd];
 }
 
-- (void)ibPopulateAttributeInspectorClasses:(NSMutableArray *)classes {
-    [classes addObject:[KTSplitViewInspector class]];
-    [super ibPopulateAttributeInspectorClasses:classes];
-	// Replace "KTSplitViewIntegrationInspector" with the name of your inspector class.
 
+
+- (void)ibPopulateAttributeInspectorClasses:(NSMutableArray *)theClasses 
+{
+    [theClasses addObject:[KTSplitViewInspector class]];
+    [super ibPopulateAttributeInspectorClasses:theClasses];
 }
 
 - (void)ibDidAddToDesignableDocument:(IBDocument *)theDocument
@@ -42,52 +45,50 @@
 	[[mSecondView styleManager] setBorderWidth:1];
 	[[mSecondView styleManager] setBackgroundColor:[NSColor colorWithCalibratedWhite:.8 alpha:1]];
 	[super ibDidAddToDesignableDocument:theDocument];
-	
-	NSLog(@"%@", NSApp);
 }
 
 
 - (NSView*)hitTest:(NSPoint)thePoint
 {
-	NSRect	aDividerFrame = [mDivider frame];
-	CGFloat aMousePadding = 10;
-	if([self dividerOrientation] == KTSplitViewDividerOrientation_Horizontal)
+	NSPoint aMousePoint = [self convertPoint:thePoint fromView:nil];
+	// if there are any split views in our subviews, we'll let them handle the hittest
+	id aViewToTest = nil;
+	if(NSPointInRect(aMousePoint, [mFirstView frame]))
+		aViewToTest = mFirstView;
+	else if(NSPointInRect(aMousePoint, [mSecondView frame]))
+		aViewToTest = mSecondView;
+	
+	if(aViewToTest)
 	{
-		if(aDividerFrame.size.height < aMousePadding)
-			aDividerFrame.size.height = aMousePadding;
-			aDividerFrame.origin.y-=aMousePadding*.5;
-	}
-	else
-	{
-		if(aDividerFrame.size.width < aMousePadding)
+		if([[aViewToTest subviews] count] > 0)
 		{
-			aDividerFrame.size.width = aMousePadding;
-			aDividerFrame.origin.x-=aMousePadding*.5;
+			if([[[aViewToTest subviews] objectAtIndex:0] isKindOfClass:[KTSplitView class]])
+			{
+				return [[[aViewToTest subviews] objectAtIndex:0] hitTest:thePoint];
+			}
 		}
 	}
-	if(NSPointInRect([self convertPoint:thePoint fromView:nil], aDividerFrame))
+
+	// if we've made it to here, we can check our divider against the point
+	id aTestResult =  [super hitTest:thePoint];	
+	if(aTestResult == mDivider)
 	{
-		if([[NSApp currentEvent] type] == NSLeftMouseDown)
-		{
-			[mDivider mouseDown:[NSApp currentEvent]];
-		}
 		if([[NSApp currentEvent] type] == NSMouseMoved)
 		{
-			NSLog(@"mouse moved in divider");
 			if([self dividerOrientation] == KTSplitViewDividerOrientation_Horizontal)
 				[[NSCursor resizeUpDownCursor] set];
 			else
 				[[NSCursor resizeLeftRightCursor] set];
+		}	
+		if([[NSApp currentEvent] type] == NSLeftMouseDown)
+		{
+			[mDivider mouseDown:[NSApp currentEvent]];
 		}
-		return mDivider;
 	}
-	else if(	[mDivider isInDrag] 
-			&&	[[NSApp currentEvent]type] == NSRightMouseUp)
-	{
-		[mDivider mouseUp:[NSApp currentEvent]];
-		return mDivider;
-	}
-	return [super hitTest:thePoint];
+	else if(	aTestResult==mFirstView
+			||	aTestResult==mSecondView)
+		aTestResult = self;
+	return aTestResult;
 }
 
 - (NSView*)ibDesignableContentView
@@ -120,10 +121,10 @@
 	NSLog(@"split view UPDATE CURSOR");
 	if([mDivider isInDrag])
 	{
-		if([self dividerOrientation] == KTSplitViewDividerOrientation_Horizontal)
-			[[NSCursor resizeUpDownCursor] set];
-		else
-			[[NSCursor resizeLeftRightCursor] set];
+//		if([self dividerOrientation] == KTSplitViewDividerOrientation_Horizontal)
+//			[[NSCursor resizeUpDownCursor] set];
+//		else
+//			[[NSCursor resizeLeftRightCursor] set];
 	}
 	else
 		[super cursorUpdate:theEvent];

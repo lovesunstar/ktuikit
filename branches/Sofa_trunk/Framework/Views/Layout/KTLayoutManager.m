@@ -32,6 +32,7 @@
 
 #import "KTLayoutManager.h"
 
+#define kKTLayoutManagerShouldDoLayoutKey @"shouldDoLayout"
 #define kKTLayoutManagerWidthTypeKey @"widthType"
 #define kKTLayoutManagerHeightTypeKey @"heightType"
 #define kKTLayoutManagerHorizontalPositionTypeKey @"horizontalPositionType"
@@ -54,7 +55,7 @@
 @end
 
 @implementation KTLayoutManager
-
+@synthesize shouldDoLayout = mShouldDoLayout;
 @synthesize widthType = mWidthType;
 @synthesize heightType = mHeightType;
 @synthesize horizontalPositionType = mHorizontalPositionType;
@@ -90,6 +91,7 @@
 		return nil;
 	wView = theView;
 	mWidthPercentage = mHeightPercentage = 1.0;
+	mShouldDoLayout = YES;
 	return self;
 }
 
@@ -105,7 +107,7 @@
 	
 	for (NSString *key in [self keysForCoding])
 		[self setValue:[theCoder decodeObjectForKey:key] forKey:key];
-	
+	mShouldDoLayout = YES;
 	return self;
 }
 
@@ -125,7 +127,8 @@
 //=========================================================== 
 - (NSArray *)keysForCoding
 {
-	return [NSArray arrayWithObjects:kKTLayoutManagerWidthTypeKey,
+	return [NSArray arrayWithObjects:kKTLayoutManagerShouldDoLayoutKey,
+									 kKTLayoutManagerWidthTypeKey,
 									 kKTLayoutManagerHeightTypeKey,
 									 kKTLayoutManagerHorizontalPositionTypeKey,
 									 kKTLayoutManagerVerticalPositionTypeKey,
@@ -147,42 +150,43 @@
 //=========================================================== 
 // - setNilValueForKey:
 //=========================================================== 
-- (void)setNilValueForKey:(NSString *)key;
+- (void)setNilValueForKey:(NSString *)theKey;
 {
-	if ([key isEqualToString:kKTLayoutManagerWidthTypeKey])
+	
+	if ([theKey isEqualToString:kKTLayoutManagerWidthTypeKey])
 		[self setWidthType:KTSizeAbsolute];
-	else if ([key isEqualToString:kKTLayoutManagerHeightTypeKey])
+	else if ([theKey isEqualToString:kKTLayoutManagerHeightTypeKey])
 		[self setHeightType:KTSizeAbsolute];
-	else if ([key isEqualToString:kKTLayoutManagerHorizontalPositionTypeKey])
+	else if ([theKey isEqualToString:kKTLayoutManagerHorizontalPositionTypeKey])
 		[self setHorizontalPositionType:KTHorizontalPositionAbsolute];
-	else if ([key isEqualToString:kKTLayoutManagerVerticalPositionTypeKey])
+	else if ([theKey isEqualToString:kKTLayoutManagerVerticalPositionTypeKey])
 		[self setVerticalPositionType:KTVerticalPositionAbsolute];
-	else if ([key isEqualToString:kKTLayoutManagerMarginTopKey])
+	else if ([theKey isEqualToString:kKTLayoutManagerMarginTopKey])
 		[self setMarginTop:0.0];
-	else if ([key isEqualToString:kKTLayoutManagerMarginRightKey])
+	else if ([theKey isEqualToString:kKTLayoutManagerMarginRightKey])
 		[self setMarginRight:0.0];
-	else if ([key isEqualToString:kKTLayoutManagerMarginBottomKey])
+	else if ([theKey isEqualToString:kKTLayoutManagerMarginBottomKey])
 		[self setMarginBottom:0.0];
-	else if ([key isEqualToString:kKTLayoutManagerMarginLeftKey])
+	else if ([theKey isEqualToString:kKTLayoutManagerMarginLeftKey])
 		[self setMarginLeft:0.0];
-	else if ([key isEqualToString:kKTLayoutManagerWidthPercentageKey])
+	else if ([theKey isEqualToString:kKTLayoutManagerWidthPercentageKey])
 		[self setWidthPercentage:1.0];
-	else if ([key isEqualToString:kKTLayoutManagerHeightPercentageKey])
+	else if ([theKey isEqualToString:kKTLayoutManagerHeightPercentageKey])
 		[self setHeightPercentage:1.0];
-	else if([key isEqualToString:kKTLayoutManagerHorizontalPercentageKey])
+	else if([theKey isEqualToString:kKTLayoutManagerHorizontalPercentageKey])
 		[self setHorizontalPositionPercentage:0.0];
-	else if([key isEqualToString:kKTLayoutManagerVerticalPercentageKey])
+	else if([theKey isEqualToString:kKTLayoutManagerVerticalPercentageKey])
 		[self setVerticalPositionPercentage:0.0];
-	else if ([key isEqualToString:kKTLayoutManagerMinWidthKey])
+	else if ([theKey isEqualToString:kKTLayoutManagerMinWidthKey])
 		[self setMinWidth:0.0];
-	else if ([key isEqualToString:kKTLayoutManagerMaxWidthKey])
+	else if ([theKey isEqualToString:kKTLayoutManagerMaxWidthKey])
 		[self setMaxWidth:0.0];
-	else if ([key isEqualToString:kKTLayoutManagerMinHeightKey])
+	else if ([theKey isEqualToString:kKTLayoutManagerMinHeightKey])
 		[self setMinHeight:0.0];
-	else if ([key isEqualToString:kKTLayoutManagerMaxHeightKey])
+	else if ([theKey isEqualToString:kKTLayoutManagerMaxHeightKey])
 		[self setMaxHeight:0.0];
 	else
-		[super setNilValueForKey:key];
+		[super setNilValueForKey:theKey];
 }
 
 
@@ -195,14 +199,26 @@
 	wView = theView;
 }
 
-
 //=========================================================== 
 // - refreshLayout
 //=========================================================== 
 - (void)refreshLayout
 {
+
 	NSRect aCurrentViewFrame = [wView frame];
 	NSRect aSuperviewFrame = [[wView parent] frame];
+	
+	if(mShouldDoLayout == NO)
+	{
+		// This flag is only here so the views can be laid out in IB without any resizing
+		// shouldn't call this from application code...I need to think of a better way to deal with
+		// this situation strictly in IB plugin code
+		aCurrentViewFrame.origin.y = NSHeight(aSuperviewFrame) - NSHeight(aCurrentViewFrame) - mMarginTop;
+		[wView setFrame:aCurrentViewFrame];
+
+		return;
+	}
+	
 	
 	//----------------------------------------------------------------------------------------
 	// WIDTH
@@ -264,38 +280,88 @@
 		
 		case KTHorizontalPositionFloatRight:
 		{
-			// position ourself at the right of the superview
-			aCurrentViewFrame.origin.x = NSWidth(aSuperviewFrame) - NSWidth(aCurrentViewFrame)- mMarginRight;
-				
-			NSArray * aSiblingList = [[wView parent] children];
-			int		  aCurrentViewIndex = [aSiblingList indexOfObject:wView];
+			// NOTE:
+			// we're resizing and positioning sibling views in this part
+			// a problem with this is that we're no longer considering the min/max sizes for the siblings
+			// in the case that views are being floated and the views combine absolute and filling sizes
+			// max/min sizes no longer make sense
 			
-			// check if we have any sibling views ahead of us
-			if(aCurrentViewIndex != 0)
+			NSArray *	aSiblingList = [[wView parent] children];
+			NSInteger	aCurrentViewIndex = [aSiblingList indexOfObject:wView];
+			CGFloat		aWidthTakeByFixedWidthSiblings = 0;
+			CGFloat		aCombinedMarginForFilledWidthSiblings = 0;
+			NSInteger	aNumberOfSiblingsWithFilledWidth = 0;
+			CGFloat		aWidthForFilledWidthSiblings = NSWidth(aSuperviewFrame);
+			
+			NSInteger i;
+			for(i = 0; i <= aCurrentViewIndex; i++)
 			{
-				// we're just interested in the view in the list before 
-				// ours that is also floating up and is positioned to the right of us
-				// we'll position ourself to the left of it
-				int i;
-				for(i = aCurrentViewIndex-1; i >= 0; i--)
+				id aSibling = [aSiblingList objectAtIndex:i];
+				
+				// check if the sibling also floats right
+				if(		[aSibling conformsToProtocol:@protocol(KTViewLayout)]
+					&&	[[aSibling viewLayoutManager] horizontalPositionType] == KTHorizontalPositionFloatRight)
 				{
-					id aSibling = [aSiblingList objectAtIndex:i];
-					if(		[aSibling conformsToProtocol:@protocol(KTViewLayout)]
-						&&	[[aSibling viewLayoutManager] horizontalPositionType] == KTHorizontalPositionFloatRight)
+					// does it have a fixed or filled width?
+					if([[aSibling viewLayoutManager] widthType] == KTSizeFill)
 					{
-						NSRect aSiblingFrame = [aSibling frame];
-						if(		NSMinY(aCurrentViewFrame) <= NSMinY(aSiblingFrame) +NSHeight(aSiblingFrame)
-							&&	NSMinY(aCurrentViewFrame) +NSHeight(aCurrentViewFrame) >= NSMinY(aSiblingFrame) )
-						{
-							// if the width is being filled, we need to adjust it to account for the sibling's position in the superview
-							if(	mWidthType == KTSizeFill)
-								aCurrentViewFrame.size.width-=(NSWidth(aSiblingFrame)+[[aSibling viewLayoutManager] marginLeft]+[[aSibling viewLayoutManager] marginRight]);
-							
-							aCurrentViewFrame.origin.x = NSMinX(aSiblingFrame) - [[aSibling viewLayoutManager] marginLeft] - mMarginRight - NSWidth(aCurrentViewFrame);
-							
-							break;
-						}
+						// keep track of the number of siblings that are also filling width so we can distribute the left over width between them
+						aNumberOfSiblingsWithFilledWidth++;
+						// keep track of their margins so that we can subtract it from the left over width
+						aCombinedMarginForFilledWidthSiblings+=[[aSibling viewLayoutManager] marginRight] + [[aSibling viewLayoutManager] marginLeft];
 					}
+					else // add up the fixed widths so that we can determine what's "left over"
+						aWidthTakeByFixedWidthSiblings+=[aSibling frame].size.width + [[aSibling viewLayoutManager] marginRight] + [[aSibling viewLayoutManager] marginLeft];
+				}
+			}
+			
+			// distribute the "left over" width between the the siblings set to fill their widths
+			if(aNumberOfSiblingsWithFilledWidth > 0)
+			{
+				CGFloat aLeftOverWidth = aSuperviewFrame.size.width - aWidthTakeByFixedWidthSiblings - aCombinedMarginForFilledWidthSiblings;
+				aWidthForFilledWidthSiblings = aLeftOverWidth / aNumberOfSiblingsWithFilledWidth;
+			}
+			
+			// resize and position each of the siblings
+			
+			// start at the far right of the superview
+			CGFloat aCurrentXPosition = NSWidth(aSuperviewFrame);
+			for(i = 0; i <=aCurrentViewIndex; i++)
+			{
+				id aSiblingToSizeAndPosition = [aSiblingList objectAtIndex:i];
+				
+				// we're only interested in other siblings that are also floating right
+				if(		[aSiblingToSizeAndPosition conformsToProtocol:@protocol(KTViewLayout)]
+					&&	[[aSiblingToSizeAndPosition viewLayoutManager] horizontalPositionType] == KTHorizontalPositionFloatRight)
+				{
+					NSRect aSiblingFrame;
+					
+					// we won't set the current view's frame right away
+					if(i!=aCurrentViewIndex)
+						aSiblingFrame = [aSiblingToSizeAndPosition frame];
+					else
+						aSiblingFrame = aCurrentViewFrame;
+						
+					if([[aSiblingToSizeAndPosition viewLayoutManager] widthType] == KTSizeFill)
+					{
+						// if the sibling fills it's width, give it the value we calculated
+						aSiblingFrame.size.width = aWidthForFilledWidthSiblings;
+						aSiblingFrame.origin.x = aCurrentXPosition - [[aSiblingToSizeAndPosition viewLayoutManager] marginRight] - aWidthForFilledWidthSiblings - [[aSiblingToSizeAndPosition viewLayoutManager] marginLeft];
+					}
+					else
+					{
+						// if the width is fixed, just position it
+						aSiblingFrame.origin.x = aCurrentXPosition - [[aSiblingToSizeAndPosition viewLayoutManager] marginRight] - aSiblingFrame.size.width - [[aSiblingToSizeAndPosition viewLayoutManager] marginLeft];
+					}
+					
+					// move the x position for the next sibling
+					aCurrentXPosition = aSiblingFrame.origin.x;
+					
+					// set sibling's frames - the current view will be set later
+					if(i!=aCurrentViewIndex)
+						[aSiblingToSizeAndPosition setFrame:aSiblingFrame];
+					else
+						aCurrentViewFrame = aSiblingFrame;
 				}
 			}
 		}
@@ -322,8 +388,8 @@
 						&&	[[aSibling viewLayoutManager] horizontalPositionType] == KTHorizontalPositionFloatLeft)
 					{
 						NSRect aSiblingFrame = [aSibling frame];
-						if(		NSMinY(aCurrentViewFrame) <= NSMinY(aSiblingFrame)+NSHeight(aSiblingFrame)
-							&&	NSMinY(aCurrentViewFrame)+NSHeight(aCurrentViewFrame) >= NSMinY(aSiblingFrame) )
+						if(		NSMinY(aCurrentViewFrame) <= NSMinY(aSiblingFrame) + NSHeight(aSiblingFrame)
+							&&	NSMinY(aCurrentViewFrame) + NSHeight(aCurrentViewFrame) >= NSMinY(aSiblingFrame) )
 						{
 							aCurrentViewFrame.origin.x = NSMinX([aSibling frame]) + NSWidth([aSibling frame]) + [[aSibling viewLayoutManager] marginRight] + mMarginLeft;
 							// if the width if being filled, we need to adjust it to account for our position change
@@ -448,6 +514,10 @@
 		break;
 	}
 	
+	
+	
+	// CS: with the new floating code, it is possible that the clipping here will
+	// mess everything up - 
 	
 	
 	// clip width

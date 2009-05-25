@@ -10,6 +10,13 @@
 #import "KTLayoutManagerControl.h"
 #import <KTUIKit/KTUIKit.h>
 
+static BOOL gShouldDoLiveResizing = YES;
+
+@interface KTLayoutManagerInspector (Private)
+- (id <KTViewLayout>)rootView;
+- (void)setViewsShouldDoLiveResizing:(NSArray*)theViews;
+@end
+
 @implementation KTLayoutManagerInspector
 - (void)awakeFromNib
 {
@@ -37,6 +44,11 @@
 
 - (void)refresh 
 {
+	[oShouldDoLiveResizingCheckBox setIntValue:gShouldDoLiveResizing];
+	id <KTViewLayout> aRootView = [self rootView];
+	if(aRootView != nil)
+		[self setViewsShouldDoLiveResizing:[NSArray arrayWithObject:aRootView]];
+	
 	NSArray *	anInspectedObjectsList = [self inspectedObjects];
 	
 	if([anInspectedObjectsList count] > 0)
@@ -67,7 +79,8 @@
 			}
 			else
 			{
-				[oWidth setStringValue:@"---"];
+				[oWidth setTextColor:[NSColor colorWithCalibratedWhite:.5 alpha:1]];
+				[oWidth setStringValue:@"Mixed"];
 			}
 			
 			if(aViewHeight == aFirstViewHeight)
@@ -80,7 +93,8 @@
 			}
 			else
 			{
-				[oHeight setStringValue:@"---"];
+				[oHeight setTextColor:[NSColor colorWithCalibratedWhite:.5 alpha:1]];
+				[oHeight setStringValue:@"Mixed"];
 			}	
 			
 			if(aViewXPosition == aFirstViewXPosition)
@@ -94,7 +108,8 @@
 			}
 			else
 			{
-				[oXPosition setStringValue:@"---"];
+				[oXPosition setTextColor:[NSColor colorWithCalibratedWhite:.5 alpha:1]];
+				[oXPosition setStringValue:@"Mixed"];
 			}	
 			
 			if(aViewYPosition == aFirstViewYPosition)
@@ -108,7 +123,8 @@
 			}
 			else
 			{
-				[oYPosition setStringValue:@"---"];
+				[oYPosition setTextColor:[NSColor colorWithCalibratedWhite:.5 alpha:1]];
+				[oYPosition setStringValue:@"Mixed"];
 			}		
 			
 		
@@ -170,8 +186,7 @@
 
 
 #pragma mark -
-#pragma mark KTView Configuration
-
+#pragma mark Frame
 - (IBAction)setXPosition:(id)theSender
 {
 	NSArray *	anInspectedObjectsList = [self inspectedObjects];
@@ -245,14 +260,32 @@
 	}
 }
 
+
+#pragma mark -
+#pragma mark Auto Placement/Alignment
 - (IBAction)centerHorizontally:(id)theSender
 {
 	for(id<KTViewLayout> anInspectedView in [self inspectedObjects])
 	{
 		NSRect aParentFrame = [[anInspectedView parent] frame];
 		NSRect aViewFrame = [anInspectedView frame];
+		
+		// adjust for the inset value
+		IBInset aViewInset = [(NSView*)anInspectedView ibLayoutInset];
+		aViewFrame.origin.x+=aViewInset.left;
+		aViewFrame.origin.y+=aViewInset.bottom;
+		aViewFrame.size.width-=(aViewInset.left + aViewInset.right);
+		aViewFrame.size.height-=(aViewInset.bottom + aViewInset.top);
+		
 		aParentFrame.origin = NSZeroPoint;
 		aViewFrame.origin.x = NSMidX(aParentFrame) - NSWidth(aViewFrame)*.5;
+		
+		// re-adjust for the inset
+		aViewFrame.origin.x-=aViewInset.left;
+		aViewFrame.origin.y-=aViewInset.bottom;
+		aViewFrame.size.width+=(aViewInset.left + aViewInset.right);
+		aViewFrame.size.height+=(aViewInset.bottom + aViewInset.top);
+		
 		[anInspectedView setFrame:aViewFrame];
 	}
 	[self refresh];
@@ -264,8 +297,23 @@
 	{
 		NSRect aParentFrame = [[anInspectedView parent] frame];
 		NSRect aViewFrame = [anInspectedView frame];
+		
+		// adjust for the inset value
+		IBInset aViewInset = [(NSView*)anInspectedView ibLayoutInset];
+		aViewFrame.origin.x+=aViewInset.left;
+		aViewFrame.origin.y+=aViewInset.bottom;
+		aViewFrame.size.width-=(aViewInset.left + aViewInset.right);
+		aViewFrame.size.height-=(aViewInset.bottom + aViewInset.top);
+		
 		aParentFrame.origin = NSZeroPoint;
 		aViewFrame.origin.y = NSMidY(aParentFrame) - NSHeight(aViewFrame)*.5;
+		
+		// re-adjust for the inset
+		aViewFrame.origin.x-=aViewInset.left;
+		aViewFrame.origin.y-=aViewInset.bottom;
+		aViewFrame.size.width+=(aViewInset.left + aViewInset.right);
+		aViewFrame.size.height+=(aViewInset.bottom + aViewInset.top);
+		
 		[anInspectedView setFrame:aViewFrame];
 	}
 	[self refresh];
@@ -277,8 +325,23 @@
 	{
 		NSRect aParentFrame = [[anInspectedView parent] frame];
 		NSRect aViewFrame = [anInspectedView frame];
+
+		// adjust for the inset value
+		IBInset aViewInset = [(NSView*)anInspectedView ibLayoutInset];
+		aViewFrame.origin.x+=aViewInset.left;
+		aViewFrame.origin.y+=aViewInset.bottom;
+		aViewFrame.size.width-=(aViewInset.left + aViewInset.right);
+		aViewFrame.size.height-=(aViewInset.bottom + aViewInset.top);
+		
 		aParentFrame.origin = NSZeroPoint;
 		aViewFrame.origin.y = NSMaxY(aParentFrame) - NSHeight(aViewFrame);
+		
+		// re-adjust for the inset
+		aViewFrame.origin.x-=aViewInset.left;
+		aViewFrame.origin.y-=aViewInset.bottom;
+		aViewFrame.size.width+=(aViewInset.left + aViewInset.right);
+		aViewFrame.size.height+=(aViewInset.bottom + aViewInset.top);
+		
 		[anInspectedView setFrame:aViewFrame];
 	}
 	[self refresh];
@@ -289,6 +352,11 @@
 	for(id<KTViewLayout> anInspectedView in [self inspectedObjects])
 	{
 		NSRect aViewFrame = [anInspectedView frame];
+//		IBInset aViewInset = [(NSView*)anInspectedView ibLayoutInset];
+//		aViewFrame.origin.x+=aViewInset.left;
+//		aViewFrame.origin.y+=aViewInset.bottom;
+//		aViewFrame.size.width-=(aViewInset.left + aViewInset.right);
+//		aViewFrame.size.height-=(aViewInset.bottom + aViewInset.top);
 		aViewFrame.origin.y = 0;
 		[anInspectedView setFrame:aViewFrame];
 	}
@@ -300,6 +368,11 @@
 	for(id<KTViewLayout> anInspectedView in [self inspectedObjects])
 	{
 		NSRect aViewFrame = [anInspectedView frame];
+//		IBInset aViewInset = [(NSView*)anInspectedView ibLayoutInset];
+//		aViewFrame.origin.x+=aViewInset.left;
+//		aViewFrame.origin.y+=aViewInset.bottom;
+//		aViewFrame.size.width-=(aViewInset.left + aViewInset.right);
+//		aViewFrame.size.height-=(aViewInset.bottom + aViewInset.top);
 		aViewFrame.origin.x = 0;
 		[anInspectedView setFrame:aViewFrame];
 	}
@@ -312,6 +385,11 @@
 	{
 		NSRect aParentFrame = [[anInspectedView parent] frame];
 		NSRect aViewFrame = [anInspectedView frame];
+//		IBInset aViewInset = [(NSView*)anInspectedView ibLayoutInset];
+//		aViewFrame.origin.x+=aViewInset.left;
+//		aViewFrame.origin.y+=aViewInset.bottom;
+//		aViewFrame.size.width-=(aViewInset.left + aViewInset.right);
+//		aViewFrame.size.height-=(aViewInset.bottom + aViewInset.top);
 		aParentFrame.origin = NSZeroPoint;
 		aViewFrame.origin.x = NSMaxX(aParentFrame) - NSWidth(aViewFrame);
 		[anInspectedView setFrame:aViewFrame];
@@ -327,6 +405,11 @@
 	for(id<KTViewLayout> anInspectedView in [self inspectedObjects])
 	{
 		NSRect aViewFrame = [anInspectedView frame];
+//		IBInset aViewInset = [(NSView*)anInspectedView ibLayoutInset];
+//		aViewFrame.origin.x+=aViewInset.left;
+//		aViewFrame.origin.y+=aViewInset.bottom;
+//		aViewFrame.size.width-=(aViewInset.left + aViewInset.right);
+//		aViewFrame.size.height-=(aViewInset.bottom + aViewInset.top);
 		aViewFrame.origin.y = aTopPosition - NSHeight(aViewFrame);
 		[anInspectedView setFrame:aViewFrame];
 	}
@@ -340,6 +423,11 @@
 	for(id<KTViewLayout> anInspectedView in [self inspectedObjects])
 	{
 		NSRect aViewFrame = [anInspectedView frame];
+//		IBInset aViewInset = [(NSView*)anInspectedView ibLayoutInset];
+//		aViewFrame.origin.x+=aViewInset.left;
+//		aViewFrame.origin.y+=aViewInset.bottom;
+//		aViewFrame.size.width-=(aViewInset.left + aViewInset.right);
+//		aViewFrame.size.height-=(aViewInset.bottom + aViewInset.top);
 		aViewFrame.origin.y = aCenterPosition - NSHeight(aViewFrame)*.5;
 		[anInspectedView setFrame:aViewFrame];
 	}
@@ -353,6 +441,11 @@
 	for(id<KTViewLayout> anInspectedView in [self inspectedObjects])
 	{
 		NSRect aViewFrame = [anInspectedView frame];
+//		IBInset aViewInset = [(NSView*)anInspectedView ibLayoutInset];
+//		aViewFrame.origin.x+=aViewInset.left;
+//		aViewFrame.origin.y+=aViewInset.bottom;
+//		aViewFrame.size.width-=(aViewInset.left + aViewInset.right);
+//		aViewFrame.size.height-=(aViewInset.bottom + aViewInset.top);
 		aViewFrame.origin.y = aBottomPosition;
 		[anInspectedView setFrame:aViewFrame];
 	}
@@ -366,6 +459,11 @@
 	for(id<KTViewLayout> anInspectedView in [self inspectedObjects])
 	{
 		NSRect aViewFrame = [anInspectedView frame];
+//		IBInset aViewInset = [(NSView*)anInspectedView ibLayoutInset];
+//		aViewFrame.origin.x+=aViewInset.left;
+//		aViewFrame.origin.y+=aViewInset.bottom;
+//		aViewFrame.size.width-=(aViewInset.left + aViewInset.right);
+//		aViewFrame.size.height-=(aViewInset.bottom + aViewInset.top);
 		aViewFrame.origin.x = aLeftPosition;
 		[anInspectedView setFrame:aViewFrame];
 	}
@@ -379,6 +477,11 @@
 	for(id<KTViewLayout> anInspectedView in [self inspectedObjects])
 	{
 		NSRect aViewFrame = [anInspectedView frame];
+//		IBInset aViewInset = [(NSView*)anInspectedView ibLayoutInset];
+//		aViewFrame.origin.x+=aViewInset.left;
+//		aViewFrame.origin.y+=aViewInset.bottom;
+//		aViewFrame.size.width-=(aViewInset.left + aViewInset.right);
+//		aViewFrame.size.height-=(aViewInset.bottom + aViewInset.top);
 		aViewFrame.origin.x = aCenterPosition - NSWidth(aViewFrame)*.5;
 		[anInspectedView setFrame:aViewFrame];
 	}
@@ -392,12 +495,57 @@
 	for(id<KTViewLayout> anInspectedView in [self inspectedObjects])
 	{
 		NSRect aViewFrame = [anInspectedView frame];
+//		IBInset aViewInset = [(NSView*)anInspectedView ibLayoutInset];
+//		aViewFrame.origin.x+=aViewInset.left;
+//		aViewFrame.origin.y+=aViewInset.bottom;
+//		aViewFrame.size.width-=(aViewInset.left + aViewInset.right);
+//		aViewFrame.size.height-=(aViewInset.bottom + aViewInset.top);
 		aViewFrame.origin.x = aRightPosition - NSWidth(aViewFrame);
 		[anInspectedView setFrame:aViewFrame];
 	}
 	[self refresh];
 }
 
+
+
+#pragma mark -
+#pragma mark Disabling/Enabling Live AutoLayout
+- (IBAction)setShouldDoLiveResizing:(id)theSender
+{
+	gShouldDoLiveResizing = [theSender intValue];
+	[self setViewsShouldDoLiveResizing:[NSArray arrayWithObject:[self rootView]]];
+}
+
+- (id <KTViewLayout>)rootView
+{
+	id<KTViewLayout> aRootView = [[self inspectedObjects] lastObject];
+	while ([aRootView parent] != nil) 
+	{
+		aRootView = [aRootView parent];
+	}
+	return aRootView;
+}
+
+- (void)setViewsShouldDoLiveResizing:(NSArray*)theViews
+{
+	for(id<KTViewLayout> aView in theViews)
+	{
+		if([[aView parent] isKindOfClass:[KTSplitView class]] == NO)
+		{
+			KTLayoutManager * aLayoutManager = [aView viewLayoutManager];
+			[aLayoutManager setShouldDoLayout:gShouldDoLiveResizing];
+			if([[aView children] count] > 0)
+			{
+				[self setViewsShouldDoLiveResizing:[aView children]];
+			}
+		}
+	}
+}
+
+
+
+#pragma mark -
+#pragma mark NSTextField Delegate Methods
 - (BOOL)control:(NSControl *)theControl textView:(NSTextView *)theTextView  doCommandBySelector:(SEL)theCommandSelector
 {
 	if(theCommandSelector==@selector(moveUp:))
@@ -437,5 +585,9 @@
 	else
 		return NO;
 }
+
+
+
+
 
 @end

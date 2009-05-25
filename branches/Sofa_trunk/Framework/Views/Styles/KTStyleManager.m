@@ -185,23 +185,30 @@
 //=========================================================== 
 - (void)drawStylesInRect:(NSRect)theRect context:(CGContextRef)theContext view:(id<KTStyle>)theView
 {
+	NSRect aViewBounds = [(NSView*)theView bounds];
 	CGFloat r, g, b, a;
 	
 	// Background
 	
 	// Either draw a background gradient of solid color fill
-	 if(mBackgroundGradient != nil)
-		[mBackgroundGradient drawInRect:theRect angle:mGradientAngle];
-	 else if(mBackgroundColor != [NSColor clearColor])
+	
+	// not sure how to partially draw a gradient, so we'll have it draw in the entire view bounds
+	// would like to find a way to optimize this
+	if(mBackgroundGradient != nil)
+		[mBackgroundGradient drawInRect:aViewBounds angle:mGradientAngle];
+	else if(mBackgroundColor != [NSColor clearColor])
 	{
 		[[mBackgroundColor colorUsingColorSpaceName:NSCalibratedRGBColorSpace] getRed:&r green:&g blue:&b alpha:&a];
 		CGContextSetRGBFillColor(theContext, r, g, b, a);
+		
+		// only draw the dirty rect
 		CGContextFillRect(theContext, NSRectToCGRect(theRect));
 	}
-
+	
+	// also need to figure out a way to optimize image drawing so it only draws in the dirty rect of the view
 	if(mBackgroundImage != nil)
 	{
-		NSPoint anImagePoint = theRect.origin;
+		NSPoint anImagePoint = aViewBounds.origin;
 		NSSize anImageSize = [mBackgroundImage size];
 		
 		NSData * anImageData = [NSBitmapImageRep TIFFRepresentationOfImageRepsInArray: [mBackgroundImage representations]];
@@ -215,7 +222,6 @@
 		
 		CFRelease(aCGImageSourceRef);
 		CGImageRelease(aCGBackgroundImage);		
-	
 	}
 	
 	
@@ -223,77 +229,107 @@
 	// Stroke - we can control color & line thickness of individual sides of the rectangle
 
 	CGContextSetLineWidth(theContext, 1);
-	NSPoint	aStrokePoint = theRect.origin;
+	NSPoint	aStrokePoint = aViewBounds.origin;
 	
 	// move the point to the top left corner to begin
-	aStrokePoint.y = theRect.size.height - .5;
+	aStrokePoint.y = aViewBounds.size.height - .5;
 	
 	// Top
-	if(		mBorderWidthTop > 0 
-		&&	mBorderColorTop != [NSColor clearColor])
+	// only draw if the top stroke is visible in the dirty rect
+	if(aStrokePoint.y <= NSMaxY(theRect))
 	{
-		CGContextBeginPath(theContext);
-		CGContextMoveToPoint(theContext, aStrokePoint.x,  aStrokePoint.y);
-		aStrokePoint.x+=theRect.size.width - .5;
-		CGContextAddLineToPoint(theContext, aStrokePoint.x,  aStrokePoint.y);
-		CGContextSetLineWidth(theContext, mBorderWidthTop);
-		[[mBorderColorTop colorUsingColorSpaceName:NSCalibratedRGBColorSpace] getRed:&r green:&g blue:&b alpha:&a];
-		CGContextSetRGBStrokeColor(theContext, r, g, b, a);
-		CGContextStrokePath(theContext);
+		if(		mBorderWidthTop > 0 
+			&&	mBorderColorTop != [NSColor clearColor])
+		{
+			CGContextBeginPath(theContext);
+			CGContextMoveToPoint(theContext, aStrokePoint.x,  aStrokePoint.y);
+			aStrokePoint.x+=aViewBounds.size.width - .5;
+			CGContextAddLineToPoint(theContext, aStrokePoint.x,  aStrokePoint.y);
+			CGContextSetLineWidth(theContext, mBorderWidthTop);
+			[[mBorderColorTop colorUsingColorSpaceName:NSCalibratedRGBColorSpace] getRed:&r green:&g blue:&b alpha:&a];
+			CGContextSetRGBStrokeColor(theContext, r, g, b, a);
+			CGContextStrokePath(theContext);
+		}
+		else
+		{
+			aStrokePoint.x += aViewBounds.size.width - .5;
+		}
 	}
-	else
+	else // i know this is a dumb structure, will refactor after I'm certain everything is drawing OK.
 	{
-		aStrokePoint.x += theRect.size.width - .5;
+		aStrokePoint.x += aViewBounds.size.width - .5;
 	}
 	
 	// Right
-	if(		mBorderWidthRight > 0 
-		&&	mBorderColorRight != [NSColor clearColor])
+	
+	// only draw if the right stroke is visible in the dirty rect
+	if(aStrokePoint.x <= NSMaxX(theRect))
 	{
-		CGContextBeginPath(theContext);
-		CGContextMoveToPoint(theContext, aStrokePoint.x,  aStrokePoint.y);
-		aStrokePoint.y-=theRect.size.height - 1;  
-		CGContextAddLineToPoint(theContext, aStrokePoint.x,  aStrokePoint.y);
-		CGContextSetLineWidth(theContext, mBorderWidthRight);
-		[[mBorderColorRight colorUsingColorSpaceName:NSCalibratedRGBColorSpace] getRed:&r green:&g blue:&b alpha:&a];
-		CGContextSetRGBStrokeColor(theContext, r, g, b, a);
-		CGContextStrokePath(theContext);
+		if(		mBorderWidthRight > 0 
+			&&	mBorderColorRight != [NSColor clearColor])
+		{
+			CGContextBeginPath(theContext);
+			CGContextMoveToPoint(theContext, aStrokePoint.x,  aStrokePoint.y);
+			aStrokePoint.y-=aViewBounds.size.height - 1;  
+			CGContextAddLineToPoint(theContext, aStrokePoint.x,  aStrokePoint.y);
+			CGContextSetLineWidth(theContext, mBorderWidthRight);
+			[[mBorderColorRight colorUsingColorSpaceName:NSCalibratedRGBColorSpace] getRed:&r green:&g blue:&b alpha:&a];
+			CGContextSetRGBStrokeColor(theContext, r, g, b, a);
+			CGContextStrokePath(theContext);
+		}
+		else
+		{
+			aStrokePoint.y -= aViewBounds.size.height - 1;
+		}
 	}
 	else
 	{
-		aStrokePoint.y -= theRect.size.height - 1;
+		aStrokePoint.y -= aViewBounds.size.height - 1;
 	}
 	
 	// Bottom
-	if(		mBorderWidthBottom > 0 
-		&&	mBorderColorBottom != [NSColor clearColor])
+	// only draw if the bottom is visible in the dirty rect
+	if(aStrokePoint.y>=NSMinY(theRect))
 	{
-		CGContextBeginPath(theContext);
-		CGContextMoveToPoint(theContext, aStrokePoint.x,  aStrokePoint.y);
-		aStrokePoint.x-=theRect.size.width - 1;     
-		CGContextAddLineToPoint(theContext, aStrokePoint.x,  aStrokePoint.y);
-		CGContextSetLineWidth(theContext, mBorderWidthBottom);
-		[[mBorderColorBottom colorUsingColorSpaceName:NSCalibratedRGBColorSpace] getRed:&r green:&g blue:&b alpha:&a];
-		CGContextSetRGBStrokeColor(theContext, r, g, b, a);							   
-		CGContextStrokePath(theContext);
+		if(		mBorderWidthBottom > 0 
+			&&	mBorderColorBottom != [NSColor clearColor])
+		{
+			CGContextBeginPath(theContext);
+			CGContextMoveToPoint(theContext, aStrokePoint.x,  aStrokePoint.y);
+			aStrokePoint.x-=aViewBounds.size.width - 1;     
+			CGContextAddLineToPoint(theContext, aStrokePoint.x,  aStrokePoint.y);
+			CGContextSetLineWidth(theContext, mBorderWidthBottom);
+			[[mBorderColorBottom colorUsingColorSpaceName:NSCalibratedRGBColorSpace] getRed:&r green:&g blue:&b alpha:&a];
+			CGContextSetRGBStrokeColor(theContext, r, g, b, a);							   
+			CGContextStrokePath(theContext);
+		}
+		else
+		{
+			aStrokePoint.x -= aViewBounds.size.width - 1;
+		}
 	}
 	else
 	{
-		aStrokePoint.x -= theRect.size.width - 1;
+		aStrokePoint.x -= aViewBounds.size.width - 1;	
 	}
 	
 	// Left
-	if(		mBorderWidthLeft > 0 
-		&&	mBorderColorLeft != [NSColor clearColor])
+	
+	// only draw if the left stroke is visible in the dirty rect
+	if(aStrokePoint.x >= NSMinX(theRect))
 	{
-		CGContextBeginPath(theContext);
-		CGContextMoveToPoint(theContext, aStrokePoint.x,  aStrokePoint.y);
-		aStrokePoint.y+=theRect.size.height; 
-		CGContextAddLineToPoint(theContext, aStrokePoint.x,  aStrokePoint.y);
-		CGContextSetLineWidth(theContext, mBorderWidthLeft);
-		[[mBorderColorLeft colorUsingColorSpaceName:NSCalibratedRGBColorSpace] getRed:&r green:&g blue:&b alpha:&a];
-		CGContextSetRGBStrokeColor(theContext, r, g, b, a);
-		CGContextStrokePath(theContext);
+		if(		mBorderWidthLeft > 0 
+			&&	mBorderColorLeft != [NSColor clearColor])
+		{
+			CGContextBeginPath(theContext);
+			CGContextMoveToPoint(theContext, aStrokePoint.x,  aStrokePoint.y);
+			aStrokePoint.y+=aViewBounds.size.height; 
+			CGContextAddLineToPoint(theContext, aStrokePoint.x,  aStrokePoint.y);
+			CGContextSetLineWidth(theContext, mBorderWidthLeft);
+			[[mBorderColorLeft colorUsingColorSpaceName:NSCalibratedRGBColorSpace] getRed:&r green:&g blue:&b alpha:&a];
+			CGContextSetRGBStrokeColor(theContext, r, g, b, a);
+			CGContextStrokePath(theContext);
+		}
 	}
 }
 
@@ -330,6 +366,10 @@
 		mBackgroundImage = theBackgroundImage;
 	}
 	mTileImage = theBool;
+	if(mTileImage)
+	{
+		[wView setOpaque:YES];	
+	}
 }
 
 
@@ -345,6 +385,9 @@
 		mBackgroundColor = [theColor retain];
 		if(mBackgroundColor!=nil)
 			[self setBackgroundGradient:nil];
+			
+		if(		[mBackgroundColor alphaComponent] >= 1)
+			[wView setOpaque:YES];
 	}
 }
 

@@ -43,15 +43,10 @@
 	• I'm considering overriding 'view' and 'setView:' so that the view controller only deals with KTViews.
 */
 
-/* (Jon 6/12/08) NOTE:
-	• Udpated -dealloc to release the ivars themselves rather than calling the accessors. This should always be done incase the get accessor returns an autoreleased copy of the ivar. For example a class that stores stuff internally in a mutable array but returns an (immutable) autoreleased copy of said array. In -dealloc if one calls [self.array release], in this case the returned object would be overreleased and the ivar itself would leak.
-	• Changed the (private) setChildren method to update the responder chain and declared the writability of the property in a class continuation.
-*/ 
 
 #import "KTViewController.h"
 #import "KTWindowController.h"
 #import "KTLayerController.h"
-
 
 
 @interface KTViewController (Private)
@@ -64,8 +59,6 @@
 //=========================================================== 
 @synthesize windowController = wWindowController;
 @synthesize hidden = mHidden;
-@dynamic descendants;
-
 
 
 //=========================================================== 
@@ -144,6 +137,15 @@
 	[[self windowController] patchResponderChain];
 }
 
+
+//=========================================================== 
+// - setHidden
+//=========================================================== 
+- (void)setHidden:(BOOL)theBool
+{
+	mHidden = theBool;
+	[[self windowController] patchResponderChain];
+}
 
 
 
@@ -250,7 +252,6 @@
 }
 
 
-
 //=========================================================== 
 // - descendants
 //=========================================================== 
@@ -277,7 +278,6 @@
 }
 
 
-
 //=========================================================== 
 // - removeAllViewControllers
 //=========================================================== 
@@ -288,7 +288,6 @@
 	// layer controllers
 	[mLayerControllers makeObjectsPerformSelector:@selector(removeObservations)];
 }
-
 
 
 //=========================================================== 

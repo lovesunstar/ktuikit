@@ -16,7 +16,7 @@
 	NSString *				mLabel;
 	id						mIdentifier;
 	KTTabViewController *	wTabViewController;
-	KTViewController *		mViewController;
+	KTViewController *		wViewController;
 }
 
 - (id)initWithViewController:(KTViewController*)theViewController;

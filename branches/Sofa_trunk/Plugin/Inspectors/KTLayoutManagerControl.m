@@ -73,6 +73,8 @@
 	[self setMarginRight:[NSNumber numberWithInt:0]];
 	[self setMarginBottom:[NSNumber numberWithInt:0]];
 	[self setMarginLeft:[NSNumber numberWithInt:0]];
+	[self setCanBecomeKeyView:NO];
+	[self setCanBecomeFirstResponder:YES];
 	return self;
 }
 
@@ -515,7 +517,7 @@
 		mTopStrutState = [self topStrutState];
 		if(mTopStrutState == KTLayoutControlStrutState_Flexible)
 		{
-			[wTopMarginTextField setStringValue:@"flexible"];
+			[wTopMarginTextField setStringValue:@"Flexible"];
 			[wTopMarginTextField setEditable:NO];
 			[wTopMarginTextField setSelectable:NO];
 		}
@@ -528,7 +530,7 @@
 		mRightStrutState = [self rightStrutState];
 		if(mRightStrutState == KTLayoutControlStrutState_Flexible)
 		{
-			[wRightMarginTextField setStringValue:@"flexible"];
+			[wRightMarginTextField setStringValue:@"Flexible"];
 			[wRightMarginTextField setEditable:NO];
 			[wRightMarginTextField setSelectable:NO];
 		}
@@ -541,7 +543,7 @@
 		mBottomStrutState = [self bottomStrutState];
 		if(mBottomStrutState == KTLayoutControlStrutState_Flexible)
 		{
-			[wBottomMarginTextField setStringValue:@"flexible"];
+			[wBottomMarginTextField setStringValue:@"Flexible"];
 			[wBottomMarginTextField setEditable:NO];
 			[wBottomMarginTextField setSelectable:NO];
 		}
@@ -554,7 +556,7 @@
 		mLeftStrutState = [self leftStrutState];
 		if(mLeftStrutState == KTLayoutControlStrutState_Flexible)
 		{
-			[wLeftMarginTextField setStringValue:@"flexible"];
+			[wLeftMarginTextField setStringValue:@"Flexible"];
 			[wLeftMarginTextField setEditable:NO];
 			[wLeftMarginTextField setSelectable:NO];
 		}
@@ -606,7 +608,7 @@
 	[mMarginTop release];
 	mMarginTop = theNumber;
 	if([theNumber intValue] == NSNotFound)
-		[wTopMarginTextField setStringValue:@"---"];
+		[wTopMarginTextField setStringValue:@"Mixed"];
 	else
 		[wTopMarginTextField setIntValue:[theNumber intValue]];
 }
@@ -620,7 +622,7 @@
 	[mMarginRight release];
 	mMarginRight = theNumber;
 	if([theNumber intValue] == NSNotFound)
-		[wRightMarginTextField setStringValue:@"---"];
+		[wRightMarginTextField setStringValue:@"Mixed"];
 	else
 		[wRightMarginTextField setIntValue:[theNumber intValue]];
 }
@@ -634,7 +636,7 @@
 	[mMarginBottom release];
 	mMarginBottom = theNumber;
 	if([theNumber intValue] == NSNotFound)
-		[wBottomMarginTextField setStringValue:@"---"];
+		[wBottomMarginTextField setStringValue:@"Mixed"];
 	else
 		[wBottomMarginTextField setIntValue:[theNumber intValue]];
 }
@@ -648,7 +650,7 @@
 	[mMarginLeft release];
 	mMarginLeft = theNumber;
 	if([theNumber intValue] == NSNotFound)
-		[wLeftMarginTextField setStringValue:@"---"];
+		[wLeftMarginTextField setStringValue:@"Mixed"];
 	else
 		[wLeftMarginTextField setIntValue:[theNumber intValue]];
 }
@@ -775,14 +777,6 @@
 }
 
 //=========================================================== 
-// - acceptsFirstResponder
-//=========================================================== 
-- (BOOL)acceptsFirstResponder
-{
-	return YES;
-}
-
-//=========================================================== 
 // - becomeFirstResponder
 //=========================================================== 
 - (void)becomeFirstResponder
@@ -819,7 +813,7 @@
 				// enabled
 				if(aTopStrutState == KTLayoutControlStrutState_Fixed)
 				{
-					// if the bottom is flexible - we'll put it in proportional mode
+					// if the bottom is Flexible - we'll put it in proportional mode
 					if([self isBottomStrutEnabledForView:aView] == NO)
 					{
 						[aViewLayoutManager setVerticalPositionType:KTVerticalPositionProportional];
@@ -895,7 +889,7 @@
 						[aViewLayoutManager setMarginBottom:0];
 						[aViewLayoutManager setHeightType:KTSizeAbsolute];
 					}
-					else //otherwise we'll set both margins flexible
+					else //otherwise we'll set both margins Flexible
 					{
 						[aViewLayoutManager setVerticalPositionType:KTVerticalPositionProportional];
 						if(NSHeight([[aView parent]frame])!=0)
@@ -968,7 +962,7 @@
 					}
 					else
 					{
-						// set both margins to be flexible
+						// set both margins to be Flexible
 						[aViewLayoutManager setHorizontalPositionType:KTHorizontalPositionProportional];
 						if(NSWidth([[aView parent]frame])!=0)
 						{
@@ -1044,7 +1038,7 @@
 					}
 					else
 					{
-						// set margins flexible
+						// set margins Flexible
 						[aViewLayoutManager setHorizontalPositionType:KTHorizontalPositionProportional];
 						if(NSWidth([[aView parent]frame])!=0)
 						{
@@ -1376,6 +1370,7 @@
 		[wRightMarginTextField setAction:@selector(setRightMargin:)];
 		[wRightMarginTextField setEditable:YES];
 		[wRightMarginTextField setSelectable:YES];
+		[wRightMarginTextField setDelegate:self];
 		[self addSubview:wRightMarginTextField];
 		[wRightMarginTextField release];
 	}
@@ -1390,6 +1385,7 @@
 		[wBottomMarginTextField setSelectable:YES];
 		[wBottomMarginTextField setTarget:self];
 		[wBottomMarginTextField setAction:@selector(setBottomMargin:)];
+		[wBottomMarginTextField setDelegate:self];
 		[self addSubview:wBottomMarginTextField];
 		[wBottomMarginTextField release];
 	}
@@ -1405,6 +1401,7 @@
 		[wTopMarginTextField setAction:@selector(setTopMargin:)];
 		[wTopMarginTextField setEditable:YES];
 		[wTopMarginTextField setSelectable:YES];
+		[wTopMarginTextField setDelegate:self];
 		[self addSubview:wTopMarginTextField];
 		[wTopMarginTextField release];
 	}
@@ -1419,9 +1416,53 @@
 		[wLeftMarginTextField setSelectable:YES];
 		[wLeftMarginTextField setTarget:self];
 		[wLeftMarginTextField setAction:@selector(setLeftMargin:)];
+		[wLeftMarginTextField setDelegate:self];
 		[self addSubview:wLeftMarginTextField];
 		[wLeftMarginTextField release];
 	}	
+}
+
+
+
+#pragma mark -
+#pragma mark NSTextField Delegate Methods
+//=========================================================== 
+// - control:textview:doCommandBySelector:
+//=========================================================== 
+- (BOOL)control:(NSControl*)theControl textView:(NSTextView*)theTextView doCommandBySelector:(SEL)theCommandSelector
+{
+    BOOL aResult = NO;
+	
+	if (theCommandSelector == @selector(insertTab:))
+    {
+        if(		theControl == wTopMarginTextField
+			||	theControl == wRightMarginTextField
+			||	theControl == wLeftMarginTextField
+			||	theControl == wBottomMarginTextField)
+		{
+			[theControl sendAction:[theControl action] to:[theControl target]];
+			[[self window] makeFirstResponder:[theControl nextValidKeyView]];
+		}
+		aResult = YES;
+    }
+    return aResult;
+}
+
+
+//=========================================================== 
+// - controlTextDidEndEditing:
+//=========================================================== 
+- (void)controlTextDidEndEditing:(NSNotification *)theNotification
+{
+	id aControl = [theNotification object];
+	if(		aControl == wTopMarginTextField
+		||	aControl == wRightMarginTextField
+		||	aControl == wLeftMarginTextField
+		||	aControl == wBottomMarginTextField)
+	{
+		[aControl sendAction:[aControl action] to:[aControl target]];
+	}
+	[[self window] makeFirstResponder:self];
 }
 
 
