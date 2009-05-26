@@ -127,8 +127,7 @@
 //=========================================================== 
 - (NSArray *)keysForCoding
 {
-	return [NSArray arrayWithObjects:kKTLayoutManagerShouldDoLayoutKey,
-									 kKTLayoutManagerWidthTypeKey,
+	return [NSArray arrayWithObjects:kKTLayoutManagerWidthTypeKey,
 									 kKTLayoutManagerHeightTypeKey,
 									 kKTLayoutManagerHorizontalPositionTypeKey,
 									 kKTLayoutManagerVerticalPositionTypeKey,
