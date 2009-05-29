@@ -590,8 +590,8 @@
 				[[aView viewLayoutManager] setMargin:0];
 			}
 		}
-		[self setMarginTop:[NSNumber numberWithInt:0]];
-		[self setMarginRight:[NSNumber numberWithInt:0]];
+		[self setMarginTop:[NSNumber numberWithInt:NSNotFound]];
+		[self setMarginRight:[NSNumber numberWithInt:NSNotFound]];
 		[self setMarginBottom:[NSNumber numberWithInt:0]];
 		[self setMarginLeft:[NSNumber numberWithInt:0]];
 		[self setNeedsDisplay:YES];
