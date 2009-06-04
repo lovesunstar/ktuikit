@@ -46,12 +46,16 @@
 	BOOL						mMouseDownCanMoveWindow;
 	BOOL						mCanBecomeKeyView;
 	BOOL						mCanBecomeFirstResponder;
+	BOOL						mDrawAsImage;
+	NSImage *					mCachedImage;
 }
 
 @property (nonatomic, readwrite, assign) BOOL opaque;
 @property (nonatomic, readwrite, assign) BOOL mouseDownCanMoveWindow;
 @property (nonatomic, readwrite, assign) BOOL canBecomeKeyView;
 @property (nonatomic, readwrite, assign) BOOL canBecomeFirstResponder;
+@property (nonatomic, readwrite, assign) BOOL drawAsImage;
+@property (nonatomic, readonly) NSImage * cachedImage;
 
 - (void)drawInContext:(CGContextRef)theContext;
 
