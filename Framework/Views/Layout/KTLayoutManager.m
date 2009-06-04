@@ -320,7 +320,7 @@
 			if(aNumberOfSiblingsWithFilledWidth > 0)
 			{
 				CGFloat aLeftOverWidth = aSuperviewFrame.size.width - aWidthTakeByFixedWidthSiblings - aCombinedMarginForFilledWidthSiblings;
-				aWidthForFilledWidthSiblings = aLeftOverWidth / aNumberOfSiblingsWithFilledWidth;
+				aWidthForFilledWidthSiblings = floor(aLeftOverWidth / aNumberOfSiblingsWithFilledWidth);
 			}
 			
 			// resize and position each of the siblings
