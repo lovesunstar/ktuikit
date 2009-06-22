@@ -75,7 +75,7 @@
 //=========================================================== 
 // - setFloatValue
 //===========================================================
-- (void)setFloatValue:(float)theFloatValue
+- (void)setFloatValue:(CGFloat)theFloatValue
 {
 	mFloatValue = theFloatValue;
 	[self setNeedsDisplay:YES];

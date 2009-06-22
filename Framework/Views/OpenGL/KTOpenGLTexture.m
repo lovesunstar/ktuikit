@@ -89,8 +89,8 @@
 		unsigned char *		aBitmapData;
 		
 		aBitmapData = [mBitmapSource bitmapData];
-		mOriginalPixelsWide = [mBitmapSource pixelsWide];
-		mOriginalPixelsHigh = [mBitmapSource pixelsHigh];
+		mOriginalPixelsWide = [(NSBitmapImageRep*)mBitmapSource pixelsWide];
+		mOriginalPixelsHigh = [(NSBitmapImageRep*)mBitmapSource pixelsHigh];
 		
 		
 		
