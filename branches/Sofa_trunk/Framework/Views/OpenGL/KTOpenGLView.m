@@ -218,7 +218,7 @@
 //	else
 		[self setup2DCamera];
 
-	float aRed, aGreen, aBlue, anAlpha;
+	CGFloat aRed, aGreen, aBlue, anAlpha;
 	[[[[self styleManager] backgroundColor] colorUsingColorSpaceName:NSCalibratedRGBColorSpace] getRed:&aRed green:&aGreen blue:&aBlue alpha:&anAlpha];
 	glClearColor(aRed, aGreen, aBlue, anAlpha);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

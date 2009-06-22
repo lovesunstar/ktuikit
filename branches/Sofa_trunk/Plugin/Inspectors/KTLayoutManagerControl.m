@@ -291,7 +291,7 @@
 			// a dashed path
 			NSBezierPath * aDashedPath = [NSBezierPath bezierPath];
 			[aDashedPath moveToPoint:aPoint];
-			float aLineDash[1];
+			CGFloat aLineDash[1];
 			aLineDash[0] = 2.0;
 			[aDashedPath setLineDash:aLineDash count:1 phase:0.0];
 			aPoint = NSMakePoint(aPoint.x, aPoint.y-theRect.size.height*.5);
@@ -779,9 +779,10 @@
 //=========================================================== 
 // - becomeFirstResponder
 //=========================================================== 
-- (void)becomeFirstResponder
+- (BOOL)becomeFirstResponder
 {
 	[self setNeedsDisplay:YES];
+	return YES;
 }
 
 //=========================================================== 
