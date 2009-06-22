@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		53DF6901067E5B8E0090B5B0 /* All */ = {
+		AB2AF5E70FEFA6C6000040A7 /* All */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = C056398708A954F8003078D8 /* Build configuration list for PBXAggregateTarget "All" */;
+			buildConfigurationList = AB2AF5F60FEFA708000040A7 /* Build configuration list for PBXAggregateTarget "All" */;
 			buildPhases = (
 			);
 			dependencies = (
-				53DF6903067E5B930090B5B0 /* PBXTargetDependency */,
-				4C5F005A0E0AD5B400F9A03C /* PBXTargetDependency */,
+				AB2AF5EB0FEFA6D8000040A7 /* PBXTargetDependency */,
+				AB2AF5ED0FEFA6D8000040A7 /* PBXTargetDependency */,
 			);
 			name = All;
 			productName = All;
@@ -185,13 +185,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		4C5F00590E0AD5B400F9A03C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0259C573FE90428111CA0C5A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 53DF68FC067E5B5A0090B5B0;
-			remoteInfo = KTUIKitFramework;
-		};
 		4C94A8DB0EB48B98000FADE7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0259C573FE90428111CA0C5A /* Project object */;
@@ -199,11 +192,18 @@
 			remoteGlobalIDString = 53DF68FC067E5B5A0090B5B0;
 			remoteInfo = KTUIKitFramework;
 		};
-		53DF6902067E5B930090B5B0 /* PBXContainerItemProxy */ = {
+		AB2AF5EA0FEFA6D8000040A7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0259C573FE90428111CA0C5A /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D1AC9600486D14A00FE50C9;
+			remoteGlobalIDString = 53DF68FC067E5B5A0090B5B0 /* KTUIKitFramework */;
+			remoteInfo = KTUIKitFramework;
+		};
+		AB2AF5EC0FEFA6D8000040A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0259C573FE90428111CA0C5A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D1AC9600486D14A00FE50C9 /* KTUIKit */;
 			remoteInfo = KTUIKit;
 		};
 /* End PBXContainerItemProxy section */
@@ -919,7 +919,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				53DF6901067E5B8E0090B5B0 /* All */,
+				AB2AF5E70FEFA6C6000040A7 /* All */,
 				53DF68FC067E5B5A0090B5B0 /* KTUIKitFramework */,
 				8D1AC9600486D14A00FE50C9 /* KTUIKit */,
 			);
@@ -1069,20 +1069,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		4C5F005A0E0AD5B400F9A03C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 53DF68FC067E5B5A0090B5B0 /* KTUIKitFramework */;
-			targetProxy = 4C5F00590E0AD5B400F9A03C /* PBXContainerItemProxy */;
-		};
 		4C94A8DC0EB48B98000FADE7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 53DF68FC067E5B5A0090B5B0 /* KTUIKitFramework */;
 			targetProxy = 4C94A8DB0EB48B98000FADE7 /* PBXContainerItemProxy */;
 		};
-		53DF6903067E5B930090B5B0 /* PBXTargetDependency */ = {
+		AB2AF5EB0FEFA6D8000040A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 53DF68FC067E5B5A0090B5B0 /* KTUIKitFramework */;
+			targetProxy = AB2AF5EA0FEFA6D8000040A7 /* PBXContainerItemProxy */;
+		};
+		AB2AF5ED0FEFA6D8000040A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8D1AC9600486D14A00FE50C9 /* KTUIKit */;
-			targetProxy = 53DF6902067E5B930090B5B0 /* PBXContainerItemProxy */;
+			targetProxy = AB2AF5EC0FEFA6D8000040A7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1130,9 +1130,31 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		AB2AF5E80FEFA6C6000040A7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = All;
+			};
+			name = Debug;
+		};
+		AB2AF5E90FEFA6C6000040A7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = All;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		C056398008A954F8003078D8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ONLY_ACTIVE_ARCH_PRE_XCODE_3_1)";
 				COPY_PHASE_STRIP = NO;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "/tmp/$(PROJECT_NAME).dst";
@@ -1151,9 +1173,11 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "Resources/KTUIKitFramework-Info.plist";
 				INSTALL_PATH = "@rpath";
 				LD_DYLIB_INSTALL_NAME = "$(DYLIB_INSTALL_NAME_BASE:standardizepath)/$(EXECUTABLE_PATH)";
+				ONLY_ACTIVE_ARCH_PRE_XCODE_3_1 = "$(NATIVE_ARCH)";
 				PRODUCT_NAME = KTUIKit;
 				SKIP_INSTALL = YES;
 			};
@@ -1162,6 +1186,8 @@
 		C056398108A954F8003078D8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEPLOYMENT_LOCATION = YES;
@@ -1179,8 +1205,9 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "Resources/KTUIKitFramework-Info.plist";
-				INSTALL_PATH = "@loader_path/../Frameworks";
+				INSTALL_PATH = "@rpath";
 				LD_DYLIB_INSTALL_NAME = "$(DYLIB_INSTALL_NAME_BASE:standardizepath)/$(EXECUTABLE_PATH)";
 				PRODUCT_NAME = KTUIKit;
 				SKIP_INSTALL = YES;
@@ -1190,6 +1217,8 @@
 		C056398408A954F8003078D8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				COPY_PHASE_STRIP = NO;
@@ -1201,6 +1230,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = KTUIKit_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = KTUIKitIBPlugin;
@@ -1212,61 +1242,33 @@
 		C056398508A954F8003078D8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
-				COPY_PHASE_STRIP = NO;
+				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_DIR)/Library/Frameworks\"";
 				GCC_ENABLE_OBJC_GC = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Plugin/KTUIKit_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = KTUIKitIBPlugin;
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = ibplugin;
 			};
 			name = Release;
 		};
-		C056398808A954F8003078D8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				PRODUCT_NAME = All;
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-				ZERO_LINK = YES;
-			};
-			name = Debug;
-		};
-		C056398908A954F8003078D8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_MODEL_TUNING = G5;
-				INSTALL_PATH = "";
-				PRODUCT_NAME = All;
-				SKIP_INSTALL = YES;
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-			};
-			name = Release;
-		};
 		C056398C08A954F8003078D8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
 				GCC_MODEL_TUNING = "";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
@@ -1278,11 +1280,10 @@
 		C056398D08A954F8003078D8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
 				GCC_MODEL_TUNING = "";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
@@ -1293,6 +1294,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		AB2AF5F60FEFA708000040A7 /* Build configuration list for PBXAggregateTarget "All" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB2AF5E80FEFA6C6000040A7 /* Debug */,
+				AB2AF5E90FEFA6C6000040A7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C056397F08A954F8003078D8 /* Build configuration list for PBXNativeTarget "KTUIKitFramework" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1307,15 +1317,6 @@
 			buildConfigurations = (
 				C056398408A954F8003078D8 /* Debug */,
 				C056398508A954F8003078D8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C056398708A954F8003078D8 /* Build configuration list for PBXAggregateTarget "All" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C056398808A954F8003078D8 /* Debug */,
-				C056398908A954F8003078D8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
