@@ -35,6 +35,9 @@
 		4C3EAA4A0ECF5843004492C4 /* KTStyleInspector.nib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3EAA3F0ECF5843004492C4 /* KTStyleInspector.nib */; };
 		4C3EAA4B0ECF5843004492C4 /* KTUIKitLibrary.nib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3EAA410ECF5843004492C4 /* KTUIKitLibrary.nib */; };
 		4C3EAA4C0ECF5843004492C4 /* KTViewInspector.nib in Resources */ = {isa = PBXBuildFile; fileRef = 4C3EAA430ECF5843004492C4 /* KTViewInspector.nib */; };
+		4C3EB75B1067A8BA004C2464 /* KTOpenGLViewIntegration.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3EB75A1067A8BA004C2464 /* KTOpenGLViewIntegration.m */; };
+		4C5C4B251068D1CE00D72FD8 /* KTViewOverlayWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5C4B231068D1CE00D72FD8 /* KTViewOverlayWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C5C4B261068D1CE00D72FD8 /* KTViewOverlayWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5C4B241068D1CE00D72FD8 /* KTViewOverlayWindow.m */; };
 		4C7AE9FA0ECF9DCE00F79A75 /* TextView.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C7AE9F90ECF9DCE00F79A75 /* TextView.tif */; };
 		4C7AEA080ECFA3F500F79A75 /* WebKit.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7AEA070ECFA3F500F79A75 /* WebKit.png */; };
 		4C9313FB0FC943B100604546 /* KTSplitView.classdescription in Resources */ = {isa = PBXBuildFile; fileRef = 4C9313F90FC943B100604546 /* KTSplitView.classdescription */; };
@@ -242,6 +245,10 @@
 		4C3EAA400ECF5843004492C4 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/KTStyleInspector.nib; sourceTree = "<group>"; };
 		4C3EAA420ECF5843004492C4 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/KTUIKitLibrary.nib; sourceTree = "<group>"; };
 		4C3EAA440ECF5843004492C4 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/KTViewInspector.nib; sourceTree = "<group>"; };
+		4C3EB75A1067A8BA004C2464 /* KTOpenGLViewIntegration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTOpenGLViewIntegration.m; sourceTree = "<group>"; };
+		4C3EB75C1067A917004C2464 /* KTOpenGLView.classdescription */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = KTOpenGLView.classdescription; sourceTree = "<group>"; };
+		4C5C4B231068D1CE00D72FD8 /* KTViewOverlayWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTViewOverlayWindow.h; sourceTree = "<group>"; };
+		4C5C4B241068D1CE00D72FD8 /* KTViewOverlayWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTViewOverlayWindow.m; sourceTree = "<group>"; };
 		4C7AE9F90ECF9DCE00F79A75 /* TextView.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = TextView.tif; sourceTree = "<group>"; };
 		4C7AEA070ECFA3F500F79A75 /* WebKit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WebKit.png; sourceTree = "<group>"; };
 		4C9313F90FC943B100604546 /* KTSplitView.classdescription */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = KTSplitView.classdescription; path = "Plugin/Class Descriptions/KTSplitView.classdescription"; sourceTree = "<group>"; };
@@ -679,6 +686,7 @@
 				4C9314010FC943D000604546 /* KTSplitViewDividerIntegration.m */,
 				4C9314020FC943D000604546 /* KTSplitViewIntegration.m */,
 				4CC1F40D0DE940F70035CE00 /* KTViewIntegration.m */,
+				4C3EB75A1067A8BA004C2464 /* KTOpenGLViewIntegration.m */,
 				4CD98F9E0EBC7C45008BD0EA /* KTScrollViewIntegration.m */,
 				4C9A7EED0EBDBD5000F8AA48 /* KTAppKitSplitViewIntegration.m */,
 				4CCA961B0EBC506C00CF9A03 /* KTButtonIntegration.m */,
@@ -767,6 +775,8 @@
 			children = (
 				4CD4637C0ED03594009725B9 /* KTWindow.h */,
 				4CD4637D0ED03594009725B9 /* KTWindow.m */,
+				4C5C4B231068D1CE00D72FD8 /* KTViewOverlayWindow.h */,
+				4C5C4B241068D1CE00D72FD8 /* KTViewOverlayWindow.m */,
 			);
 			path = NSWindowSubclasses;
 			sourceTree = "<group>";
@@ -775,6 +785,7 @@
 			isa = PBXGroup;
 			children = (
 				4CC1F4060DE940160035CE00 /* KTView.classdescription */,
+				4C3EB75C1067A917004C2464 /* KTOpenGLView.classdescription */,
 				4C9313F90FC943B100604546 /* KTSplitView.classdescription */,
 				4C9313FA0FC943B100604546 /* KTViewController.classdescription */,
 				4CCA961D0EBC511B00CF9A03 /* KTButton.classdescription */,
@@ -863,6 +874,7 @@
 				4CB5E6C70FCC061C0077E788 /* KTScroller.h in Headers */,
 				4CB5E6CE0FCC06680077E788 /* KTSplitView.h in Headers */,
 				4CB5E6D00FCC06680077E788 /* KTSplitViewDivider.h in Headers */,
+				4C5C4B251068D1CE00D72FD8 /* KTViewOverlayWindow.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1030,6 +1042,7 @@
 				4CB5E6C80FCC061C0077E788 /* KTScroller.m in Sources */,
 				4CB5E6CF0FCC06680077E788 /* KTSplitView.m in Sources */,
 				4CB5E6D10FCC06680077E788 /* KTSplitViewDivider.m in Sources */,
+				4C5C4B261068D1CE00D72FD8 /* KTViewOverlayWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1063,6 +1076,7 @@
 				4C9314030FC943D000604546 /* KTLayoutManagerIntegration.m in Sources */,
 				4C9314040FC943D000604546 /* KTSplitViewDividerIntegration.m in Sources */,
 				4C9314050FC943D000604546 /* KTSplitViewIntegration.m in Sources */,
+				4C3EB75B1067A8BA004C2464 /* KTOpenGLViewIntegration.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1154,7 +1168,7 @@
 		C056398008A954F8003078D8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ONLY_ACTIVE_ARCH_PRE_XCODE_3_1)";
+				ARCHS = "$(NATIVE_ARCH)";
 				COPY_PHASE_STRIP = NO;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "/tmp/$(PROJECT_NAME).dst";
@@ -1177,7 +1191,7 @@
 				INFOPLIST_FILE = "Resources/KTUIKitFramework-Info.plist";
 				INSTALL_PATH = "@rpath";
 				LD_DYLIB_INSTALL_NAME = "$(DYLIB_INSTALL_NAME_BASE:standardizepath)/$(EXECUTABLE_PATH)";
-				ONLY_ACTIVE_ARCH_PRE_XCODE_3_1 = "$(NATIVE_ARCH)";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = KTUIKit;
 				SKIP_INSTALL = YES;
 			};
@@ -1186,8 +1200,7 @@
 		C056398108A954F8003078D8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
+				ARCHS = "$(NATIVE_ARCH)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEPLOYMENT_LOCATION = YES;
@@ -1217,8 +1230,7 @@
 		C056398408A954F8003078D8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
+				ARCHS = "$(NATIVE_ARCH)";
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				COPY_PHASE_STRIP = NO;
@@ -1242,8 +1254,7 @@
 		C056398508A954F8003078D8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
+				ARCHS = "$(NATIVE_ARCH)";
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				COPY_PHASE_STRIP = YES;
@@ -1265,8 +1276,7 @@
 		C056398C08A954F8003078D8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
+				ARCHS = "$(NATIVE_ARCH)";
 				GCC_MODEL_TUNING = "";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1280,8 +1290,7 @@
 		C056398D08A954F8003078D8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
+				ARCHS = "$(NATIVE_ARCH)";
 				GCC_MODEL_TUNING = "";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;

@@ -52,7 +52,7 @@
 - (void)drawOverlays;
 - (void)setNeedsDisplay:(BOOL)theBool;
 - (void)display;
-
+- (void)viewWillMoveToWindow:(NSWindow*)theWindow;
 
 - (KTOpenGLLayer*)hitTest:(NSPoint)thePoint;
 
