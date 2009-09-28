@@ -205,8 +205,22 @@
 //=========================================================== 
 - (void)refreshLayout
 {
-
-	NSRect aCurrentViewFrame = [wView frame];
+	
+	NSRect aCurrentViewFrame;
+	if([wView isKindOfClass:[NSWindow class]])
+	{
+//		NSLog(@"----------");
+//		NSLog(@"layout manager getting window frame: %@", NSStringFromRect([wView frame]));
+		NSRect anOverlayFrame = [wView frame];
+		NSPoint aBasePoint = [[(NSView*)[wView parent] window] convertScreenToBase:anOverlayFrame.origin];
+		NSPoint aViewPoint = [(NSView*)[wView parent] convertPoint:aBasePoint fromView:nil];
+		aCurrentViewFrame.origin = aViewPoint;
+		aCurrentViewFrame.size = anOverlayFrame.size;
+//		NSLog(@"layout manager convertd screen frame to parent view coords: %@", NSStringFromRect(aCurrentViewFrame));
+	}
+	else
+		aCurrentViewFrame = [wView frame];
+		
 	NSRect aSuperviewFrame = [[wView parent] frame];
 	
 	if(mShouldDoLayout == NO)
@@ -261,14 +275,18 @@
 			if(		mMarginLeft > 0
 				&&	NSMinX(aCurrentViewFrame) < mMarginLeft)
 				aCurrentViewFrame.origin.x = mMarginLeft;
+			//NSLog(@"KTHorizontalPositionAbsolute:a current view frame: %@", NSStringFromRect(aCurrentViewFrame));
+
 		break;
 		
 		case KTHorizontalPositionKeepCentered:
 			aCurrentViewFrame.origin.x = floor(NSWidth(aSuperviewFrame)*.5) - floor(NSWidth(aCurrentViewFrame)*.5);
+			//NSLog(@"KTHorizontalPositionKeepCentered:a current view frame: %@", NSStringFromRect(aCurrentViewFrame));
 		break;
 		
 		case KTHorizontalPositionStickLeft:
 			aCurrentViewFrame.origin.x = mMarginLeft;
+			//NSLog(@"KTHorizontalPositionStickLeft:a current view frame: %@", NSStringFromRect(aCurrentViewFrame));
 		break;
 		
 		case KTHorizontalPositionStickRight:

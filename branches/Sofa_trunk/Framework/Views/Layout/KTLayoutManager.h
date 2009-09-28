@@ -77,6 +77,7 @@ typedef enum
 	
 	KTSizeType					mWidthType;
 	KTSizeType					mHeightType;
+	
 	KTHorizontalPositionType	mHorizontalPositionType;
 	KTVerticalPositionType		mVerticalPositionType;
 	

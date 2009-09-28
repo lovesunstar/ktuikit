@@ -83,6 +83,7 @@
 	if(mViewControllers != theViewControllers)
 	{
 		NSMutableArray * aNewViewControllers = [theViewControllers mutableCopy];
+		[mViewControllers makeObjectsPerformSelector:@selector(removeObservations)];
 		[mViewControllers release];
 		mViewControllers = aNewViewControllers;
 	}
@@ -116,6 +117,7 @@
 //=========================================================== 
 - (void)removeViewController:(KTViewController *)theViewController
 {
+	[theViewController removeObservations];
 	[mViewControllers removeObject:theViewController];
 	[self patchResponderChain];
 }
@@ -127,10 +129,17 @@
 //=========================================================== 
 - (void)removeAllViewControllers
 {
+	[mViewControllers makeObjectsPerformSelector:@selector(removeObservations)];
 	[mViewControllers removeAllObjects];
 }
 
-
+//=========================================================== 
+// - removeObservations
+//=========================================================== 
+- (void)removeObservations
+{
+	[mViewControllers makeObjectsPerformSelector:@selector(removeObservations)];
+}
 
 //=========================================================== 
 // - patchResponderChain

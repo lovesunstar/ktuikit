@@ -8,6 +8,7 @@
 
 #import "KTOpenGLView.h"
 #import "KTOpenGLLayer.h"
+#import "KTViewOverlayWindow.h"
 
 @interface KTOpenGLView (Private)
 
@@ -65,6 +66,9 @@
 	KTStyleManager * aStyleManager = [[[KTStyleManager alloc] initWithView:self] autorelease];
 	[self setStyleManager:aStyleManager];
 	
+	// overlay window
+	mOverlayWindows = [[NSMutableArray alloc] init];
+	
 	// For Debugging
 	[self setLabel:@"KTOpenGLView"];
 	[self setOpaque:NO];
@@ -113,6 +117,9 @@
 	[aStyleManager setView:self];
 	[self setStyleManager:aStyleManager];
 	
+	// overlay window
+	mOverlayWindows = [[NSMutableArray alloc] init];
+	
 	[self setLabel:[theCoder decodeObjectForKey:@"label"]];
 	[self setOpaque:NO];
 	return self;
@@ -131,6 +138,9 @@
 	[mLabel release];
 	[mOpenGLLayer setView:nil];
 	[mOpenGLLayer release];
+	for(KTViewOverlayWindow * anOverlayWindow in mOverlayWindows)
+		[self removeOverlayWindow:anOverlayWindow];
+	[mOverlayWindows release];
 	[super dealloc];
 }
 
@@ -317,6 +327,77 @@
 }
 
 
+
+
+#pragma mark -
+#pragma mark Overlay Windows
+//=========================================================== 
+// - addOverlayWindow:
+//===========================================================
+- (void)addOverlayWindow:(KTViewOverlayWindow*)theOverlayWindow
+{	
+	[theOverlayWindow setParentView:self];
+	[mOverlayWindows addObject:theOverlayWindow];
+
+	if([self window])
+	{
+		[[self window] addChildWindow:theOverlayWindow ordered:NSWindowAbove];
+//		if([theOverlayWindow isVisible]==NO)
+//			[theOverlayWindow orderOut:self];		
+	}
+}
+
+//=========================================================== 
+// - removeOverlayWindow:
+//===========================================================
+- (void)removeOverlayWindow:(KTViewOverlayWindow*)theOverlayWindow
+{
+	[theOverlayWindow setParentView:nil];
+	[mOverlayWindows removeObject:theOverlayWindow];
+	if([self window])
+	{
+//		if([theOverlayWindow isVisible])
+//			[theOverlayWindow close];
+		[[self window] removeChildWindow:theOverlayWindow];	
+	}
+}
+
+
+//=========================================================== 
+// - removeOverlayWindow:
+//===========================================================
+- (void)viewWillMoveToWindow:(NSWindow*)theWindow
+{
+	// remove the overlays from the current window
+	NSWindow * aCurrentWindow = [self window];
+	if(aCurrentWindow)
+	{
+		for(NSWindow * anOverlay in mOverlayWindows)
+		{	
+//			if([anOverlay isVisible])
+//				[anOverlay close];
+			[aCurrentWindow removeChildWindow:anOverlay];
+		}
+	}
+	// and add them to the new window
+	if(theWindow)
+	{
+		for(NSWindow * anOverlay in mOverlayWindows)
+		{
+			[theWindow addChildWindow:anOverlay ordered:NSWindowAbove];
+//			if([anOverlay isVisible]==NO)
+//				[anOverlay orderOut:self];
+		}
+	}
+	
+	
+	// send the message to our layer
+	if(mOpenGLLayer)
+	{
+		[mOpenGLLayer viewWillMoveToWindow:(NSWindow*)theWindow];
+	}
+}
+
 #pragma mark -
 #pragma mark Responder Chain
 //=========================================================== 
@@ -478,6 +559,8 @@
 
 
 
+
+
 #pragma mark -
 #pragma mark Layout protocol
 //=========================================================== 
@@ -547,9 +630,11 @@
 //===========================================================
 - (NSArray*)children
 {
-	NSArray *	aChildren = nil;
+	NSMutableArray *	aChildren = [NSMutableArray array];
 	if(mOpenGLLayer!=nil)
-		aChildren = [NSArray arrayWithObject:mOpenGLLayer];
+		[aChildren addObject:mOpenGLLayer];
+	if([mOverlayWindows count] > 0)
+		[aChildren addObjectsFromArray:mOverlayWindows];
 	return aChildren;
 }
 

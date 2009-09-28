@@ -18,6 +18,7 @@
 #import "KTStyleManager.h"
 
 @class KTOpenGLLayer;
+@class KTViewOverlayWindow;
 
 @interface KTOpenGLView : NSOpenGLView <KTView>
 {
@@ -28,6 +29,7 @@
 	KTOpenGLLayer *				mCurrentMouseEventHandler;
 	BOOL						mShouldAcceptFirstResponder;
 	BOOL						mOpaque;
+	NSMutableArray *			mOverlayWindows;
 }
 
 @property (readwrite, retain) KTOpenGLLayer * openGLLayer;
@@ -37,6 +39,6 @@
 + (NSOpenGLPixelFormat*)defaultPixelFormat;
 - (void)drawInContext:(NSOpenGLContext*)theContext;
 
-
-
+- (void)addOverlayWindow:(KTViewOverlayWindow*)theOverlayWindow;
+- (void)removeOverlayWindow:(KTViewOverlayWindow*)theOverlayWindow;
 @end

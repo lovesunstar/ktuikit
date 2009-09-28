@@ -100,9 +100,9 @@
 {
 	//NSLog(@"%@ dealloc", self);
 	[self releaseNibObjects];
-	[mSubcontrollers makeObjectsPerformSelector:@selector(removeObservations)];
+//	[mSubcontrollers makeObjectsPerformSelector:@selector(removeObservations)];
 	[mSubcontrollers release];
-	[mLayerControllers makeObjectsPerformSelector:@selector(removeObservations)];
+//	[mLayerControllers makeObjectsPerformSelector:@selector(removeObservations)];
 	[mLayerControllers release];
 	[super dealloc];
 }

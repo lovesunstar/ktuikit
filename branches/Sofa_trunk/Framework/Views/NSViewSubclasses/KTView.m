@@ -71,11 +71,9 @@
 - (void)encodeWithCoder:(NSCoder*)theCoder
 {	
 	[super encodeWithCoder:theCoder];
-	
 	[theCoder encodeObject:[self viewLayoutManager] forKey:@"layoutManager"];
 	[theCoder encodeObject:[self styleManager] forKey:@"styleManager"];
 	[theCoder encodeObject:[self label] forKey:@"label"];
-
 }
 
 //=========================================================== 

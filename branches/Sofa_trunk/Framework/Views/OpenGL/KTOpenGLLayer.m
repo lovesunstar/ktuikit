@@ -361,7 +361,19 @@
 }
 
 
-
+//=========================================================== 
+// - removeOverlayWindow:
+//===========================================================
+- (void)viewWillMoveToWindow:(NSWindow*)theWindow
+{
+	for(KTOpenGLLayer * aSublayer in mSublayers)
+	{
+		if([aSublayer respondsToSelector:@selector(viewWillMoveToWindow:)])
+			[aSublayer viewWillMoveToWindow:theWindow];
+	}
+	
+	// subclasses make sure to call super!
+}
 
 
 
