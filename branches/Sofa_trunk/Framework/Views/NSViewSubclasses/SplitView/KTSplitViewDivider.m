@@ -113,6 +113,11 @@
 //===========================================================
 - (void)setFrame:(NSRect)theFrame
 {	
+//	if([[self splitView] dividerOrientation] == KTSplitViewDividerOrientation_Vertical)
+//		theFrame.origin.x-=(theFrame.size.width*.5);
+//	else
+//		theFrame.origin.y-=(theFrame.size.height*.5);
+		
 //	//NSLog(@"%@ setFrame:", self);
 //	if([[self splitView] dividerOrientation] == KTSplitViewDividerOrientation_Vertical)
 //	{
@@ -157,8 +162,9 @@
 //		}
 //	}
 
+
 	[super setFrame:theFrame];
-	[[self splitView] resetResizeInformation];
+//	[[self splitView] resetResizeInformation];
 	[[self splitView] layoutViews];
 }
 
@@ -244,14 +250,17 @@
 // - mouseEntered
 //===========================================================
 - (void)mouseEntered:(NSEvent*)theEvent
-{
-	if([[self splitView] dividerOrientation]  == KTSplitViewDividerOrientation_Horizontal)
+{	
+	if([[self splitView] userInteractionEnabled])
 	{
-		[[NSCursor resizeUpDownCursor] set];
-	}
-	else
-	{
-		[[NSCursor resizeLeftRightCursor] set];
+		if([[self splitView] dividerOrientation]  == KTSplitViewDividerOrientation_Horizontal)
+		{
+			[[NSCursor resizeUpDownCursor] set];
+		}
+		else
+		{
+			[[NSCursor resizeLeftRightCursor] set];
+		}
 	}
 //	NSLog(@"%@ mouseEntered", self);
 }
