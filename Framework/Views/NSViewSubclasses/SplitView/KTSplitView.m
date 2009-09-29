@@ -198,20 +198,24 @@
 				// if this is the first resize after the divider last moved, we need to cache the information
 				// we need to calculate the position of the divider during a live resize
 				if(mResetResizeInformation == YES)
-				{
-					mResizeInformation = anOldDividerFrame.origin.y / anOldViewFrame.size.height;
+				{	
+					mResizeInformation = floor(((anOldDividerFrame.origin.y+anOldDividerFrame.size.height*.5) / anOldViewFrame.size.height) * 100);
 					mResetResizeInformation = NO;
 				}
-				[[self divider] setFrame:NSMakeRect(anOldDividerFrame.origin.x, theSize.height * mResizeInformation, theSize.width, anOldDividerFrame.size.height)];
+				CGFloat aDividerPosition = ((theSize.height*mResizeInformation)/100) - (anOldDividerFrame.size.height*.5);
+				aDividerPosition = floor(aDividerPosition);
+				[[self divider] setFrame:NSMakeRect(anOldDividerFrame.origin.x, aDividerPosition, theSize.width, anOldDividerFrame.size.height)];
 			}
 			else
 			{
 				if(mResetResizeInformation == YES)
 				{
-					mResizeInformation = anOldDividerFrame.origin.x / anOldViewFrame.size.width;
+					mResizeInformation = floor(((anOldDividerFrame.origin.x+anOldDividerFrame.size.width*.5) / anOldViewFrame.size.width) * 100);
 					mResetResizeInformation = NO;
 				}
-				[[self divider]  setFrame:NSMakeRect(theSize.width * mResizeInformation, anOldDividerFrame.origin.y, anOldDividerFrame.size.width, theSize.height)];
+				CGFloat aDividerPosition = ((theSize.width*mResizeInformation)/100) - (anOldDividerFrame.size.width*.5);
+				aDividerPosition = floor(aDividerPosition);
+				[[self divider]  setFrame:NSMakeRect(aDividerPosition, anOldDividerFrame.origin.y, anOldDividerFrame.size.width, theSize.height)];
 			}
 		}
 		break;
@@ -576,6 +580,20 @@
 	}
 	[self resetResizeInformation];
 	[self setNeedsDisplay:YES];
+}
+
+//=========================================================== 
+// - setResizeBehavior
+//===========================================================
+- (void)setResizeBehavior:(KTSplitViewResizeBehavior)theResizeBehavior
+{
+	mResizeBehavior = theResizeBehavior;
+	
+	if(theResizeBehavior==KTSplitViewResizeBehavior_MaintainProportions)
+	{
+		[self resetResizeInformation];
+		[self setNeedsDisplay:YES];
+	}
 }
 
 
