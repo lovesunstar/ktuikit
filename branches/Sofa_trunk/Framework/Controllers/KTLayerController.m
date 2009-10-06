@@ -38,6 +38,7 @@
 	if(self = [super init])
 	{
 		wViewController = theViewController;
+		mSubcontrollers = [[NSMutableArray alloc] init];
 	}
 	return self;
 }
@@ -103,6 +104,12 @@
 			[anArray addObjectsFromArray:[aLayerController descendants]];
 	}
 	return [[anArray copy] autorelease]; // return an immutable array
+}
+
+
+- (BOOL)hidden
+{
+	return NO;
 }
 
 @end

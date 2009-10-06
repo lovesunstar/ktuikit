@@ -81,7 +81,6 @@
 		
 		[mOpenGLContext makeCurrentContext];
 		
-		BOOL				aHasAlpha;
 		GLenum				aFormat1;
 		GLenum				aFormat2;
 		GLenum				aType;
@@ -94,12 +93,12 @@
 		
 		
 		
-		aHasAlpha = [mBitmapSource hasAlpha];
-		aFormat1 = aHasAlpha ? GL_RGBA8 : GL_RGB8;
-		aFormat2 = aHasAlpha ? GL_RGBA : GL_RGB;
+		mHasAlpha = [mBitmapSource hasAlpha];
+		aFormat1 = mHasAlpha ? GL_RGBA8 : GL_RGB8;
+		aFormat2 = mHasAlpha ? GL_RGBA : GL_RGB;
 		aSamplesPerPixel = ([mBitmapSource bitsPerPixel]/[mBitmapSource bitsPerSample]);
 		
-		aType = aHasAlpha ? ARGB_IMAGE_TYPE : GL_UNSIGNED_BYTE;
+		aType = mHasAlpha ? ARGB_IMAGE_TYPE : GL_UNSIGNED_BYTE;
 		
 //		NSLog(@"pixels wide: %d high:%d", mOriginalPixelsWide, mOriginalPixelsHigh);
 //		NSLog(@"bits per sample: %d", [mBitmapSource bitsPerSample]);
@@ -134,6 +133,7 @@
 	if( mTextureName == 0 )
 		return;
 		
+	//NSLog(@"texture DRAW IN RECT x:%f y:%f w:%f h:%f", theRect.origin.x, theRect.origin.y, theRect.size.width, theRect.size.height);	
 	[mOpenGLContext makeCurrentContext];
 		
 	CGFloat aTextureWidth = mOriginalPixelsWide;
@@ -141,11 +141,11 @@
 	CGFloat aTextureXPos = 0;
 	CGFloat aTextureYPos = 0;
 	
-	CGFloat aDrawingWidth = floor(theRect.size.width);
-	CGFloat aDrawingHeight = floor(theRect.size.height);
+	CGFloat aDrawingWidth = theRect.size.width;
+	CGFloat aDrawingHeight = theRect.size.height;
 	
-	CGFloat anXPosition = floor(theRect.origin.x);
-	CGFloat aYPosition = floor(theRect.origin.y);
+	CGFloat anXPosition = theRect.origin.x;
+	CGFloat aYPosition = theRect.origin.y;
 
 	glColor4f(1.0, 1.0, 1.0, theAlpha);
 	glEnable(GL_TEXTURE_RECTANGLE_EXT);
@@ -217,6 +217,11 @@
 - (NSSize)size
 {
 	return NSMakeSize(mOriginalPixelsWide, mOriginalPixelsHigh);
+}
+
+- (BOOL)hasAlpha
+{
+	return mHasAlpha;
 }
 
 //----------------------------------------------------------------------------------------

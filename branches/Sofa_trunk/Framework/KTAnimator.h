@@ -8,6 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
+
+extern NSString *const KTAnimatorFloatAnimation;
+extern NSString *const KTAnimatorRectAnimation;
+extern NSString *const KTAnimatorPointAnimation;
+
 typedef enum
 {
 	kKTAnimationType_EaseInAndOut = 0,
