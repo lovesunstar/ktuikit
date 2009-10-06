@@ -21,6 +21,7 @@
 		size_t				mOriginalPixelsHigh;
 		id					mBitmapSource;
 		NSOpenGLContext *	mOpenGLContext;
+		BOOL				mHasAlpha;
 }
 
 - (void)createTextureWithTextureInfo:(NSDictionary*)theTextureInfo;
@@ -29,4 +30,5 @@
 - (void)drawInRect:(NSRect)theRect anchorPoint:(NSPoint)theAnchorPoint alpha:(CGFloat)theAlpha;
 - (void)deleteTexture;
 - (NSSize)size;
+- (BOOL)hasAlpha;
 @end
