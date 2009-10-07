@@ -7,6 +7,17 @@
 //
 
 #import "KTAnimator.h"
+
+NSString *const KTAnimatorAnimationNameKey = @"KTAnimatorAnimationNameKey";
+NSString *const KTAnimatorAnimationObjectKey = @"KTAnimatorAnimationObjectKey";
+NSString *const KTAnimatorAnimationKeyPathKey = @"KTAnimatorAnimationKeyPathKey";
+NSString *const KTAnimatorAnimationDurationKey = @"KTAnimatorAnimationDurationKey";
+NSString *const KTAnimatorAnimationSpeedKey = @"KTAnimatorAnimationSpeedKey";
+NSString *const KTAnimatorAnimationStartValueKey = @"KTAnimatorAnimationStartValueKey";
+NSString *const KTAnimatorAnimationEndValueKey = @"KTAnimatorAnimationEndValueKey";
+NSString *const KTAnimatorAnimationTypeKey = @"KTAnimatorAnimationTypeKey";
+NSString *const KTAnimatorAnimationStartDateKey = @"KTAnimatorAnimationStartDateKey";
+NSString *const KTAnimatorAnimationCurveKey = @"KTAnimatorAnimationCurveKey";
 NSString *const KTAnimatorFloatAnimation = @"KTAnimatorFloatAnimation";
 NSString *const KTAnimatorRectAnimation = @"KTAnimatorRectAnimation";
 NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
@@ -26,7 +37,6 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 @end
 
 @implementation KTAnimator
-@synthesize animationType = mAnimationType;
 @synthesize framesPerSecond = mFramesPerSecond;
 @synthesize delegate = wDelegate;
 - (id)init
@@ -61,7 +71,7 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 {
 	// animations can either be set with a duration or a speed
 	// if the speed is set, we ignore a duration if it's set as well
-	if([theAnimationProperties valueForKey:@"speed"]!=nil)
+	if([theAnimationProperties valueForKey:KTAnimatorAnimationSpeedKey]!=nil)
 	{
 		// CS: at the moment, speed-based animations are not implemented
 		// if the speed is set, we'll raise an exception telling the programmer to set a duration instead
@@ -70,20 +80,20 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 		// once we implement the speed-based updating, we'll uncomment out the code below and remove the exception
 		
 		/*
-		if([theAnimationProperties valueForKey:@"duration"]!=nil)
+		if([theAnimationProperties valueForKey:KTAnimatorAnimationDurationKey]!=nil)
 		{
 			NSLog(@"%@ found a speed setting and a durration setting, removing the durations", self);
-			[theAnimationProperties removeObjectForKey:@"duration"];
+			[theAnimationProperties removeObjectForKey:KTAnimatorAnimationDurationKey];
 		}
 		*/
 	}
 	
 	
-//	if([theAnimationProperties valueForKey:@"duration"]!=nil)
+//	if([theAnimationProperties valueForKey:KTAnimatorAnimationDurationKey]!=nil)
 //	{
 //		NSNumber * aCurrentValue = [[theAnimationProperties valueForKey:@"object"] valueForKey:[theAnimationProperties valueForKey:@"keyPath"]];
-//		NSNumber * aStartValue = [theAnimationProperties valueForKey:@"startValue"];
-//		NSNumber * anEndValue = [theAnimationProperties valueForKey:@"endValue"];
+//		NSNumber * aStartValue = [theAnimationProperties valueForKey:KTAnimatorAnimationStartValueKey];
+//		NSNumber * anEndValue = [theAnimationProperties valueForKey:KTAnimatorAnimationEndValueKey];
 //		// adjust the duration if it's necessary - this allows for interruptions in an animation, not sure if this is what the
 //		// animator should do...
 //		if([aCurrentValue floatValue] != [aStartValue floatValue])
@@ -93,9 +103,9 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 //			float aPct = 0;
 //			if(aDistance!=0)
 //				aPct = aDiff/aDistance;
-//			float aDuration = [[theAnimationProperties valueForKey:@"duration"]floatValue];
+//			float aDuration = [[theAnimationProperties valueForKey:KTAnimatorAnimationDurationKey]floatValue];
 //			aDuration *= aPct;
-//			[theAnimationProperties setValue:[NSNumber numberWithFloat:aPct] forKey:@"duration"];
+//			[theAnimationProperties setValue:[NSNumber numberWithFloat:aPct] forKey:KTAnimatorAnimationDurationKey];
 //		}
 //	}
 	
@@ -105,11 +115,11 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 	id	anObjectToRemove = nil;
 	for(i = 0; i < anAnimationCount; i++)
 	{
-		id	anObject = [theAnimationProperties valueForKey:@"object"];
-		id	aCurrentObject = [[mAnimationQueue objectAtIndex:i] valueForKey:@"object"];
+		id	anObject = [theAnimationProperties valueForKey:KTAnimatorAnimationObjectKey];
+		id	aCurrentObject = [[mAnimationQueue objectAtIndex:i] valueForKey:KTAnimatorAnimationObjectKey];
 		if(aCurrentObject == anObject)
 		{
-			if([[theAnimationProperties valueForKey:@"keyPath"] isEqualToString:[[mAnimationQueue objectAtIndex:i] valueForKey:@"keyPath"]])
+			if([[theAnimationProperties valueForKey:KTAnimatorAnimationKeyPathKey] isEqualToString:[[mAnimationQueue objectAtIndex:i] valueForKey:KTAnimatorAnimationKeyPathKey]])
 			{
 				// we have the same object and the same keypath
 				// remove the object in the queue, we don't care about this animation anymore
@@ -136,7 +146,9 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 
 - (void)performUpdateAnimation:(NSTimer*)theTimer
 {
-	[self performSelectorOnMainThread:@selector(updateAnimation) withObject:nil waitUntilDone:NO];
+	NSLog(@"%p %s", self, __func__);
+	[self updateAnimation];
+	//[self performSelectorOnMainThread:@selector(updateAnimation) withObject:nil waitUntilDone:NO];
 }
 
 
@@ -168,20 +180,21 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 		BOOL				anAnimationIsComplete = NO;
 		
 		// speed-based animation
-		if([anAnimationObject valueForKey:@"speed"]!=nil)
+		if([anAnimationObject valueForKey:KTAnimatorAnimationSpeedKey]!=nil)
 		{
 			// not implemented yet
 		}
 		
 		// duration-based animation
-		else if([anAnimationObject valueForKey:@"duration"]!=nil)
+		else if([anAnimationObject valueForKey:KTAnimatorAnimationDurationKey]!=nil)
 		{
 			// if there's no start date, make one
-			if([anAnimationObject valueForKey:@"startDate"]==nil)
-				[anAnimationObject setValue:[NSDate date] forKey:@"startDate"]; 
+			if([anAnimationObject valueForKey:KTAnimatorAnimationStartDateKey]==nil)
+				[anAnimationObject setValue:[NSDate date] forKey:KTAnimatorAnimationStartDateKey]; 
 			
-			CGFloat				aDuration = [[anAnimationObject valueForKey:@"duration"]floatValue];
-			CFTimeInterval		anElapsedTime = -[[anAnimationObject valueForKey:@"startDate"] timeIntervalSinceNow];
+			KTAnimationType		anAnimationCurveType = [[anAnimationObject valueForKey:KTAnimatorAnimationCurveKey] intValue];
+			CGFloat				aDuration = [[anAnimationObject valueForKey:KTAnimatorAnimationDurationKey]floatValue];
+			CFTimeInterval		anElapsedTime = -[[anAnimationObject valueForKey:KTAnimatorAnimationStartDateKey] timeIntervalSinceNow];
 			CGFloat				aNormalizedLocationInAnimation = (anElapsedTime / aDuration);	
 			
 			// For a duration based animtation, we know that the animation should be over if the duration < the time that has passed
@@ -190,15 +203,15 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 			anAnimationIsComplete = (fabs(anElapsedTime) > aDuration);
 			if(anAnimationIsComplete)
 			{
-				aNewValue = [anAnimationObject valueForKey:@"endValue"];
+				aNewValue = [anAnimationObject valueForKey:KTAnimatorAnimationEndValueKey];
 			}
 			else
 			{
 				// is this a frame animation?
-				if([[anAnimationObject valueForKey:@"KTAnimatorAnimationType"] isEqualToString:KTAnimatorRectAnimation])
+				if([[anAnimationObject valueForKey:KTAnimatorAnimationTypeKey] isEqualToString:KTAnimatorRectAnimation])
 				{
-					NSRect		aStartingRect = [[anAnimationObject valueForKey:@"startValue"] rectValue];
-					NSRect		anEndingRect = [[anAnimationObject valueForKey:@"endValue"] rectValue];
+					NSRect		aStartingRect = [[anAnimationObject valueForKey:KTAnimatorAnimationStartValueKey] rectValue];
+					NSRect		anEndingRect = [[anAnimationObject valueForKey:KTAnimatorAnimationEndValueKey] rectValue];
 					NSRect		aFrameToSet = NSZeroRect;
 					
 					CGFloat		aSinEaseNormalizedLocationInAnimation = 1.0 - (.5 * sin((aNormalizedLocationInAnimation+.5) * ((3.14*2) / 2.0)) + .5);
@@ -235,10 +248,10 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 					// set the new value as an NSValue with a rect
 					aNewValue = [NSValue valueWithRect:aFrameToSet];						
 				}
-				else if([[anAnimationObject valueForKey:@"KTAnimatorAnimationType"] isEqualToString:KTAnimatorPointAnimation])
+				else if([[anAnimationObject valueForKey:KTAnimatorAnimationTypeKey] isEqualToString:KTAnimatorPointAnimation])
 				{
-					NSPoint		aStartingPoint = [[anAnimationObject valueForKey:@"startValue"] pointValue];
-					NSPoint		anEndingPoint = [[anAnimationObject valueForKey:@"endValue"] pointValue];
+					NSPoint		aStartingPoint = [[anAnimationObject valueForKey:KTAnimatorAnimationStartValueKey] pointValue];
+					NSPoint		anEndingPoint = [[anAnimationObject valueForKey:KTAnimatorAnimationEndValueKey] pointValue];
 					NSPoint		aPointToSet = NSZeroPoint;
 					CGFloat		aSinEaseNormalizedLocationInAnimation = 1.0 - (.5 * sin((aNormalizedLocationInAnimation+.5) * ((3.14*2) / 2.0)) + .5);
 					
@@ -262,12 +275,12 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 				}
 				else // this is animating just a float value
 				{
-					CGFloat	anEndValue = [[anAnimationObject valueForKey:@"endValue"] floatValue];
-					CGFloat	aStartValue = [[anAnimationObject valueForKey:@"startValue"] floatValue];
+					CGFloat	anEndValue = [[anAnimationObject valueForKey:KTAnimatorAnimationEndValueKey] floatValue];
+					CGFloat	aStartValue = [[anAnimationObject valueForKey:KTAnimatorAnimationStartValueKey] floatValue];
 					CGFloat	aDistanceOfAnimation = (anEndValue - aStartValue);
 					CGFloat aFloatValueToSet = anEndValue;
 					
-					switch(mAnimationType)
+					switch(anAnimationCurveType)
 					{
 						case kKTAnimationType_Linear:
 							aFloatValueToSet = aStartValue + (aNormalizedLocationInAnimation * aDistanceOfAnimation);
@@ -299,7 +312,7 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 		}
 
 		// set the value
-		[[anAnimationObject valueForKey:@"object"] setValue:aNewValue forKey:[anAnimationObject valueForKey:@"keyPath"]];
+		[[anAnimationObject valueForKey:KTAnimatorAnimationObjectKey] setValue:aNewValue forKey:[anAnimationObject valueForKey:KTAnimatorAnimationKeyPathKey]];
 		// let delegate know we've updated
 		if(wDelegate)
 		{
@@ -348,11 +361,11 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 - (void)startTimer
 {
 	// start the timer
-	mAnimationTimer = [[NSTimer scheduledTimerWithTimeInterval:(1.0/mFramesPerSecond)
-										  target:self 
-										  selector:@selector(performUpdateAnimation:)
-										  userInfo:nil
-										  repeats:YES] retain];
+	mAnimationTimer = [[NSTimer timerWithTimeInterval:(1.0/mFramesPerSecond)
+											   target:self 
+											 selector:@selector(performUpdateAnimation:)
+											 userInfo:nil
+											  repeats:YES] retain];
 
 	[[NSRunLoop currentRunLoop] addTimer:mAnimationTimer forMode:NSDefaultRunLoopMode];
 	[[NSRunLoop currentRunLoop] addTimer:mAnimationTimer forMode:NSModalPanelRunLoopMode];
@@ -361,6 +374,7 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 	if([wDelegate respondsToSelector:@selector(animatorStarted)])
 		[wDelegate animatorStarted];
 }
+
 
 - (void)endTimer
 {
