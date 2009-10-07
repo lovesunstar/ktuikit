@@ -110,20 +110,20 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 //	}
 	
 	// check to see if we're already animating this value for this object
-	int anAnimationCount = [mAnimationQueue count];
-	int i;
 	id	anObjectToRemove = nil;
-	for(i = 0; i < anAnimationCount; i++)
+	for(NSDictionary * anAnimationToCheck in mAnimationQueue)
 	{
 		id	anObject = [theAnimationProperties valueForKey:KTAnimatorAnimationObjectKey];
-		id	aCurrentObject = [[mAnimationQueue objectAtIndex:i] valueForKey:KTAnimatorAnimationObjectKey];
+		id	aCurrentObject = [anAnimationToCheck valueForKey:KTAnimatorAnimationObjectKey];
 		if(aCurrentObject == anObject)
 		{
-			if([[theAnimationProperties valueForKey:KTAnimatorAnimationKeyPathKey] isEqualToString:[[mAnimationQueue objectAtIndex:i] valueForKey:KTAnimatorAnimationKeyPathKey]])
+			if([[theAnimationProperties valueForKey:KTAnimatorAnimationKeyPathKey] isEqualToString:[anAnimationToCheck valueForKey:KTAnimatorAnimationKeyPathKey]])
 			{
 				// we have the same object and the same keypath
-				// remove the object in the queue, we don't care about this animation anymore
-				anObjectToRemove = [mAnimationQueue objectAtIndex:i];
+				// remove the animation in the queue, we don't care about this animation anymore
+				anObjectToRemove = anAnimationToCheck;
+				if([wDelegate respondsToSelector:@selector(animator:didEndAnimation:)])
+					[wDelegate animator:self didEndAnimation:anAnimationToCheck];
 			}
 		}
 	}
@@ -146,7 +146,6 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 
 - (void)performUpdateAnimation:(NSTimer*)theTimer
 {
-	NSLog(@"%p %s", self, __func__);
 	[self updateAnimation];
 	//[self performSelectorOnMainThread:@selector(updateAnimation) withObject:nil waitUntilDone:NO];
 }
@@ -154,7 +153,6 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 
 - (void)updateAnimation
 {
-
 	/*
 		CS:  All of the animaitons get updated every time the timer fires.  We have different options for how we calculate the new value 
 		in the animation:
@@ -168,14 +166,10 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 	// get ready to build a list of animations that are finished after this frame and can be removed from the queue
 	NSMutableArray *	aListOfAnimationsToRemove = [[NSMutableArray alloc] init];
 	
-	// update each animation in the queue
-	NSInteger anAnimationCount = [mAnimationQueue count];
-	NSInteger i;
-	
-	for(i = 0; i < anAnimationCount; i++)
+	// update each animation in the queue	
+	for(NSDictionary * anAnimationObject in mAnimationQueue)
 	{
 		// get the info we need to calculate a new value
-		NSDictionary *		anAnimationObject = [mAnimationQueue objectAtIndex:i];
 		id					aNewValue = nil;
 		BOOL				anAnimationIsComplete = NO;
 		
