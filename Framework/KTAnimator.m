@@ -146,8 +146,8 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 
 - (void)performUpdateAnimation:(NSTimer*)theTimer
 {
-	[self updateAnimation];
-	//[self performSelectorOnMainThread:@selector(updateAnimation) withObject:nil waitUntilDone:NO];
+	//[self updateAnimation];
+	[self performSelectorOnMainThread:@selector(updateAnimation) withObject:nil waitUntilDone:NO];
 }
 
 
@@ -262,6 +262,7 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 					aDistanceOfAnimation = (anEndValue - aStartValue);
 					aPointToSet.x = aStartValue + (aSinEaseNormalizedLocationInAnimation * aDistanceOfAnimation);
 					
+					// y pos
 					aStartValue = aStartingPoint.y;
 					anEndValue = anEndingPoint.y;
 					aDistanceOfAnimation = (anEndValue - aStartValue);
