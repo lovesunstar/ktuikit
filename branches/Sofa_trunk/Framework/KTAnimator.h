@@ -7,8 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
-
+@class KTAnimator;
+@interface NSObject (KTANimatorDelegateMethods)
+- (void)animator:(KTAnimator*)theAnimator didStartAnimation:(NSDictionary*)theAnimation;
+- (void)animator:(KTAnimator*)theAnimator didUpdateAnimation:(NSDictionary*)theAnimation;
+- (void)animator:(KTAnimator*)theAnimator didEndAnimation:(NSDictionary*)theAnimation;
+@end
 
 extern NSString *const KTAnimatorAnimationNameKey;
 extern NSString *const KTAnimatorAnimationObjectKey;

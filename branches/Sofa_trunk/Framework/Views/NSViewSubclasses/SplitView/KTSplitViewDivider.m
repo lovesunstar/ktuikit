@@ -12,7 +12,6 @@
 
 @interface NSObject (KTSplitViewDividerSplitView)
 - (void)dividerAnimationDidEnd;
-
 @end
 
 @interface KTSplitViewDivider (Private)
