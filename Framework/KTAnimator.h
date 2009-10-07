@@ -9,9 +9,19 @@
 #import <Cocoa/Cocoa.h>
 
 
+
+extern NSString *const KTAnimatorAnimationNameKey;
+extern NSString *const KTAnimatorAnimationObjectKey;
+extern NSString *const KTAnimatorAnimationKeyPathKey;
+extern NSString *const KTAnimatorAnimationDurationKey;
+extern NSString *const KTAnimatorAnimationSpeedKey;
+extern NSString *const KTAnimatorAnimationStartValueKey;
+extern NSString *const KTAnimatorAnimationEndValueKey;
+extern NSString *const KTAnimatorAnimationTypeKey;
 extern NSString *const KTAnimatorFloatAnimation;
 extern NSString *const KTAnimatorRectAnimation;
 extern NSString *const KTAnimatorPointAnimation;
+extern NSString *const KTAnimatorAnimationCurveKey;
 
 typedef enum
 {
@@ -28,12 +38,10 @@ typedef enum
 	NSTimer *					mAnimationTimer;
 	NSMutableArray *			mAnimationQueue;
 	id							wDelegate;
-	KTAnimationType				mAnimationType;
 	CGFloat						mFramesPerSecond;
 	BOOL						mDoubleDuration;
 }
 
-@property (readwrite, assign) KTAnimationType animationType;
 @property (readwrite, assign) CGFloat framesPerSecond;
 @property (readwrite, assign) id delegate;
 - (void)animateObject:(NSMutableDictionary*)theAnimationProperties;
