@@ -46,8 +46,8 @@ typedef enum
 	BOOL						mDoubleDuration;
 }
 
-@property (readwrite, assign) CGFloat framesPerSecond;
-@property (readwrite, assign) id delegate;
+@property (nonatomic, readwrite, assign) CGFloat framesPerSecond;
+@property (nonatomic, readwrite, assign) id delegate;
 - (void)animateObject:(NSMutableDictionary*)theAnimationProperties;
 - (void)removeAllAnimations;
 - (void)doubleDurationOfAllAnimations;
