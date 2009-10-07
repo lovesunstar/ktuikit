@@ -163,7 +163,7 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 			• based on whether the animation is speed or duration based.
 		I plan to break this down into several methods to keep the logic more readable.
 	*/ 
-//	NSLog(@"***************************************UPDATE KTANIMATION************************************************");
+	//	NSLog(@"***************************************UPDATE KTANIMATION************************************************");
 
 	// get ready to build a list of animations that are finished after this frame and can be removed from the queue
 	NSMutableArray *	aListOfAnimationsToRemove = [[NSMutableArray alloc] init];
@@ -190,8 +190,11 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 		{
 			// if there's no start date, make one
 			if([anAnimationObject valueForKey:KTAnimatorAnimationStartDateKey]==nil)
+			{
 				[anAnimationObject setValue:[NSDate date] forKey:KTAnimatorAnimationStartDateKey]; 
-			
+				if([[self delegate] respondsToSelector:@selector(animator:didStartAnimation:)])
+					[[self delegate] animator:self didStartAnimation:anAnimationObject];
+			}
 			KTAnimationType		anAnimationCurveType = [[anAnimationObject valueForKey:KTAnimatorAnimationCurveKey] intValue];
 			CGFloat				aDuration = [[anAnimationObject valueForKey:KTAnimatorAnimationDurationKey]floatValue];
 			CFTimeInterval		anElapsedTime = -[[anAnimationObject valueForKey:KTAnimatorAnimationStartDateKey] timeIntervalSinceNow];
@@ -304,20 +307,22 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 			NSLog(@"cannot update animation, there is no duration or speed set");
 		}
 		
-		
-		// if we have determined that this animation is complete, add it to list of animations to remove and adjust this new value so that it is the requested end value
-		if(anAnimationIsComplete)
-		{
-			[aListOfAnimationsToRemove addObject:anAnimationObject];
-		}
-
 		// set the value
 		[[anAnimationObject valueForKey:KTAnimatorAnimationObjectKey] setValue:aNewValue forKey:[anAnimationObject valueForKey:KTAnimatorAnimationKeyPathKey]];
 		// let delegate know we've updated
 		if(wDelegate)
 		{
-			if([wDelegate respondsToSelector:@selector(animatorIsUpdatingAnimation:)])
-				[wDelegate animatorIsUpdatingAnimation:anAnimationObject];
+			if([wDelegate respondsToSelector:@selector(animator:didUpdateAnimation:)])
+				[wDelegate animator:self didUpdateAnimation:anAnimationObject];
+		}
+	
+	
+		// if we have determined that this animation is complete, add it to list of animations to remove and adjust this new value so that it is the requested end value
+		if(anAnimationIsComplete)
+		{
+			[aListOfAnimationsToRemove addObject:anAnimationObject];
+			if([wDelegate respondsToSelector:@selector(animator:didEndAnimation:)])
+				[wDelegate animator:self didEndAnimation:anAnimationObject];
 		}
 	}
 	
@@ -370,9 +375,6 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 	[[NSRunLoop currentRunLoop] addTimer:mAnimationTimer forMode:NSDefaultRunLoopMode];
 	[[NSRunLoop currentRunLoop] addTimer:mAnimationTimer forMode:NSModalPanelRunLoopMode];
 	[[NSRunLoop currentRunLoop] addTimer:mAnimationTimer forMode:NSEventTrackingRunLoopMode];
-	
-	if([wDelegate respondsToSelector:@selector(animatorStarted)])
-		[wDelegate animatorStarted];
 }
 
 
@@ -384,9 +386,6 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 		[mAnimationTimer release];
 		mAnimationTimer=nil;
 	}
-	
-	if([wDelegate respondsToSelector:@selector(animatorEnded)])
-		[wDelegate animatorEnded];
 }
 
 - (void)setDelegate:(id)theDelegate
