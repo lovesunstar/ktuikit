@@ -15,6 +15,7 @@ NSString *const KTAnimatorAnimationDurationKey = @"KTAnimatorAnimationDurationKe
 NSString *const KTAnimatorAnimationSpeedKey = @"KTAnimatorAnimationSpeedKey";
 NSString *const KTAnimatorAnimationStartValueKey = @"KTAnimatorAnimationStartValueKey";
 NSString *const KTAnimatorAnimationEndValueKey = @"KTAnimatorAnimationEndValueKey";
+NSString *const KTAnimatorAnimationLocationKey = @"KTAnimatorAnimationLocationKey";
 NSString *const KTAnimatorAnimationTypeKey = @"KTAnimatorAnimationTypeKey";
 NSString *const KTAnimatorAnimationStartDateKey = @"KTAnimatorAnimationStartDateKey";
 NSString *const KTAnimatorAnimationCurveKey = @"KTAnimatorAnimationCurveKey";
@@ -189,10 +190,22 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 				if([[self delegate] respondsToSelector:@selector(animator:didStartAnimation:)])
 					[[self delegate] animator:self didStartAnimation:anAnimationObject];
 			}
-			KTAnimationType		anAnimationCurveType = [[anAnimationObject valueForKey:KTAnimatorAnimationCurveKey] intValue];
-			CGFloat				aDuration = [[anAnimationObject valueForKey:KTAnimatorAnimationDurationKey]floatValue];
-			CFTimeInterval		anElapsedTime = -[[anAnimationObject valueForKey:KTAnimatorAnimationStartDateKey] timeIntervalSinceNow];
-			CGFloat				aNormalizedLocationInAnimation = (anElapsedTime / aDuration);	
+			KTAnimationType	anAnimationCurveType = [[anAnimationObject valueForKey:KTAnimatorAnimationCurveKey] intValue];
+			CGFloat			aDuration = [[anAnimationObject valueForKey:KTAnimatorAnimationDurationKey]floatValue];
+			CFTimeInterval	anElapsedTime = -[[anAnimationObject valueForKey:KTAnimatorAnimationStartDateKey] timeIntervalSinceNow];
+			CGFloat			aNormalizedLocationInAnimation = (anElapsedTime / aDuration);	
+			CGFloat			aLocationInAnimation = aNormalizedLocationInAnimation;
+			
+			switch(anAnimationCurveType)
+			{
+				case kKTAnimationType_EaseInAndOut:
+					// apply the ease curve
+					aLocationInAnimation = 1.0 - (.5 * sin((aNormalizedLocationInAnimation+.5) * ((3.14*2) / 2.0)) + .5);
+				break;
+			}
+			
+			// set the location in the animation objct info
+			[anAnimationObject setValue:[NSNumber numberWithFloat:aLocationInAnimation] forKey:KTAnimatorAnimationLocationKey];
 			
 			// For a duration based animtation, we know that the animation should be over if the duration < the time that has passed
 			// if this is the case we just use the end value for the new value - it the animation is not smooth, this could cause a jumpy effect at the
@@ -211,7 +224,7 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 					NSRect		anEndingRect = [[anAnimationObject valueForKey:KTAnimatorAnimationEndValueKey] rectValue];
 					NSRect		aFrameToSet = NSZeroRect;
 					
-					CGFloat		aSinEaseNormalizedLocationInAnimation = 1.0 - (.5 * sin((aNormalizedLocationInAnimation+.5) * ((3.14*2) / 2.0)) + .5);
+
 					
 					// frame animation - animate each part of the rect individually
 					CGFloat aStartValue;
@@ -222,25 +235,25 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 					aStartValue = aStartingRect.origin.x;
 					anEndValue = anEndingRect.origin.x;
 					aDistanceOfAnimation = (anEndValue - aStartValue);
-					aFrameToSet.origin.x = aStartValue + (aSinEaseNormalizedLocationInAnimation * aDistanceOfAnimation);
+					aFrameToSet.origin.x = aStartValue + (aLocationInAnimation * aDistanceOfAnimation);
 					
 					// y pos
 					aStartValue = aStartingRect.origin.y;
 					anEndValue = anEndingRect.origin.y;
 					aDistanceOfAnimation = (anEndValue - aStartValue);
-					aFrameToSet.origin.y = aStartValue + (aSinEaseNormalizedLocationInAnimation * aDistanceOfAnimation);
+					aFrameToSet.origin.y = aStartValue + (aLocationInAnimation * aDistanceOfAnimation);
 					
 					// width
 					aStartValue = aStartingRect.size.width;
 					anEndValue = anEndingRect.size.width;
 					aDistanceOfAnimation = (anEndValue - aStartValue);
-					aFrameToSet.size.width = aStartValue + (aSinEaseNormalizedLocationInAnimation * aDistanceOfAnimation);
+					aFrameToSet.size.width = aStartValue + (aLocationInAnimation * aDistanceOfAnimation);
 					
 					// height
 					aStartValue = aStartingRect.size.height;
 					anEndValue = anEndingRect.size.height;
 					aDistanceOfAnimation = (anEndValue - aStartValue);
-					aFrameToSet.size.height = aStartValue + (aSinEaseNormalizedLocationInAnimation * aDistanceOfAnimation);					
+					aFrameToSet.size.height = aStartValue + (aLocationInAnimation * aDistanceOfAnimation);					
 								
 					// set the new value as an NSValue with a rect
 					aNewValue = [NSValue valueWithRect:aFrameToSet];						
@@ -250,7 +263,6 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 					NSPoint		aStartingPoint = [[anAnimationObject valueForKey:KTAnimatorAnimationStartValueKey] pointValue];
 					NSPoint		anEndingPoint = [[anAnimationObject valueForKey:KTAnimatorAnimationEndValueKey] pointValue];
 					NSPoint		aPointToSet = NSZeroPoint;
-					CGFloat		aSinEaseNormalizedLocationInAnimation = 1.0 - (.5 * sin((aNormalizedLocationInAnimation+.5) * ((3.14*2) / 2.0)) + .5);
 					
 					CGFloat aStartValue;
 					CGFloat anEndValue;
@@ -260,13 +272,13 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 					aStartValue = aStartingPoint.x;
 					anEndValue = anEndingPoint.x;
 					aDistanceOfAnimation = (anEndValue - aStartValue);
-					aPointToSet.x = aStartValue + (aSinEaseNormalizedLocationInAnimation * aDistanceOfAnimation);
+					aPointToSet.x = aStartValue + (aLocationInAnimation * aDistanceOfAnimation);
 					
 					// y pos
 					aStartValue = aStartingPoint.y;
 					anEndValue = anEndingPoint.y;
 					aDistanceOfAnimation = (anEndValue - aStartValue);
-					aPointToSet.y = aStartValue + (aSinEaseNormalizedLocationInAnimation * aDistanceOfAnimation);			
+					aPointToSet.y = aStartValue + (aLocationInAnimation * aDistanceOfAnimation);			
 								
 					// set the new value as an NSValue with a rect
 					aNewValue = [NSValue valueWithPoint:aPointToSet];					
@@ -277,20 +289,8 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 					CGFloat	aStartValue = [[anAnimationObject valueForKey:KTAnimatorAnimationStartValueKey] floatValue];
 					CGFloat	aDistanceOfAnimation = (anEndValue - aStartValue);
 					CGFloat aFloatValueToSet = anEndValue;
-					
-					switch(anAnimationCurveType)
-					{
-						case kKTAnimationType_Linear:
-							aFloatValueToSet = aStartValue + (aNormalizedLocationInAnimation * aDistanceOfAnimation);
-						case kKTAnimationType_EaseInAndOut:
-						{
-							CGFloat		aSinEaseNormalizedLocationInAnimation = 1.0 - (.5 * sin((aNormalizedLocationInAnimation+.5) * ((3.14*2) / 2.0)) + .5);
-							aFloatValueToSet = aStartValue + (aSinEaseNormalizedLocationInAnimation * aDistanceOfAnimation);
-						}
-						break;
-						default:
-						break;
-					}
+
+					aFloatValueToSet = aStartValue + (aLocationInAnimation * aDistanceOfAnimation);
 					
 					// set the new value to an NSNumber from a float
 					aNewValue = [NSNumber numberWithFloat:aFloatValueToSet];
@@ -370,6 +370,8 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 	[[NSRunLoop currentRunLoop] addTimer:mAnimationTimer forMode:NSDefaultRunLoopMode];
 	[[NSRunLoop currentRunLoop] addTimer:mAnimationTimer forMode:NSModalPanelRunLoopMode];
 	[[NSRunLoop currentRunLoop] addTimer:mAnimationTimer forMode:NSEventTrackingRunLoopMode];
+	if([wDelegate respondsToSelector:@selector(animatorDidStartAnimating:)])
+		[wDelegate animatorDidStartAnimating:self];
 }
 
 
@@ -380,6 +382,8 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 		[mAnimationTimer invalidate];
 		[mAnimationTimer release];
 		mAnimationTimer=nil;
+		if([wDelegate respondsToSelector:@selector(animatorDidEndAllAnimations:)])
+			[wDelegate animatorDidEndAllAnimations:self];
 	}
 }
 
