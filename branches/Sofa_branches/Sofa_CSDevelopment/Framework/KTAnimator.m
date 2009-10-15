@@ -23,10 +23,6 @@ NSString *const KTAnimatorFloatAnimation = @"KTAnimatorFloatAnimation";
 NSString *const KTAnimatorRectAnimation = @"KTAnimatorRectAnimation";
 NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 
-
-// TESTING EXTERNALS!!!
-
-
 @interface NSObject (KTAnimatorDelegate)
 - (void)animatorIsUpdatingAnimation:(NSDictionary*)theAnimation;
 - (BOOL)isAnimationOverForStartValue:(CGFloat)theStartValue endValue:(CGFloat)theEndValue newValue:(CGFloat)theNewValue;

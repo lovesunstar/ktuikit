@@ -15,20 +15,19 @@
 
 @interface KTOpenGLTexture : NSObject 
 {
-	@private
-		GLuint				mTextureName;
-		size_t				mOriginalPixelsWide;
-		size_t				mOriginalPixelsHigh;
-		id					mBitmapSource;
-		NSOpenGLContext *	mOpenGLContext;
-		BOOL				mHasAlpha;
+	GLuint				mTextureName;
+	GLuint				mOriginalPixelsWide;
+	GLuint				mOriginalPixelsHigh;
+	id					mBitmapSource;
+	NSOpenGLContext *	mOpenGLContext;
+	BOOL				mHasAlpha;
 }
 
-- (void)createTextureWithTextureInfo:(NSDictionary*)theTextureInfo;
 - (void)createTextureFromNSBitmapImageRep:(NSBitmapImageRep*)theNSBitmapImageRep openGLContext:(NSOpenGLContext*)theContext;
 - (void)drawInRect:(NSRect)theRect alpha:(CGFloat)theAlpha;
 - (void)drawInRect:(NSRect)theRect anchorPoint:(NSPoint)theAnchorPoint alpha:(CGFloat)theAlpha;
 - (void)deleteTexture;
 - (NSSize)size;
 - (BOOL)hasAlpha;
+- (GLuint)textureName;
 @end
