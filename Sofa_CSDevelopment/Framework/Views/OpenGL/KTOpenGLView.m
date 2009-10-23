@@ -94,34 +94,35 @@
 //=========================================================== 
 - (id)initWithCoder:(NSCoder*)theCoder
 {
-	if (![super initWithCoder:theCoder])
-		return nil;
+	if (self = [super initWithCoder:theCoder])
+	{
 		
-	NSOpenGLPixelFormat * aPixelFormat = [KTOpenGLView defaultPixelFormat];
-	[super initWithFrame:[self frame] pixelFormat:aPixelFormat];
-	
-	NSOpenGLContext * anOpenGLContext = [self openGLContext];
-	[anOpenGLContext makeCurrentContext];
-	
-	// swap interval
-	GLint swapInterval = 1;
-	[anOpenGLContext setValues:&swapInterval forParameter:NSOpenGLCPSwapInterval];
+		NSOpenGLPixelFormat * aPixelFormat = [KTOpenGLView defaultPixelFormat];
+		[self setPixelFormat:aPixelFormat];
 		
-	KTLayoutManager * aLayoutManager = [theCoder decodeObjectForKey:@"layoutManager"];
-	[aLayoutManager setView:self];
-	[self setViewLayoutManager:aLayoutManager];
-	[self setAutoresizesSubviews:NO];
-	[self setAutoresizingMask:NSViewNotSizable];
-	
-	KTStyleManager * aStyleManager = [theCoder decodeObjectForKey:@"styleManager"];
-	[aStyleManager setView:self];
-	[self setStyleManager:aStyleManager];
-	
-	// overlay window
-	mOverlayWindows = [[NSMutableArray alloc] init];
-	
-	[self setLabel:[theCoder decodeObjectForKey:@"label"]];
-	[self setOpaque:NO];
+		NSOpenGLContext * anOpenGLContext = [self openGLContext];
+		[anOpenGLContext makeCurrentContext];
+		
+		// swap interval
+		GLint swapInterval = 1;
+		[anOpenGLContext setValues:&swapInterval forParameter:NSOpenGLCPSwapInterval];
+			
+		KTLayoutManager * aLayoutManager = [theCoder decodeObjectForKey:@"layoutManager"];
+		[aLayoutManager setView:self];
+		[self setViewLayoutManager:aLayoutManager];
+		[self setAutoresizesSubviews:NO];
+		[self setAutoresizingMask:NSViewNotSizable];
+		
+		KTStyleManager * aStyleManager = [theCoder decodeObjectForKey:@"styleManager"];
+		[aStyleManager setView:self];
+		[self setStyleManager:aStyleManager];
+		
+		// overlay window
+		mOverlayWindows = [[NSMutableArray alloc] init];
+		
+		[self setLabel:[theCoder decodeObjectForKey:@"label"]];
+		[self setOpaque:NO];
+	}
 	return self;
 }
 

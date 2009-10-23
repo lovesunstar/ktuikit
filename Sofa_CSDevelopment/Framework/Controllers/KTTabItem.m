@@ -11,7 +11,7 @@
 
 @implementation KTTabItem
 @synthesize label = mLabel;
-@synthesize identifier = mIdentifier;
+@synthesize identifier = wIdentifier;
 @synthesize tabViewController = wTabViewController;
 @synthesize viewController = wViewController;
 
@@ -33,6 +33,7 @@
 
 - (void)dealloc
 {
+	NSLog(@"%@ dealloc", self);
 	[mLabel release];
 	[super dealloc];
 }

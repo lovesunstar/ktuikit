@@ -106,6 +106,7 @@
 //=========================================================== 
 - (void)dealloc
 {	
+	NSLog(@"%p %s", self, __func__);
 	[mLayoutManager release];
 	[mStyleManager release];
 	[mLabel release];
@@ -151,22 +152,22 @@
 //=========================================================== 
 - (void)drawAsImage:(BOOL)theBool
 {
-	mDrawAsImage = theBool;
-	if(mDrawAsImage)
-	{
-		[self lockFocus];
-		NSBitmapImageRep * aBitmap = [[[NSBitmapImageRep alloc] initWithFocusedViewRect:[self bounds]] autorelease];
-		[self unlockFocus];
-		NSImage * anImage = [[[NSImage alloc] initWithData:[aBitmap TIFFRepresentation]] autorelease];
-		if(mCachedImage!=nil)
-			[mCachedImage release];
-		mCachedImage = [anImage retain];
-	}
-	else
-	{
-		[mCachedImage release];
-		mCachedImage = nil;
-	}
+//	mDrawAsImage = theBool;
+//	if(mDrawAsImage)
+//	{
+//		[self lockFocus];
+//		NSBitmapImageRep * aBitmap = [[[NSBitmapImageRep alloc] initWithFocusedViewRect:[self bounds]] autorelease];
+//		[self unlockFocus];
+//		NSImage * anImage = [[[NSImage alloc] initWithData:[aBitmap TIFFRepresentation]] autorelease];
+//		if(mCachedImage!=nil)
+//			[mCachedImage release];
+//		mCachedImage = [anImage retain];
+//	}
+//	else
+//	{
+//		[mCachedImage release];
+//		mCachedImage = nil;
+//	}
 }
 
 
@@ -178,16 +179,16 @@
 - (void)drawRect:(NSRect)theRect
 {	
 	CGContextRef aContext = [[NSGraphicsContext currentContext] graphicsPort];
-	if(mDrawAsImage)
-	{
-		[mCachedImage drawInRect:theRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
-//		NSLog(@"drawing cached image of view");
-	}
-	else
-	{
+//	if(mDrawAsImage)
+//	{
+//		[mCachedImage drawInRect:theRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
+////		NSLog(@"drawing cached image of view");
+//	}
+//	else
+//	{
 		[mStyleManager drawStylesInRect:theRect context:aContext view:self];
 		[self drawInContext:aContext];
-	}
+//	}
 }
 
 //=========================================================== 

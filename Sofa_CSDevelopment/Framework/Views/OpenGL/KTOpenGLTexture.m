@@ -155,7 +155,7 @@
 	glRotatef(0, 1, 0, 0);
 	glRotatef(0, 0, 1, 0);
 	glRotatef(0, 0, 0, 1);
-	
+//	glBlendFunc(GL_DST_COLOR, GL_ONE_MINUS_SRC_ALPHA);
 	glBegin( GL_QUADS );
 		glTexCoord2i(aTextureXPos, aTextureYPos);			glVertex3i(aTextureXPos, aDrawingHeight, 0);
 		glTexCoord2i(aTextureWidth, aTextureYPos);			glVertex3i(aDrawingWidth, aDrawingHeight, 0);

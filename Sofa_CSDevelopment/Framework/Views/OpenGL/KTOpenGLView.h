@@ -12,7 +12,7 @@
 #import <OpenGL/glu.h>
 #import <OpenGL/glext.h>
 
-
+#import "KTSharedContextOpenGLView.h"
 #import "KTViewProtocol.h"
 #import "KTLayoutManager.h"
 #import "KTStyleManager.h"
