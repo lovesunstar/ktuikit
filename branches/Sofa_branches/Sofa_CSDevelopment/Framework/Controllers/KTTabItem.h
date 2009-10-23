@@ -14,7 +14,7 @@
 @interface KTTabItem : NSObject 
 {
 	NSString *				mLabel;
-	id						mIdentifier;
+	id						wIdentifier;
 	KTTabViewController *	wTabViewController;
 	KTViewController *		wViewController;
 }
