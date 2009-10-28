@@ -30,3 +30,4 @@
 #import <KTUIKit/KTSplitView.h>
 #import <KTUIKit/NSBezierPathAdditions.h>
 #import <KTUIKit/KTViewOverlayWindow.h>
+#import <KTUIKit/KTControl.h>
