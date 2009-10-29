@@ -17,7 +17,7 @@
 	@private
 	KTView *				wContentView;
 	NSArrayController *		mTabItemArrayController;
-	KTTabItem *				mCurrentSelectedTab;
+	KTTabItem *				wCurrentSelectedTab;
 	BOOL					mReleaseViewControllersWhenNotSeletcted;
 	id						wDelegate;
 }
