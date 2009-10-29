@@ -105,7 +105,7 @@
 	
 	// draw ourself
 	[self draw];
-		
+
 	// draw sublayers
 	for(KTOpenGLLayer * aSublayer in [self sublayers])
 		[aSublayer drawLayers];

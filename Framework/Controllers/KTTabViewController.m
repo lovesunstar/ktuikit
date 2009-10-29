@@ -30,7 +30,7 @@
 //===========================================================
 - (id)initWithNibName:(NSString*)theNibName bundle:(NSBundle*)theBundle windowController:(KTWindowController*)theWindowController
 {
-	if(self = [super initWithNibName:theNibName bundle:theBundle windowController:theWindowController])
+	if(self = [super initWithNibName:nil bundle:theBundle windowController:theWindowController])
 	{
 		// create the 'content view' - when we switch controllers
 		// we'll be adding/removing their views to and from this 'content' view
@@ -54,7 +54,7 @@
 //===========================================================
 - (void)dealloc
 {
-	//NSLog(@"%@ dealloc", self);
+	NSLog(@"%@ dealloc", self);
 	[mTabItemArrayController release];
 	[super dealloc];
 }
@@ -82,7 +82,6 @@
 			if(aSelectedIndex!=NSNotFound)
 				aNewTabToSelect = [[mTabItemArrayController arrangedObjects] objectAtIndex:aSelectedIndex];
 			[self selectTabItem:aNewTabToSelect];
-			mCurrentSelectedTab = aNewTabToSelect;
 		}
 	}
 }
@@ -104,7 +103,7 @@
 - (void)removeTabItem:(KTTabItem*)theTabItem
 {
 	NSInteger	anIndexOfTabItemToRemove = [[mTabItemArrayController arrangedObjects] indexOfObject:theTabItem];
-	BOOL		aTabIsCurrentSelection = [theTabItem isEqualTo:mCurrentSelectedTab];
+	BOOL		aTabIsCurrentSelection = [theTabItem isEqualTo:wCurrentSelectedTab];
 	KTTabItem * aNewTabToSelect = nil;
 	
 	if(anIndexOfTabItemToRemove!=NSNotFound)
@@ -249,12 +248,13 @@
 	*/
 
 		// deal with the current selection first
-		KTViewController * aCurrentViewController = [mCurrentSelectedTab viewController];
+		KTViewController * aCurrentViewController = [wCurrentSelectedTab viewController];
 //		if(aCurrentViewController == nil)
 //			NSLog(@"de-selecting a tab with no view controller");
 //			
 		// remove the current view controller's view from the view hierarchy
 		[[aCurrentViewController view] removeFromSuperview];
+		[aCurrentViewController setHidden:YES];
 		// remove the view controller from our list of subcontrollers to take it out of the responder chain
 		// this automatcally calls 'removeObservations'
 //		[self removeSubcontroller:aCurrentViewController];
@@ -265,9 +265,6 @@
 		KTViewController * aViewControllerToSelect = [theTabItem viewController];
 		KTView * aViewForTab = (KTView*)[aViewControllerToSelect view];
 		[wContentView addSubview:aViewForTab];
-		
-		
-		[aCurrentViewController setHidden:YES];
 		[aViewControllerToSelect setHidden:NO];
 		
 		// layout
@@ -275,11 +272,14 @@
 		[[aViewForTab viewLayoutManager] setHeightType:KTSizeFill];
 		[[wContentView viewLayoutManager] refreshLayout];	
 		
-		// add the new vi ew controller as a subcontroller
+		// add the new view controller as a subcontroller
 //		[self addSubcontroller:aViewControllerToSelect];
 //		// reestablish its KVO/bindings with its represented object
 //		id aRepresentedObjectForViewController = [aViewControllerToSelect representedObject];
 //		[aViewControllerToSelect setRepresentedObject:aRepresentedObjectForViewController];
+		
+		
+		wCurrentSelectedTab = theTabItem;
 		
 		// finally send our delegate a message that we've selected a new tab item
 		if([wDelegate respondsToSelector:@selector(tabViewController:didSelectTabItem:)])
