@@ -168,7 +168,8 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 	NSMutableArray *	aListOfAnimationsToRemove = [[NSMutableArray alloc] init];
 	
 	// update each animation in the queue	
-	for(NSDictionary * anAnimationObject in mAnimationQueue)
+	NSArray * anAnimationQueue = [[mAnimationQueue copy] autorelease];
+	for(NSDictionary * anAnimationObject in anAnimationQueue)
 	{
 		// get the info we need to calculate a new value
 		id					aNewValue = nil;
@@ -337,8 +338,6 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 		[self endTimer];
 	}
 }
-
-
 
 - (BOOL)isAnimationOverForStartValue:(CGFloat)theStartValue endValue:(CGFloat)theEndValue newValue:(CGFloat)theNewValue
 {
