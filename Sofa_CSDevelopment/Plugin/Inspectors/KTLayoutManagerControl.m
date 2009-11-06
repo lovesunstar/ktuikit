@@ -1099,7 +1099,7 @@
 		anInspectedViewArray = [wDelegate inspectedObjects];
 	
 	BOOL aFoundMultipleValuesForEnabled = NO;
-	BOOL anIsTopStrutEnabled;
+	BOOL anIsTopStrutEnabled = NO;
 	
 	if([anInspectedViewArray count] > 0)
 	{
@@ -1157,7 +1157,7 @@
 		anInspectedViewArray = [wDelegate inspectedObjects];
 	
 	BOOL aFoundMultipleValuesForEnabled = NO;
-	BOOL anIsBottomStrutEnabled;
+	BOOL anIsBottomStrutEnabled = NO;
 	
 	if([anInspectedViewArray count] > 0)
 	{
@@ -1212,7 +1212,7 @@
 		anInspectedViewArray = [wDelegate inspectedObjects];
 	
 	BOOL aFoundMultipleValuesForEnabled = NO;
-	BOOL anIsRightStrutEnabled;
+	BOOL anIsRightStrutEnabled = NO;
 	
 	if([anInspectedViewArray count] > 0)
 	{
@@ -1267,7 +1267,7 @@
 		anInspectedViewArray = [wDelegate inspectedObjects];
 	
 	BOOL aFoundMultipleValuesForEnabled = NO;
-	BOOL anIsLeftStrutStateEnabled;
+	BOOL anIsLeftStrutStateEnabled = NO;
 	
 	if([anInspectedViewArray count] > 0)
 	{

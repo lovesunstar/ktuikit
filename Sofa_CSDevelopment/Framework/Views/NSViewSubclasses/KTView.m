@@ -106,7 +106,6 @@
 //=========================================================== 
 - (void)dealloc
 {	
-	NSLog(@"%p %s", self, __func__);
 	[mLayoutManager release];
 	[mStyleManager release];
 	[mLabel release];
