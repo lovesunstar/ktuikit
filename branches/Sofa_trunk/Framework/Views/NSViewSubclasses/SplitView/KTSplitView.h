@@ -67,7 +67,6 @@ typedef enum
 	CGFloat								mDividerPositionToSet;
 	BOOL								mResetResizeInformation;
 	CGFloat								mResizeInformation;
-	NSRect								mCachedFrame;
 	NSViewAnimation *					mAnimator;
 }
 

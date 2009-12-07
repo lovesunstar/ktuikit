@@ -75,35 +75,35 @@
 //===========================================================
 - (void)_resetTrackingArea
 {
-	if(mTrackingArea)
-	{
-		[self removeTrackingArea:mTrackingArea];
-		[mTrackingArea release];
-	}
-	NSRect	aTrackingRect = [self bounds];
-	CGFloat	aPadding = 10;
-	if([[self splitView] dividerOrientation] == KTSplitViewDividerOrientation_Horizontal)
-	{
-		if(aTrackingRect.size.height < aPadding)
-		{
-			CGFloat aCenterY = NSMidY(aTrackingRect);
-			aTrackingRect.size.height = aPadding;
-			aTrackingRect.origin.y = aCenterY - aPadding*.5;
-		}
-	}
-	else
-	{
-		if(aTrackingRect.size.width < aPadding)
-		{
-			CGFloat aCenterX = NSMidX(aTrackingRect);
-			aTrackingRect.size.width = aPadding;
-			aTrackingRect.origin.x = aCenterX - aPadding*.5;
-		}
-	}
-	mTrackingArea = [[NSTrackingArea alloc] initWithRect:aTrackingRect
-												 options:(NSTrackingActiveInActiveApp | NSTrackingMouseEnteredAndExited | NSTrackingAssumeInside | NSTrackingEnabledDuringMouseDrag) 
-												   owner:self userInfo:nil];
-	[self addTrackingArea:mTrackingArea];	
+//	if(mTrackingArea)
+//	{
+//		[self removeTrackingArea:mTrackingArea];
+//		[mTrackingArea release];
+//	}
+//	NSRect	aTrackingRect = [self bounds];
+//	CGFloat	aPadding = 10;
+//	if([[self splitView] dividerOrientation] == KTSplitViewDividerOrientation_Horizontal)
+//	{
+//		if(aTrackingRect.size.height < aPadding)
+//		{
+//			CGFloat aCenterY = NSMidY(aTrackingRect);
+//			aTrackingRect.size.height = aPadding;
+//			aTrackingRect.origin.y = aCenterY - aPadding*.5;
+//		}
+//	}
+//	else
+//	{
+//		if(aTrackingRect.size.width < aPadding)
+//		{
+//			CGFloat aCenterX = NSMidX(aTrackingRect);
+//			aTrackingRect.size.width = aPadding;
+//			aTrackingRect.origin.x = aCenterX - aPadding*.5;
+//		}
+//	}
+//	mTrackingArea = [[NSTrackingArea alloc] initWithRect:aTrackingRect
+//												 options:(NSTrackingActiveInActiveApp | NSTrackingMouseEnteredAndExited | NSTrackingAssumeInside | NSTrackingEnabledDuringMouseDrag) 
+//												   owner:self userInfo:nil];
+//	[self addTrackingArea:mTrackingArea];	
 }
 
 
@@ -248,39 +248,39 @@
 //=========================================================== 
 // - mouseEntered
 //===========================================================
-- (void)mouseEntered:(NSEvent*)theEvent
-{	
-	if([[self splitView] userInteractionEnabled])
-	{
-		if([[self splitView] dividerOrientation]  == KTSplitViewDividerOrientation_Horizontal)
-		{
-			[[NSCursor resizeUpDownCursor] set];
-		}
-		else
-		{
-			[[NSCursor resizeLeftRightCursor] set];
-		}
-	}
-//	NSLog(@"%@ mouseEntered", self);
-}
+//- (void)mouseEntered:(NSEvent*)theEvent
+//{	
+////	if([[self splitView] userInteractionEnabled])
+////	{
+////		if([[self splitView] dividerOrientation]  == KTSplitViewDividerOrientation_Horizontal)
+////		{
+////			[[NSCursor resizeUpDownCursor] set];
+////		}
+////		else
+////		{
+////			[[NSCursor resizeLeftRightCursor] set];
+////		}
+////	}
+////	NSLog(@"%@ mouseEntered", self);
+//}
 
 
 //=========================================================== 
 // - mouseExited
 //===========================================================
-- (void)mouseExited:(NSEvent*)theEvent
-{
-//	NSLog(@"%@ mouseExited", self);
-	if(mIsInDrag==NO)
-	[[NSCursor arrowCursor] set];
-}
+//- (void)mouseExited:(NSEvent*)theEvent
+//{
+////	NSLog(@"%@ mouseExited", self);
+////	if(mIsInDrag==NO)
+////	[[NSCursor arrowCursor] set];
+//}
 
 
 //=========================================================== 
 // - cursorUpdate
 //===========================================================
-- (void)cursorUpdate:(NSEvent *)theEvent
-{
-//	NSLog(@"%@ cursorUpdate", self);
-}
+//- (void)cursorUpdate:(NSEvent *)theEvent
+//{
+////	NSLog(@"%@ cursorUpdate", self);
+//}
 @end

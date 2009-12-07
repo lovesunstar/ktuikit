@@ -64,6 +64,10 @@
 		//	If the position is set before the flag changes, we'll cache the value and apply it later.
 		mCanSetDividerPosition = NO; 
 		[self setUserInteractionEnabled:YES];
+		
+		[mDivider setLabel:@"KTSplitView Divider view"];
+		[mFirstView setLabel:@"KTSplitView first view"];
+		[mSecondView setLabel:@"KTSplitView second view"];
 	}
 	return self;
 }
@@ -111,6 +115,11 @@
 		[self setUserInteractionEnabled:[aUserInteractionEnabledAsNSNumber boolValue]];
 	else
 		[self setUserInteractionEnabled:YES];
+		
+	[mDivider setLabel:@"KTSplitView Divider view"];
+	[mFirstView setLabel:@"KTSplitView first view"];
+	[mSecondView setLabel:@"KTSplitView second view"];
+		
 	return self;
 }
 
@@ -151,7 +160,6 @@
 //===========================================================
 - (void)setFrame:(NSRect)theFrame
 {
-	mCachedFrame = [self frame];
 	[super setFrame:theFrame];
 }
 
