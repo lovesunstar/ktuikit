@@ -11,5 +11,8 @@
 
 @interface KTWindow : NSWindow 
 {
+	BOOL		mCanBecomeKeyWindow;
 }
+
+- (void)setCanBecomeKeyWindow:(BOOL)theBool;
 @end

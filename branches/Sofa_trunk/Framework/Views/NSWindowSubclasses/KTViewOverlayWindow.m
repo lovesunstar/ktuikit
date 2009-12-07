@@ -18,19 +18,16 @@
 {
 	if(self = [super initWithContentRect:theContentRect styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO])
 	{
-		[super setBackgroundColor:[NSColor clearColor]];
+		[self setBackgroundColor:[NSColor clearColor]];
 		[self setMovableByWindowBackground:NO];
 		[self setExcludedFromWindowsMenu:YES];
-//		[self setAlphaValue:0];
-//		[self setOpaque:YES];
-//		[self setHasShadow:YES];
 		[self useOptimizedDrawing:YES];
 		[self setReleasedWhenClosed:NO];
 		[self setHidesOnDeactivate:NO];
 		KTLayoutManager * aLayoutManger = [[[KTLayoutManager alloc] initWithView:self] autorelease];
 		[self setViewLayoutManager:aLayoutManger];
 		
-//		KTView * aDebugView = [[[KTView alloc] initWithFrame:NSMakeRect(0, 0, 20, 20)] autorelease];
+//		KTView * aDebugView = [[[KTView alloc] initWithFrame:theContentRect] autorelease];
 //		[[self contentView] addSubview:aDebugView];
 //		[[aDebugView styleManager] setBackgroundColor:[[NSColor greenColor] colorWithAlphaComponent:.5]];
 	}

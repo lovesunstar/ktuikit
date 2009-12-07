@@ -163,7 +163,6 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 		I plan to break this down into several methods to keep the logic more readable.
 	*/ 
 	//	NSLog(@"***************************************UPDATE KTANIMATION************************************************");
-
 	// get ready to build a list of animations that are finished after this frame and can be removed from the queue
 	NSMutableArray *	aListOfAnimationsToRemove = [[NSMutableArray alloc] init];
 	
@@ -172,8 +171,8 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 	for(NSDictionary * anAnimationObject in anAnimationQueue)
 	{
 		// get the info we need to calculate a new value
-		id					aNewValue = nil;
-		BOOL				anAnimationIsComplete = NO;
+		id		aNewValue = nil;
+		BOOL	anAnimationIsComplete = NO;
 		
 		// speed-based animation
 		if([anAnimationObject valueForKey:KTAnimatorAnimationSpeedKey]!=nil)
