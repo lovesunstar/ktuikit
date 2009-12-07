@@ -179,7 +179,7 @@
     glDisable (GL_CULL_FACE);
 	glDisable(GL_STENCIL_TEST);
 		
-    glColorMask (GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+//    glColorMask (GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
     glDepthMask (GL_FALSE);
     glStencilMask (GL_FALSE);
 	
@@ -559,6 +559,16 @@
 }
 
 
+//=========================================================== 
+// - updateTrackingAreas:
+//===========================================================
+- (void)updateTrackingAreas
+{
+	if(mOpenGLLayer)
+	{
+		[mOpenGLLayer updateTrackingAreas];
+	}
+}
 
 
 

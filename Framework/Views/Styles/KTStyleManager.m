@@ -388,8 +388,7 @@
 		if(mBackgroundColor!=nil)
 			[self setBackgroundGradient:nil];
 			
-		if(		[mBackgroundColor alphaComponent] >= 1
-			&&	[wView isKindOfClass:[KTView class]])
+		if([mBackgroundColor alphaComponent] >= 1)
 			[(KTView*)wView setOpaque:YES];
 	}
 }
@@ -405,6 +404,7 @@
 		mBackgroundGradient = [theGradient retain];
 		if(mBackgroundGradient!=nil)
 			[self setBackgroundColor:nil];
+		[(KTView*)wView setOpaque:YES];
 	}
 }
 

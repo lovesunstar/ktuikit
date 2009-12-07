@@ -360,9 +360,20 @@
 	return aLayerToReturn;
 }
 
+//=========================================================== 
+// - updateTrackingAreas:
+//===========================================================
+- (void)updateTrackingAreas
+{
+	for(KTOpenGLLayer * aSublayer in mSublayers)
+	{
+		if([aSublayer respondsToSelector:@selector(updateTrackingAreas)])
+			[aSublayer updateTrackingAreas];
+	}
+}
 
 //=========================================================== 
-// - removeOverlayWindow:
+// - viewWillMoveToWindow:
 //===========================================================
 - (void)viewWillMoveToWindow:(NSWindow*)theWindow
 {

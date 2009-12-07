@@ -55,7 +55,7 @@
 - (void)viewWillMoveToWindow:(NSWindow*)theWindow;
 
 - (KTOpenGLLayer*)hitTest:(NSPoint)thePoint;
-
+- (void)updateTrackingAreas;
 
 // converting coordinates
 - (NSRect)convertRect:(NSRect)theRect fromLayer:(KTOpenGLLayer*)theLayer;
