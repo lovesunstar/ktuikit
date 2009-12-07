@@ -10,4 +10,13 @@
 
 
 @implementation KTWindow
+- (void)setCanBecomeKeyWindow:(BOOL)theBool
+{
+	mCanBecomeKeyWindow = theBool;
+}
+
+- (BOOL)canBecomeKeyWindow
+{
+	return mCanBecomeKeyWindow;
+}
 @end
