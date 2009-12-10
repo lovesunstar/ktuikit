@@ -48,7 +48,7 @@ typedef enum
 
 @class KTSplitViewDivider;
 
-@interface KTSplitView : KTView <KTSplitView>
+@interface KTSplitView : KTView <KTSplitView, NSAnimationDelegate>
 {
 	@private
 	id<KTSplitViewDelegate>				wDelegate;
