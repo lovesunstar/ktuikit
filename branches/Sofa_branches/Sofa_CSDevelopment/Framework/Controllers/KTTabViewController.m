@@ -11,6 +11,7 @@
 #import "KTView.h"
 
 @interface NSObject (KTTabViewControllerDelegate)
+- (void)tabViewController:(KTTabViewController*)theTabViewController willSelectTabItem:(KTTabItem*)theTabItem;
 - (void)tabViewController:(KTTabViewController*)theTabViewController didSelectTabItem:(KTTabItem*)theTabItem;
 - (void)tabViewController:(KTTabViewController*)theTabViewController willRemoveTabItem:(KTTabItem*)theTabItem;
 - (void)tabViewControllerDidRemoveTabItem:(KTTabViewController*)theTabViewController;
@@ -246,6 +247,10 @@
 		When we select a new view controller, we can re-set its represented object for bindings/kvo and also
 		add it as a subcontroller to put it in the responder chain.
 	*/
+	
+
+		if([[self delegate] respondsToSelector:@selector(tabViewController:willSelectTabItem:)])
+			[[self delegate] tabViewController:self willSelectTabItem:theTabItem];
 
 		// deal with the current selection first
 		KTViewController * aCurrentViewController = [wCurrentSelectedTab viewController];
@@ -255,6 +260,8 @@
 		// remove the current view controller's view from the view hierarchy
 		[[aCurrentViewController view] removeFromSuperview];
 		[aCurrentViewController setHidden:YES];
+		
+		
 		// remove the view controller from our list of subcontrollers to take it out of the responder chain
 		// this automatcally calls 'removeObservations'
 //		[self removeSubcontroller:aCurrentViewController];
