@@ -27,6 +27,7 @@
 	NSString *					mLabel;
 	KTOpenGLLayer *				mOpenGLLayer;
 	KTOpenGLLayer *				mCurrentMouseEventHandler;
+	KTOpenGLLayer *				mCurrentKeyLayer;
 	BOOL						mShouldAcceptFirstResponder;
 	BOOL						mOpaque;
 	NSMutableArray *			mOverlayWindows;

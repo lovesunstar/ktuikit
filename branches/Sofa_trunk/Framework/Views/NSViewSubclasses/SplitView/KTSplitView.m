@@ -298,7 +298,7 @@
 		aFirstViewFrame = NSMakeRect(aSplitViewBounds.origin.x,
 									 aDividerFrame.origin.y + aDividerFrame.size.height,
 									 aSplitViewBounds.size.width,
-									 aSplitViewBounds.size.height - NSMinY(aDividerFrame));
+									 aSplitViewBounds.size.height - NSMaxY(aDividerFrame));
 		
 		
 		aSecondViewFrame = NSMakeRect(aSplitViewBounds.origin.x,

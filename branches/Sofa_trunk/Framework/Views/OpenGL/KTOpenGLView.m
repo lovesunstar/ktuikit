@@ -307,14 +307,15 @@
 {
 	[theLayer retain];
 	
-	id aNextResponder = [self nextResponder];
-	// make the layer our next responder
-	[self setNextResponder:theLayer];
-	
-	if(aNextResponder != mOpenGLLayer)
-		[theLayer setNextResponder:aNextResponder];
-	else
-		[theLayer setNextResponder:[mOpenGLLayer nextResponder]];
+//	id aNextResponder = [self nextResponder];
+//	// make the layer our next responder
+//	[self setNextResponder:theLayer];
+//	
+//	if(aNextResponder != mOpenGLLayer)
+//		[theLayer setNextResponder:aNextResponder];
+//	else
+//		[theLayer setNextResponder:[mOpenGLLayer nextResponder]];
+	[theLayer setNextResponder:self];
 	
 	[mOpenGLLayer setView:nil];
 	[mOpenGLLayer release];
@@ -523,22 +524,23 @@
 	}
 }
 
+
 //=========================================================== 
 // - mouseMoved:
 //===========================================================
-- (void)mouseMoved:(NSEvent*)theEvent
-{
-	if(mOpenGLLayer)
-	{
-		NSPoint	aMousePoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-		KTOpenGLLayer * aHitTestResult = [mOpenGLLayer hitTest:aMousePoint];
-		if(aHitTestResult)
-		{
-			[aHitTestResult mouseMoved:theEvent];
-			return;
-		}
-	}
-}
+//- (void)mouseMoved:(NSEvent*)theEvent
+//{
+//	if(mOpenGLLayer)
+//	{
+//		NSPoint	aMousePoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+//		KTOpenGLLayer * aHitTestResult = [mOpenGLLayer hitTest:aMousePoint];
+//		if(aHitTestResult)
+//		{
+//			[aHitTestResult mouseMoved:theEvent];
+//			return;
+//		}
+//	}
+//}
 
 
 //=========================================================== 
@@ -562,13 +564,13 @@
 //=========================================================== 
 // - updateTrackingAreas:
 //===========================================================
-- (void)updateTrackingAreas
-{
-	if(mOpenGLLayer)
-	{
-		[mOpenGLLayer updateTrackingAreas];
-	}
-}
+//- (void)updateTrackingAreas
+//{
+//	if(mOpenGLLayer)
+//	{
+//		[mOpenGLLayer updateTrackingAreas];
+//	}
+//}
 
 
 
