@@ -285,13 +285,13 @@
 {
 	NSPoint aPointToReturn = thePoint;
 	// go up the layer tree until we find the view - we will adjust our coordinates for each layer
-	KTOpenGLLayer * aSuperLayer = [self superlayer];
-	while(aSuperLayer != nil)
+	KTOpenGLLayer * aLayer = self;
+	while(aLayer != nil)
 	{
-		NSRect aSuperLayerFrame = [aSuperLayer frame];
-		aPointToReturn.x+=aSuperLayerFrame.origin.x;
-		aPointToReturn.y+=aSuperLayerFrame.origin.y;
-		aSuperLayer = [aSuperLayer superlayer];
+		NSRect aLayerFrame = [aLayer frame];
+		aPointToReturn.x+=aLayerFrame.origin.x;
+		aPointToReturn.y+=aLayerFrame.origin.y;
+		aLayer = [aLayer superlayer];
 	}
 	return aPointToReturn;
 }
@@ -365,11 +365,12 @@
 //===========================================================
 - (void)updateTrackingAreas
 {
-	for(KTOpenGLLayer * aSublayer in mSublayers)
-	{
-		if([aSublayer respondsToSelector:@selector(updateTrackingAreas)])
-			[aSublayer updateTrackingAreas];
-	}
+//	for(KTOpenGLLayer * aSublayer in mSublayers)
+//	{
+//		if([aSublayer respondsToSelector:@selector(updateTrackingAreas)])
+//			[aSublayer updateTrackingAreas];
+//	}
+	// subclasses make sure to call super!
 }
 
 //=========================================================== 
