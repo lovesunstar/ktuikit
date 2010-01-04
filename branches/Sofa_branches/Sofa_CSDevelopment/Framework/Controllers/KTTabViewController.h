@@ -35,8 +35,11 @@
 
 // selection
 - (KTTabItem*)selectedTabItem;
-- (IBAction)selectTab:(id)theSender;
+- (NSInteger)selectedTabIndex;
 - (void)selectTabAtIndex:(NSInteger)theTabIndex;
 - (void)selectTabItem:(KTTabItem*)theTabItem;
-
+- (BOOL)canSelectNextTabItem;
+- (BOOL)canSelectPreviousTabItem;
+- (void)selectNextTabItem;
+- (void)selectPreviousTabItem;
 @end
