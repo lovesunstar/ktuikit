@@ -76,7 +76,7 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 	{
 		// CS: at the moment, speed-based animations are not implemented
 		// if the speed is set, we'll raise an exception telling the programmer to set a duration instead
-		[NSException raise:@"KTAnimator" format:@"Speed configurations are not yet supported, please set a duration instead."];
+		[NSException raise:@"KTAnimator" format:[NSString stringWithFormat:@"Speed configurations are not yet supported, please set a duration instead."]];
 		
 		// once we implement the speed-based updating, we'll uncomment out the code below and remove the exception
 		

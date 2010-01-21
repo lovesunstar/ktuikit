@@ -18,6 +18,10 @@
 - (void)tabViewController:(KTTabViewController*)theTabViewController didAddTabItem:(KTTabItem*)theTabItem;
 @end
 
+@interface KTTabViewController (Private)
+- (void)_selectTabItem:(KTTabItem*)theTabItem;
+@end
+
 @implementation KTTabViewController
 //=========================================================== 
 // - synthesize
@@ -82,7 +86,7 @@
 			KTTabItem * aNewTabToSelect = nil;
 			if(aSelectedIndex!=NSNotFound)
 				aNewTabToSelect = [[mTabItemArrayController arrangedObjects] objectAtIndex:aSelectedIndex];
-			[self selectTabItem:aNewTabToSelect];
+			[self _selectTabItem:aNewTabToSelect];
 		}
 	}
 }
@@ -210,13 +214,21 @@
 }
 
 //=========================================================== 
-// - selectTab
+// - selectedTabIndex
 //===========================================================
-- (IBAction)selectTab:(id)theSender
+- (NSInteger)selectedTabIndex
 {
-	[mTabItemArrayController setSelectedObjects:[NSArray arrayWithObject:theSender]];
+	 KTTabItem * aSelectedTab = [self selectedTabItem];
+	 return [[mTabItemArrayController arrangedObjects] indexOfObject:aSelectedTab];
 }
 
+//=========================================================== 
+// - selectTabAtIndex
+//===========================================================
+- (void)selectTabItem:(KTTabItem*)theTabItem
+{
+	[mTabItemArrayController setSelectedObjects:[NSArray arrayWithObject:theTabItem]];
+}
 
 //=========================================================== 
 // - selectTabAtIndex
@@ -230,7 +242,7 @@
 //=========================================================== 
 // - selectTabForViewController
 //===========================================================
-- (void)selectTabItem:(KTTabItem*)theTabItem
+- (void)_selectTabItem:(KTTabItem*)theTabItem
 {
 	/*
 		When switching tabs we are doing two different things:
@@ -294,5 +306,46 @@
 
 }
 
+- (BOOL)canSelectNextTabItem
+{
+	BOOL aBoolToReturn = YES;
+	NSInteger aCurrentIndex = [self selectedTabIndex];
+	if(		aCurrentIndex >= [[mTabItemArrayController arrangedObjects] count]-1
+		||	aCurrentIndex == NSNotFound)
+		aBoolToReturn = NO;
+	return aBoolToReturn;
+}
+
+- (BOOL)canSelectPreviousTabItem
+{
+	BOOL aBoolToReturn = YES;
+	NSInteger aCurrentIndex = [self selectedTabIndex];
+	if(		aCurrentIndex <= 0
+		||	aCurrentIndex == NSNotFound)
+		aBoolToReturn = NO;
+	return aBoolToReturn;
+}
+
+- (void)selectNextTabItem
+{
+	if([self canSelectNextTabItem] == NO)
+		return;
+		
+	NSInteger aCurrentIndex = [self selectedTabIndex];
+	if(		aCurrentIndex < [[mTabItemArrayController arrangedObjects] count]-1
+		&&	aCurrentIndex != NSNotFound)
+		[self selectTabAtIndex:aCurrentIndex+1];
+}
+
+- (void)selectPreviousTabItem
+{
+	if([self canSelectPreviousTabItem] == NO)
+		return;
+		
+	NSInteger aCurrentIndex = [self selectedTabIndex];
+	if(		aCurrentIndex > 0
+		&&	aCurrentIndex != NSNotFound)
+		[self selectTabAtIndex:aCurrentIndex-1];
+}
 
 @end
