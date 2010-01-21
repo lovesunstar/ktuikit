@@ -15,6 +15,15 @@
 	#define ARGB_IMAGE_TYPE GL_UNSIGNED_INT_8_8_8_8_REV
 #endif
 
+#define glReportError()\
+{\
+	GLenum error=glGetError();\
+	if(GL_NO_ERROR!=error)\
+	{\
+		printf("OpenGL error at %s:%d: %s\n",__FILE__,__LINE__,(char*)gluErrorString(error));\
+	}\
+}\
+
 @implementation KTOpenGLTexture
 //----------------------------------------------------------------------------------------
 //	init
@@ -51,78 +60,98 @@
 	[self performSelectorOnMainThread:@selector(uploadTextureWithTextureInfo:) withObject:anInfoDict waitUntilDone:YES];
 	
 }
+//----------------------------------------------------------------------------------------
+//	uploadTextureWithNSImage:openGLContext:
+//----------------------------------------------------------------------------------------
+- (void)uploadTextureWithNSImage:(NSImage*)theImage openGLContext:(NSOpenGLContext*)theContext
+{	
+	NSBitmapImageRep * aBitmapImageRep = [[[NSBitmapImageRep alloc] initWithData:[theImage TIFFRepresentation]] autorelease];
+	NSDictionary * anInfoDict = [NSDictionary dictionaryWithObjectsAndKeys:aBitmapImageRep, @"NSBitmapImageRepInfoKey", theContext, @"NSOpenGLContextInfoKey", nil];
+	[self performSelectorOnMainThread:@selector(uploadTextureWithTextureInfo:) withObject:anInfoDict waitUntilDone:YES];
+}
 
-//
-////----------------------------------------------------------------------------------------
-////	uploadTextureWithTextureInfo
-////----------------------------------------------------------------------------------------
-//- (void)uploadTextureWithTextureInfo:(NSDictionary*)theInfoDict
-//{
-//	NSOpenGLContext *	anOpenGLContext = [theInfoDict objectForKey:@"NSOpenGLContextInfoKey"];
-//	NSBitmapImageRep *	anNSBitmapImageRep = [theInfoDict objectForKey:@"NSBitmapImageRepInfoKey"];
-//	
-//	if (	mTextureName == 0
-//		&&	anNSBitmapImageRep != nil
-//		&&	anOpenGLContext != nil) 
-//	{
-//		mOpenGLContext = [anOpenGLContext retain];
-//		mBitmapSource = [anNSBitmapImageRep retain];
+//----------------------------------------------------------------------------------------
+//	uploadTextureWithTextureInfo
+//----------------------------------------------------------------------------------------
+- (void)uploadTextureWithTextureInfo:(NSDictionary*)theInfoDict
+{
+	if(		mOpenGLContext != nil
+		||	mTextureName != 0
+		||	mBitmapSource != nil)
+	{
+		[self deleteTexture];
+	}
+	
+	mOpenGLContext = [[theInfoDict objectForKey:@"NSOpenGLContextInfoKey"] retain];
+	mBitmapSource = [[theInfoDict objectForKey:@"NSBitmapImageRepInfoKey"] retain];
+			
+	if (	mTextureName == 0
+		&&	mBitmapSource != nil
+		&&	mOpenGLContext != nil) 
+	{
+		
+		[mOpenGLContext makeCurrentContext];
+		
+		GLenum				aFormat1;
+		GLenum				aFormat2;
+		GLenum				aType;
+		unsigned char *		aBitmapData;
+		
+		aBitmapData = [mBitmapSource bitmapData];
+		mOriginalPixelsWide = (GLuint)[(NSBitmapImageRep*)mBitmapSource pixelsWide];
+		mOriginalPixelsHigh = (GLuint)[(NSBitmapImageRep*)mBitmapSource pixelsHigh];
+
+		mHasAlpha = [mBitmapSource hasAlpha];
+		if([mBitmapSource bitsPerPixel]==8)
+		{
+			// gray scale image
+			aFormat1 = GL_LUMINANCE8;
+			aFormat2 = GL_LUMINANCE;
+		}
+		else
+		{
+			aFormat1 = mHasAlpha ? GL_RGBA8 : GL_RGB8;
+			aFormat2 = mHasAlpha ? GL_RGBA : GL_RGB;
+		}
+				
+		aType = mHasAlpha ? ARGB_IMAGE_TYPE : GL_UNSIGNED_BYTE;
+		
+//		NSLog(@"pixels wide: %d high:%d", mOriginalPixelsWide, mOriginalPixelsHigh);
+//		NSLog(@"bits per sample: %d", [mBitmapSource bitsPerSample]);
+//		NSLog(@"bytes per row: %d", [mBitmapSource bytesPerRow]);
+//		NSLog(@"bits per pixels: %d", [mBitmapSource bitsPerPixel]);
+//		NSLog(@"samples per pixel: %d", [mBitmapSource bitsPerPixel]/[mBitmapSource bitsPerSample]);
+		
+		glEnable(GL_TEXTURE_RECTANGLE_EXT);		
+		glGenTextures(1, &mTextureName);
+		glReportError();			
+		
+		NSLog(@"mTexture Name: %d", mTextureName);
 //		
-//		[mOpenGLContext makeCurrentContext];
-//		
-//		GLenum				aFormat1;
-//		GLenum				aFormat2;
-//		GLenum				aType;
-//		NSInteger			aSamplesPerPixel;
-//		unsigned char *		aBitmapData;
-//		
-//		aBitmapData = [mBitmapSource bitmapData];
-//		mOriginalPixelsWide = (GLuint)ceil([(NSBitmapImageRep*)mBitmapSource pixelsWide]);
-//		mOriginalPixelsHigh = (GLuint)ceil([(NSBitmapImageRep*)mBitmapSource pixelsHigh]);
-//		
-//
-//		
-//		mHasAlpha = [mBitmapSource hasAlpha];
-//		if([mBitmapSource bitsPerPixel]==8)
-//		{
-//			// gray scale image
-//			aFormat1 = GL_LUMINANCE8;
-//			aFormat2 = GL_LUMINANCE;
-//		}
-//		else
-//		{
-//			aFormat1 = mHasAlpha ? GL_RGBA8 : GL_RGB8;
-//			aFormat2 = mHasAlpha ? GL_RGBA : GL_RGB;
-//		}
-//		
-//		aSamplesPerPixel = ([mBitmapSource bitsPerPixel]/[mBitmapSource bitsPerSample]);
-//		
-//		aType = mHasAlpha ? ARGB_IMAGE_TYPE : GL_UNSIGNED_BYTE;
-//		
-////		NSLog(@"pixels wide: %d high:%d", mOriginalPixelsWide, mOriginalPixelsHigh);
-////		NSLog(@"bits per sample: %d", [mBitmapSource bitsPerSample]);
-////		NSLog(@"bytes per row: %d", [mBitmapSource bytesPerRow]);
-////		NSLog(@"bits per pixels: %d", [mBitmapSource bitsPerPixel]);
-////		NSLog(@"samples per pixel: %d", [mBitmapSource bitsPerPixel]/[mBitmapSource bitsPerSample]);
-//		
-//		
-//		glGenTextures(1, &mTextureName);
-//		glBindTexture(GL_TEXTURE_RECTANGLE_EXT, mTextureName);
-//		
-//		glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-//		glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-//		glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-//		glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-//		
-//		glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_STORAGE_HINT_APPLE, GL_STORAGE_CACHED_APPLE);
-//		glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, GL_TRUE);
-//		glPixelStorei(GL_UNPACK_ROW_LENGTH, mOriginalPixelsWide);//([mBitmapSource bytesPerRow] / ([mBitmapSource bitsPerPixel]  >> aSamplesPerPixel)));//([mBitmapSource bytesPerRow] / aSamplesPerPixel));//
-//		
-//		glTexImage2D(GL_TEXTURE_RECTANGLE_EXT, 0, aFormat1, mOriginalPixelsWide, mOriginalPixelsHigh, 0, aFormat2, aType, aBitmapData);		
-//		glBindTexture(GL_TEXTURE_RECTANGLE_EXT, 0);
-//	}
-//}
-//
+		glBindTexture(GL_TEXTURE_RECTANGLE_EXT, mTextureName);
+		glReportError();			
+		glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glReportError();	
+		glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glReportError();
+		glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glReportError();
+		glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glReportError();		
+		glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_STORAGE_HINT_APPLE, GL_STORAGE_CACHED_APPLE);
+		glReportError();
+		glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, GL_TRUE);
+		glReportError();
+		glPixelStorei(GL_UNPACK_ROW_LENGTH, mOriginalPixelsWide);
+		glReportError();		
+		glTexImage2D(GL_TEXTURE_RECTANGLE_EXT, 0, aFormat1, mOriginalPixelsWide, mOriginalPixelsHigh, 0, aFormat2, aType, aBitmapData);		
+		glReportError();		
+		glBindTexture(GL_TEXTURE_RECTANGLE_EXT, 0);
+		glReportError();	
+		glDisable(GL_TEXTURE_RECTANGLE_EXT);
+	}
+}
+
 
 //----------------------------------------------------------------------------------------
 //	drawInRect:alpha
@@ -131,8 +160,7 @@
 {
 	if( mTextureName == 0 )
 		return;
-		
-	//NSLog(@"texture DRAW IN RECT x:%f y:%f w:%f h:%f", theRect.origin.x, theRect.origin.y, theRect.size.width, theRect.size.height);	
+	
 	[mOpenGLContext makeCurrentContext];
 		
 	GLuint aTextureWidth = mOriginalPixelsWide;
@@ -148,8 +176,9 @@
 
 	glColor4f(1.0, 1.0, 1.0, theAlpha);
 	glEnable(GL_TEXTURE_RECTANGLE_EXT);
+	glReportError();	
 	glBindTexture( GL_TEXTURE_RECTANGLE_EXT, mTextureName);
-	
+	glReportError();	
 	glPushMatrix();	
 	glTranslatef(anXPosition, aYPosition, 0);
 	glRotatef(0, 1, 0, 0);
@@ -164,8 +193,9 @@
 	glEnd();
 	
 	glBindTexture(GL_TEXTURE_RECTANGLE_EXT, 0);
+	glReportError();	
 	glDisable(GL_TEXTURE_RECTANGLE_EXT);
-	
+	glReportError();	
 	glPopMatrix();
 }
 
@@ -209,6 +239,9 @@
 	
 	glPopMatrix();	
 }
+
+
+
 
 //----------------------------------------------------------------------------------------
 //	size

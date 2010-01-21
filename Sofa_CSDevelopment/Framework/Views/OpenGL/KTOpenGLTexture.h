@@ -23,6 +23,7 @@
 	BOOL				mHasAlpha;
 }
 
+- (void)uploadTextureWithNSImage:(NSImage *)theImage openGLContext:(NSOpenGLContext *)theContext;
 - (void)createTextureFromNSBitmapImageRep:(NSBitmapImageRep*)theNSBitmapImageRep openGLContext:(NSOpenGLContext*)theContext;
 - (void)drawInRect:(NSRect)theRect alpha:(CGFloat)theAlpha;
 - (void)drawInRect:(NSRect)theRect anchorPoint:(NSPoint)theAnchorPoint alpha:(CGFloat)theAlpha;
@@ -30,4 +31,5 @@
 - (NSSize)size;
 - (BOOL)hasAlpha;
 - (GLuint)textureName;
+
 @end
