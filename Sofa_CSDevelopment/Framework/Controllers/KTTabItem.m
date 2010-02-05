@@ -33,7 +33,7 @@
 
 - (void)dealloc
 {
-	NSLog(@"%@ dealloc", self);
+//	NSLog(@"%@ dealloc", self);
 	[mLabel release];
 	[super dealloc];
 }
