@@ -439,7 +439,7 @@
 		break;
 		
 		case KTVerticalPositionKeepCentered:
-			aCurrentViewFrame.origin.y = NSHeight(aSuperviewFrame)*.5 - NSHeight(aCurrentViewFrame)*.5 + .5;
+			aCurrentViewFrame.origin.y = floor(NSHeight(aSuperviewFrame)*.5) - floor(NSHeight(aCurrentViewFrame)*.5);
 		break;
 		
 		case KTVerticalPositionStickTop:
