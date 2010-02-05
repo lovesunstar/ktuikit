@@ -32,7 +32,7 @@
 - (void)insertTabItem:(KTTabItem*)theTabItem atIndex:(NSInteger)theIndex;
 - (NSArray*)tabItems;
 - (KTTabItem*)tabItemForIdentifier:(id)theIdentifier;
-
+- (KTTabItem*)tabItemForViewController:(KTViewController*)theViewController;
 // selection
 - (KTTabItem*)selectedTabItem;
 - (NSInteger)selectedTabIndex;

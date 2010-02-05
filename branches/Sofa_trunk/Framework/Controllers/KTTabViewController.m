@@ -42,6 +42,7 @@
 		wContentView = [[[KTView alloc] initWithFrame:NSZeroRect] autorelease];
 		[[wContentView viewLayoutManager] setWidthType:KTSizeFill];
 		[[wContentView viewLayoutManager] setHeightType:KTSizeFill];
+		[[wContentView styleManager] setBackgroundColor:[NSColor greenColor]];
 		[self setView:wContentView];
 		
 		// create an array that will hold our list of KSTabItems - users can bind to the
@@ -201,7 +202,22 @@
 	return aTabItemToReturn;
 }
 
-
+//=========================================================== 
+// - tabItemForViewController
+//===========================================================
+- (KTTabItem*)tabItemForViewController:(KTViewController*)theViewController
+{
+	KTTabItem * aTabItemToReturn = nil;
+	for(KTTabItem * aTabItem in [mTabItemArrayController arrangedObjects])
+	{
+		if([[aTabItem viewController] isEqual:theViewController])
+		{
+			aTabItemToReturn = aTabItem;
+			break;
+		}
+	}
+	return aTabItemToReturn;
+}
 
 #pragma mark -
 #pragma mark Selection

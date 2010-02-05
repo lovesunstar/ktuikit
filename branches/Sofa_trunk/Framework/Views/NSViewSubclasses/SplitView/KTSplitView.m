@@ -467,7 +467,7 @@
 		[mAnimator setDelegate:self];																						
 		[mAnimator setDuration: theTimeInSeconds];
 		[mAnimator setAnimationCurve:NSAnimationEaseInOut];
-		[mAnimator setAnimationBlockingMode: NSAnimationBlocking];
+		[mAnimator setAnimationBlockingMode:NSAnimationNonblocking];
 		[mAnimator startAnimation];
 	}
 }
