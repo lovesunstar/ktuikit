@@ -89,7 +89,7 @@
 //=========================================================== 
 - (id)initWithNibName:(NSString *)name bundle:(NSBundle *)bundle
 {
-	[NSException raise:@"KTViewControllerException" format:[NSString stringWithFormat:@"An instance of an KTViewController concrete subclass was initialized using the NSViewController method -initWithNibName:bundle: all view controllers in the enusing tree will have no reference to an KTWindowController object and cannot be automatically added to the responder chain"]];
+	[NSException raise:@"KTViewControllerException" format:@"An instance of an KTViewController concrete subclass was initialized using the NSViewController method -initWithNibName:bundle: all view controllers in the enusing tree will have no reference to an KTWindowController object and cannot be automatically added to the responder chain"];
 	return nil;
 }
 
