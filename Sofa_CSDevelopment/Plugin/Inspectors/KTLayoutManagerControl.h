@@ -22,7 +22,7 @@ typedef enum
 - (NSArray*)inspectedViews;	
 @end
 
-@interface KTLayoutManagerControl : KTView 
+@interface KTLayoutManagerControl : KTView <NSTextFieldDelegate>
 {
 	IBInspector	*				wDelegate;
 	BOOL						mIsEnabled;
