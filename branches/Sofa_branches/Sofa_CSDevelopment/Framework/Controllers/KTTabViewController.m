@@ -28,6 +28,7 @@
 //===========================================================
 @synthesize tabItemArrayController = mTabItemArrayController;
 @synthesize releaseViewControllersWhenNotSeletcted = mReleaseViewControllersWhenNotSeletcted;
+@synthesize shouldResizeTabViews = mShouldResizeTabViews;
 @synthesize delegate = wDelegate;
 
 //=========================================================== 
@@ -42,7 +43,6 @@
 		wContentView = [[[KTView alloc] initWithFrame:NSZeroRect] autorelease];
 		[[wContentView viewLayoutManager] setWidthType:KTSizeFill];
 		[[wContentView viewLayoutManager] setHeightType:KTSizeFill];
-		[[wContentView styleManager] setBackgroundColor:[NSColor greenColor]];
 		[self setView:wContentView];
 		
 		// create an array that will hold our list of KSTabItems - users can bind to the
@@ -51,6 +51,8 @@
 		mTabItemArrayController = [[NSArrayController alloc] init];
 		[mTabItemArrayController setSelectsInsertedObjects:YES];
 		[mTabItemArrayController addObserver:self forKeyPath:@"selectionIndex"options:0 context:nil];
+		
+		[self setShouldResizeTabViews:YES];
 	}
 	return self;
 }
@@ -219,6 +221,18 @@
 	return aTabItemToReturn;
 }
 
+//=========================================================== 
+// - tabItemForIndex
+//===========================================================
+- (KTTabItem*)tabItemForIndex:(NSInteger)theIndex
+{
+	KTTabItem * aTabItemToReturn = nil;
+	if(		theIndex >= 0
+		||	theIndex < [[mTabItemArrayController arrangedObjects] count])
+		aTabItemToReturn = [[mTabItemArrayController arrangedObjects] objectAtIndex:theIndex];
+	return aTabItemToReturn;
+}
+
 #pragma mark -
 #pragma mark Selection
 //=========================================================== 
@@ -303,10 +317,20 @@
 		[aViewControllerToSelect setHidden:NO];
 		
 		// layout
-		[[aViewForTab viewLayoutManager] setWidthType:KTSizeFill];
-		[[aViewForTab viewLayoutManager] setHeightType:KTSizeFill];
-		[[wContentView viewLayoutManager] refreshLayout];	
-		
+		if([self shouldResizeTabViews])
+		{
+			[[aViewForTab viewLayoutManager] setWidthType:KTSizeFill];
+			[[aViewForTab viewLayoutManager] setHeightType:KTSizeFill];
+			[[wContentView viewLayoutManager] refreshLayout];	
+		}
+		else
+		{
+			NSRect aFrameForTab = [aViewForTab frame];
+			aFrameForTab.origin.x = 0;
+			aFrameForTab.origin.y = 0;
+			[aViewForTab setFrame:aFrameForTab];
+		}
+
 		// add the new view controller as a subcontroller
 //		[self addSubcontroller:aViewControllerToSelect];
 //		// reestablish its KVO/bindings with its represented object
