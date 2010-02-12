@@ -19,12 +19,15 @@
 	NSArrayController *		mTabItemArrayController;
 	KTTabItem *				wCurrentSelectedTab;
 	BOOL					mReleaseViewControllersWhenNotSeletcted;
+	BOOL					mShouldResizeTabViews;
 	id						wDelegate;
 }
 
 @property (nonatomic, readonly) NSArrayController * tabItemArrayController;
 @property (nonatomic, readwrite, assign) BOOL releaseViewControllersWhenNotSeletcted;
+@property (nonatomic, readwrite, assign) BOOL shouldResizeTabViews;
 @property (nonatomic, readwrite, assign) id delegate;
+
 
 // adding/removing/getting tabs
 - (void)addTabItem:(KTTabItem*)theTabItem;
@@ -33,6 +36,8 @@
 - (NSArray*)tabItems;
 - (KTTabItem*)tabItemForIdentifier:(id)theIdentifier;
 - (KTTabItem*)tabItemForViewController:(KTViewController*)theViewController;
+- (KTTabItem*)tabItemForIndex:(NSInteger)theIndex;
+
 // selection
 - (KTTabItem*)selectedTabItem;
 - (NSInteger)selectedTabIndex;

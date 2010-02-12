@@ -455,6 +455,25 @@
 }
 
 //=========================================================== 
+// - rightMouseDown:
+//===========================================================
+- (void)rightMouseDown:(NSEvent *)theEvent
+{
+	if(mOpenGLLayer)
+	{
+		NSPoint	aMousePoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+		KTOpenGLLayer * aHitTestResult = [mOpenGLLayer hitTest:aMousePoint];
+		if(aHitTestResult)
+		{
+			[aHitTestResult rightMouseDown:theEvent];
+			mCurrentMouseEventHandler = aHitTestResult;
+			return;
+		}
+	}
+}
+
+
+//=========================================================== 
 // - mouseDown:
 //===========================================================
 - (void)mouseDown:(NSEvent*)theEvent
