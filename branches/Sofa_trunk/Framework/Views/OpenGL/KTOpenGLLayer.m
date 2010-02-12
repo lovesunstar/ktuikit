@@ -354,9 +354,10 @@
 	
 	if(aLayerToReturn == nil)
 	{
-		if(NSPointInRect(thePoint, [self convertRectToViewRect:[self frame]]))
+		if(NSPointInRect(thePoint, [self convertRectToViewRect:[self bounds]]))
 			aLayerToReturn = self;
 	}
+
 	return aLayerToReturn;
 }
 
