@@ -146,11 +146,19 @@
 	[mFirstView release];
 	[mSecondView release];
 	[mDivider release];
+	[mAnimator setDelegate:nil];
 	[mAnimator release];
 	[super dealloc];
 }
 
-
+//=========================================================== 
+// - viewWillMoveToSuperview
+//===========================================================
+- (void)viewWillMoveToSuperview:(NSView *)theNewSuperview
+{
+	if([mAnimator isAnimating])
+		[mAnimator stopAnimation];
+}
 
 
 #pragma mark -
@@ -467,7 +475,7 @@
 		[mAnimator setDelegate:self];																						
 		[mAnimator setDuration: theTimeInSeconds];
 		[mAnimator setAnimationCurve:NSAnimationEaseInOut];
-		[mAnimator setAnimationBlockingMode:NSAnimationNonblocking];
+		[mAnimator setAnimationBlockingMode:NSAnimationBlocking];
 		[mAnimator startAnimation];
 	}
 }
