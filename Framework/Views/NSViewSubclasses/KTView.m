@@ -32,6 +32,10 @@
 
 #import "KTView.h"
 
+@interface KTView (Private)
+- (void)_drawDebugginRect;
+@end
+
 @implementation KTView
 
 @synthesize mouseDownCanMoveWindow = mMouseDownCanMoveWindow;
@@ -40,6 +44,7 @@
 @synthesize canBecomeFirstResponder = mCanBecomeFirstResponder;
 @synthesize drawAsImage = mDrawAsImage;
 @synthesize cachedImage = mCachedImage;
+@synthesize drawDebuggingRect = mDrawDebuggingRect;
 
 //=========================================================== 
 // - initWithFrame:
@@ -178,6 +183,9 @@
 - (void)drawRect:(NSRect)theRect
 {	
 	CGContextRef aContext = [[NSGraphicsContext currentContext] graphicsPort];
+	if([self drawDebuggingRect])
+		[self _drawDebugginRect];
+		
 //	if(mDrawAsImage)
 //	{
 //		[mCachedImage drawInRect:theRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1];
@@ -196,6 +204,21 @@
 - (void)drawInContext:(CGContextRef)theContext
 {
 	// subclasses can override this to do custom drawing over the styles
+}
+
+
+//=========================================================== 
+// - _drawDebugginRect:
+//=========================================================== 
+- (void)_drawDebugginRect
+{
+	[[NSColor colorWithCalibratedRed:0 green:1 blue:0 alpha:.5] set];
+	NSRect anInsetBounds = NSInsetRect([self bounds], 10, 10);
+	[NSBezierPath fillRect:anInsetBounds];
+	
+	NSRect anOriginSquare = NSMakeRect(0, 0, 10, 10);
+	[[NSColor colorWithCalibratedRed:1 green:0 blue:0 alpha:.5] set];
+	[NSBezierPath fillRect:anOriginSquare];
 }
 
 

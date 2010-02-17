@@ -297,6 +297,11 @@
 - (void)layoutViews
 {
 	NSRect aSplitViewBounds = [self bounds];
+	
+	if(		aSplitViewBounds.size.width < 0
+		||	aSplitViewBounds.size.height < 0)
+			return;
+			
 	NSRect aDividerFrame = [[self divider] frame];
 	NSRect aFirstViewFrame;
 	NSRect aSecondViewFrame;
@@ -332,6 +337,15 @@
 									  aSplitViewBounds.size.height);
 	}
 	
+	if(aFirstViewFrame.size.width < 0)
+		aFirstViewFrame.size.width = 0;
+	if(aFirstViewFrame.size.height < 0)
+		aFirstViewFrame.size.height = 0;
+	if(aSecondViewFrame.size.height < 0)
+		aSecondViewFrame.size.height = 0;
+	if(aSecondViewFrame.size.width < 0)
+		aSecondViewFrame.size.width = 0;
+		
 	if(NSEqualRects(aFirstViewFrame, [[self firstView] frame]) == NO)
 		[[self firstView] setFrame:aFirstViewFrame];
 	if(NSEqualRects(aSecondViewFrame, [[self secondView] frame]) == NO)
