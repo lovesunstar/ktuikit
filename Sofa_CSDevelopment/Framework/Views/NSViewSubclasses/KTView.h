@@ -48,6 +48,8 @@
 	BOOL						mCanBecomeFirstResponder;
 	BOOL						mDrawAsImage;
 	NSImage *					mCachedImage;
+	
+	BOOL						mDrawDebuggingRect;
 }
 
 @property (nonatomic, readwrite, assign) BOOL opaque;
@@ -56,7 +58,7 @@
 @property (nonatomic, readwrite, assign) BOOL canBecomeFirstResponder;
 @property (nonatomic, readwrite, assign) BOOL drawAsImage;
 @property (nonatomic, readonly) NSImage * cachedImage;
-
+@property (nonatomic, readwrite, assign) BOOL drawDebuggingRect;
 - (void)drawInContext:(CGContextRef)theContext;
 
 
