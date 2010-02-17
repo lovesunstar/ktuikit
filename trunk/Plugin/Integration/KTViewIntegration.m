@@ -114,9 +114,9 @@
 //=========================================================== 
 - (NSView*)ibDesignableContentView
 {
-	return self;
+	return [self isMemberOfClass:[KTView class]] ? self : nil;
 }
-//
+
 - (IBInset)ibLayoutInset
 {
 	IBInset anInsetToReturn;

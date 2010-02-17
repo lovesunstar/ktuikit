@@ -56,37 +56,37 @@
 //		return [super hitTest:thePoint];
 //}
 //
-
-- (void) mouseDown:(NSEvent *)theEvent
-{		
-
-
-	
-   NSEvent * aNextEvent = nil;
-   while ((aNextEvent = [[self window] nextEventMatchingMask:NSLeftMouseUpMask | NSLeftMouseDraggedMask | NSMouseMovedMask
-												   untilDate:[NSDate distantFuture] 
-													  inMode:NSDefaultRunLoopMode dequeue:YES]))
-   {
-       switch ([aNextEvent type])
-       {
-			case NSLeftMouseDragged:
-			  [self mouseDragged:aNextEvent];
-			break;
-			
-			case NSMouseMovedMask:
-			break;
-					   
-			case NSLeftMouseUp:
-				[self mouseUp:aNextEvent];
-//				[[NSCursor arrowCursor] set];
-			return;
-			
-
-			
-			default:
-			return;
-       }
-   }
-}
-
+//
+//- (void) mouseDown:(NSEvent *)theEvent
+//{		
+//
+//
+//	
+//   NSEvent * aNextEvent = nil;
+//   while ((aNextEvent = [[self window] nextEventMatchingMask:NSLeftMouseUpMask | NSLeftMouseDraggedMask | NSMouseMovedMask
+//												   untilDate:[NSDate distantFuture] 
+//													  inMode:NSDefaultRunLoopMode dequeue:YES]))
+//   {
+//       switch ([aNextEvent type])
+//       {
+//			case NSLeftMouseDragged:
+//			  [self mouseDragged:aNextEvent];
+//			break;
+//			
+//			case NSMouseMovedMask:
+//			break;
+//					   
+//			case NSLeftMouseUp:
+//				[self mouseUp:aNextEvent];
+////				[[NSCursor arrowCursor] set];
+//			return;
+//			
+//
+//			
+//			default:
+//			return;
+//       }
+//   }
+//}
+//
 @end

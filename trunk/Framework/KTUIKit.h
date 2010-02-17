@@ -4,9 +4,10 @@
 #import <KTUIKit/KTLayoutManager.h>
 #import <KTUIKit/KTStyleManager.h>
 #import <KTUIKit/KTView.h>
-//#import <KTUIKit/KTOpenGLView.h>
-//#import <KTUIKit/KTOpenGLTexture.h>
-//#import <KTUIKit/KTOpenGLLayer.h>
+#import <KTUIKit/KTAnimator.h>
+#import <KTUIKit/KTOpenGLView.h>
+#import <KTUIKit/KTOpenGLTexture.h>
+#import <KTUIKit/KTOpenGLLayer.h>
 #import <KTUIKit/KTScrollView.h>
 //#import "KTUIKitFramework/KTScroller.h"
 #import <KTUIKit/KTAppKitSplitView.h>

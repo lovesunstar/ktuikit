@@ -137,7 +137,6 @@
 //=========================================================== 
 - (void)patchResponderChain
 {
-
 	NSMutableArray * aFlatViewControllersList = [NSMutableArray array];
 	for (KTViewController * aViewController in mViewControllers) { // flatten the view controllers into an array
 		if([aViewController hidden]==NO)

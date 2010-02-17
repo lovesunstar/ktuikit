@@ -75,12 +75,20 @@
 @synthesize gradientAngle = mGradientAngle;
 
 //=========================================================== 
-// - initWithCoder:
+// - init
+//=========================================================== 
+- (id)init
+{
+	return [self initWithView:nil];
+}
+
+//=========================================================== 
+// - initWithView:
 //=========================================================== 
 - (id)initWithView:(id<KTStyle>)theView
 {
 	if(![super init])
-		return self;
+		return nil;
 	
 	[self setView:theView];
 	[self setBackgroundColor:[NSColor clearColor]];
