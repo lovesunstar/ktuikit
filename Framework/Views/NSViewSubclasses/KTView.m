@@ -58,8 +58,7 @@
 	
 	// For Debugging
 	[self setLabel:@"KTView"];
-	
-	[self setOpaque:NO];
+
 	return self;
 }
 
@@ -94,9 +93,11 @@
 	[self setAutoresizingMask:NSViewNotSizable];
 	
 	KTStyleManager * aStyleManager = [theCoder decodeObjectForKey:@"styleManager"];
+	if(aStyleManager == nil)
+		aStyleManager = [[[KTStyleManager alloc] init] autorelease];
 	[aStyleManager setView:self];
 	[self setStyleManager:aStyleManager];
-	[self setOpaque:NO];
+
 	[self setLabel:[theCoder decodeObjectForKey:@"label"]];
 	return self;
 }
@@ -145,6 +146,10 @@
 	return mMouseDownCanMoveWindow;
 }
 
+- (void)mouseDown:(NSEvent*)theEvent
+{
+	NSLog(@"mouse down %@", self);
+}
 
 #pragma mark -
 #pragma mark Drawing

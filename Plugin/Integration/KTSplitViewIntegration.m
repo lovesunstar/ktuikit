@@ -47,49 +47,49 @@
 	[super ibDidAddToDesignableDocument:theDocument];
 }
 
-
-- (NSView*)hitTest:(NSPoint)thePoint
-{
-	NSPoint aMousePoint = [self convertPoint:thePoint fromView:nil];
-	// if there are any split views in our subviews, we'll let them handle the hittest
-	id aViewToTest = nil;
-	if(NSPointInRect(aMousePoint, [mFirstView frame]))
-		aViewToTest = mFirstView;
-	else if(NSPointInRect(aMousePoint, [mSecondView frame]))
-		aViewToTest = mSecondView;
-	
-	if(aViewToTest)
-	{
-		if([[aViewToTest subviews] count] > 0)
-		{
-			if([[[aViewToTest subviews] objectAtIndex:0] isKindOfClass:[KTSplitView class]])
-			{
-				return [[[aViewToTest subviews] objectAtIndex:0] hitTest:thePoint];
-			}
-		}
-	}
-
-	// if we've made it to here, we can check our divider against the point
-	id aTestResult =  [super hitTest:thePoint];	
-	if(aTestResult == mDivider)
-	{
-		if([[NSApp currentEvent] type] == NSMouseMoved)
-		{
-			if([self dividerOrientation] == KTSplitViewDividerOrientation_Horizontal)
-				[[NSCursor resizeUpDownCursor] set];
-			else
-				[[NSCursor resizeLeftRightCursor] set];
-		}	
-		if([[NSApp currentEvent] type] == NSLeftMouseDown)
-		{
-			[mDivider mouseDown:[NSApp currentEvent]];
-		}
-	}
-	else if(	aTestResult==mFirstView
-			||	aTestResult==mSecondView)
-		aTestResult = self;
-	return aTestResult;
-}
+//
+//- (NSView*)hitTest:(NSPoint)thePoint
+//{
+//	NSPoint aMousePoint = [self convertPoint:thePoint fromView:nil];
+//	// if there are any split views in our subviews, we'll let them handle the hittest
+//	id aViewToTest = nil;
+//	if(NSPointInRect(aMousePoint, [mFirstView frame]))
+//		aViewToTest = mFirstView;
+//	else if(NSPointInRect(aMousePoint, [mSecondView frame]))
+//		aViewToTest = mSecondView;
+//	
+//	if(aViewToTest)
+//	{
+//		if([[aViewToTest subviews] count] > 0)
+//		{
+//			if([[[aViewToTest subviews] objectAtIndex:0] isKindOfClass:[KTSplitView class]])
+//			{
+//				return [[[aViewToTest subviews] objectAtIndex:0] hitTest:thePoint];
+//			}
+//		}
+//	}
+//
+//	// if we've made it to here, we can check our divider against the point
+//	id aTestResult =  [super hitTest:thePoint];	
+//	if(aTestResult == mDivider)
+//	{
+//		if([[NSApp currentEvent] type] == NSMouseMoved)
+//		{
+//			if([self dividerOrientation] == KTSplitViewDividerOrientation_Horizontal)
+//				[[NSCursor resizeUpDownCursor] set];
+//			else
+//				[[NSCursor resizeLeftRightCursor] set];
+//		}	
+//		if([[NSApp currentEvent] type] == NSLeftMouseDown)
+//		{
+//			[mDivider mouseDown:[NSApp currentEvent]];
+//		}
+//	}
+//	else if(	aTestResult==mFirstView
+//			||	aTestResult==mSecondView)
+//		aTestResult = self;
+//	return aTestResult;
+//}
 
 - (NSView*)ibDesignableContentView
 {
