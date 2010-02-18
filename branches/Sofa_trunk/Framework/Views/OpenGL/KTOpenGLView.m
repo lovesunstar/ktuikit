@@ -484,8 +484,11 @@
 		KTOpenGLLayer * aHitTestResult = [mOpenGLLayer hitTest:aMousePoint];
 		if(aHitTestResult)
 		{
-			[aHitTestResult mouseDown:theEvent];
-			mCurrentMouseEventHandler = aHitTestResult;
+			if([aHitTestResult respondsToSelector:@selector(mouseDown:)])
+			{
+				[aHitTestResult mouseDown:theEvent];
+				mCurrentMouseEventHandler = aHitTestResult;
+			}
 			return;
 		}
 	}
