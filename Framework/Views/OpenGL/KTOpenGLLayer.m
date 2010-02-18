@@ -354,10 +354,12 @@
 	
 	if(aLayerToReturn == nil)
 	{
-		if(NSPointInRect(thePoint, [self convertRectToViewRect:[self bounds]]))
+		thePoint = [self convertViewPointToLayerPoint:thePoint];
+		NSRect aLayerRect = [self bounds];
+		aLayerRect.origin = [self position];
+		if(NSPointInRect(thePoint, aLayerRect))
 			aLayerToReturn = self;
 	}
-
 	return aLayerToReturn;
 }
 
