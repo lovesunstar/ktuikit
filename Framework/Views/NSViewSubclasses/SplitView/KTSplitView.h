@@ -48,7 +48,11 @@ typedef enum
 
 @class KTSplitViewDivider;
 
-@interface KTSplitView : KTView <KTSplitView, NSAnimationDelegate>
+@interface KTSplitView : KTView <KTSplitView
+#if MAC_OS_X_VERSION_MAX_ALLOWED > MAC_OS_X_VERSION_10_5
+, NSAnimationDelegate
+#endif
+>
 {
 	@private
 	id<KTSplitViewDelegate>				wDelegate;
