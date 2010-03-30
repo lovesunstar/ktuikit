@@ -198,8 +198,11 @@
 //=========================================================== 
 - (void)addSubcontroller:(KTViewController *)theViewController;
 {
-	[mSubcontrollers addObject:theViewController];
-	[[self windowController] patchResponderChain];
+	if(theViewController)
+	{
+		[mSubcontrollers addObject:theViewController];
+		[[self windowController] patchResponderChain];
+	}
 }
 
 
@@ -209,9 +212,12 @@
 //=========================================================== 
 - (void)removeSubcontroller:(KTViewController *)theViewController;
 {
-	[theViewController removeObservations];
-	[mSubcontrollers removeObject:theViewController];
-	[[self windowController] patchResponderChain];
+	if(theViewController)
+	{
+		[theViewController removeObservations];
+		[mSubcontrollers removeObject:theViewController];
+		[[self windowController] patchResponderChain];
+	}
 }
 
 
@@ -232,8 +238,11 @@
 //=========================================================== 
 - (void)addLayerController:(KTLayerController*)theLayerController
 {
-	[mLayerControllers addObject:theLayerController];
-	[[self windowController] patchResponderChain];
+	if(theLayerController)
+	{
+		[mLayerControllers addObject:theLayerController];
+		[[self windowController] patchResponderChain];
+	}
 }
 
 
