@@ -46,7 +46,7 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 	{
 		mAnimationTimer = nil;	
 		mAnimationQueue = [[NSMutableArray alloc] init];
-		mFramesPerSecond = 60.0;
+		mFramesPerSecond = 30.0;
 	}
 	return self;
 }
