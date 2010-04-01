@@ -23,6 +23,10 @@
 	BOOL				mHasAlpha;
 }
 
+@property (nonatomic, readwrite, retain) id bitmapSource;
+@property (nonatomic, readwrite, retain) NSOpenGLContext * openGLContext;
+
+
 - (void)uploadTextureWithNSImage:(NSImage *)theImage openGLContext:(NSOpenGLContext *)theContext;
 - (void)createTextureFromNSBitmapImageRep:(NSBitmapImageRep*)theNSBitmapImageRep openGLContext:(NSOpenGLContext*)theContext;
 - (void)drawInRect:(NSRect)theRect alpha:(CGFloat)theAlpha;
