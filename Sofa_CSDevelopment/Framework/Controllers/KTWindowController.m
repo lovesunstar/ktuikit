@@ -106,8 +106,11 @@
 //=========================================================== 
 - (void)addViewController:(KTViewController *)theViewController
 {
-	[mViewControllers addObject:theViewController];
-	[self patchResponderChain];
+	if(theViewController)
+	{
+		[mViewControllers addObject:theViewController];
+		[self patchResponderChain];
+	}
 }
 
 
@@ -117,9 +120,12 @@
 //=========================================================== 
 - (void)removeViewController:(KTViewController *)theViewController
 {
-	[theViewController removeObservations];
-	[mViewControllers removeObject:theViewController];
-	[self patchResponderChain];
+	if(theViewController)
+	{
+		[theViewController removeObservations];
+		[mViewControllers removeObject:theViewController];
+		[self patchResponderChain];
+	}
 }
 
 
@@ -148,7 +154,8 @@
 {
 
 	NSMutableArray * aFlatViewControllersList = [NSMutableArray array];
-	for (KTViewController * aViewController in mViewControllers) { // flatten the view controllers into an array
+	for (KTViewController * aViewController in mViewControllers) 
+	{ // flatten the view controllers into an array
 		if([aViewController hidden]==NO)
 		{
 			[aFlatViewControllersList addObject:aViewController];

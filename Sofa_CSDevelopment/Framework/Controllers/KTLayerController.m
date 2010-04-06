@@ -76,8 +76,11 @@
 //===========================================================
 - (void)addSubcontroller:(KTLayerController*)theSubcontroller
 {
-	[mSubcontrollers addObject:theSubcontroller];
-	[[[self viewController] windowController] patchResponderChain];
+	if(theSubcontroller)
+	{
+		[mSubcontrollers addObject:theSubcontroller];
+		[[[self viewController] windowController] patchResponderChain];
+	}
 }
 
 //=========================================================== 
@@ -85,8 +88,11 @@
 //===========================================================
 - (void)removeSubcontroller:(KTLayerController*)theSubcontroller
 {
-	[mSubcontrollers removeObject:theSubcontroller];
-	[[[self viewController] windowController] patchResponderChain];
+	if(theSubcontroller)
+	{
+		[mSubcontrollers removeObject:theSubcontroller];
+		[[[self viewController] windowController] patchResponderChain];
+	}
 }
 
 
