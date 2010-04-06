@@ -25,6 +25,9 @@
 }\
 
 @implementation KTOpenGLTexture
+@synthesize bitmapSource = mBitmapSource;
+@synthesize openGLContext = mOpenGLContext;
+
 //----------------------------------------------------------------------------------------
 //	init
 //----------------------------------------------------------------------------------------
@@ -82,27 +85,28 @@
 		[self deleteTexture];
 	}
 	
-	mOpenGLContext = [[theInfoDict objectForKey:@"NSOpenGLContextInfoKey"] retain];
-	mBitmapSource = [[theInfoDict objectForKey:@"NSBitmapImageRepInfoKey"] retain];
+	[self setOpenGLContext:[theInfoDict objectForKey:@"NSOpenGLContextInfoKey"]];
+	[self setBitmapSource:[theInfoDict objectForKey:@"NSBitmapImageRepInfoKey"]];
 			
 	if (	mTextureName == 0
-		&&	mBitmapSource != nil
-		&&	mOpenGLContext != nil) 
+		&&	[self bitmapSource] != nil
+		&&	[self openGLContext] != nil) 
 	{
 		
-		[mOpenGLContext makeCurrentContext];
+		[[self openGLContext] makeCurrentContext];
 		
 		GLenum				aFormat1;
 		GLenum				aFormat2;
 		GLenum				aType;
 		unsigned char *		aBitmapData;
 		
-		aBitmapData = [mBitmapSource bitmapData];
-		mOriginalPixelsWide = (GLuint)[(NSBitmapImageRep*)mBitmapSource pixelsWide];
-		mOriginalPixelsHigh = (GLuint)[(NSBitmapImageRep*)mBitmapSource pixelsHigh];
+		id aBitmapSource = [self bitmapSource];
+		aBitmapData = [aBitmapSource bitmapData];
+		mOriginalPixelsWide = (GLuint)[(NSBitmapImageRep*)aBitmapSource pixelsWide];
+		mOriginalPixelsHigh = (GLuint)[(NSBitmapImageRep*)aBitmapSource pixelsHigh];
 
-		mHasAlpha = [mBitmapSource hasAlpha];
-		if([mBitmapSource bitsPerPixel]==8)
+		mHasAlpha = [aBitmapSource hasAlpha];
+		if([aBitmapSource bitsPerPixel]==8)
 		{
 			// gray scale image
 			aFormat1 = GL_LUMINANCE8;
@@ -285,10 +289,8 @@
 		glDeleteTextures(1,&mTextureName);
 		mTextureName = 0;
 	}
-	[mBitmapSource release];
-	mBitmapSource = nil;	
-	[mOpenGLContext release];
-	mOpenGLContext = nil;
+	[self setBitmapSource:nil];
+	[self setOpenGLContext:nil];
 }
 
 

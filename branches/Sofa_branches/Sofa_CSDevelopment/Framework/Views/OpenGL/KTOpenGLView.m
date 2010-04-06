@@ -466,7 +466,7 @@
 		if(aHitTestResult)
 		{
 			[aHitTestResult rightMouseDown:theEvent];
-			mCurrentMouseEventHandler = aHitTestResult;
+			wCurrentMouseEventHandler = aHitTestResult;
 			return;
 		}
 	}
@@ -487,7 +487,7 @@
 			if([aHitTestResult respondsToSelector:@selector(mouseDown:)])
 			{
 				[aHitTestResult mouseDown:theEvent];
-				mCurrentMouseEventHandler = aHitTestResult;
+				wCurrentMouseEventHandler = aHitTestResult;
 			}
 			return;
 		}
@@ -501,10 +501,10 @@
 {
 	if(mOpenGLLayer)
 	{
-		if(mCurrentMouseEventHandler!=nil)
+		if(wCurrentMouseEventHandler!=nil)
 		{
-			[mCurrentMouseEventHandler mouseUp:theEvent];
-			mCurrentMouseEventHandler = nil;
+			[wCurrentMouseEventHandler mouseUp:theEvent];
+			wCurrentMouseEventHandler = nil;
 			return;
 		}
 		else
@@ -527,9 +527,9 @@
 {
 	if(mOpenGLLayer)
 	{
-		if(mCurrentMouseEventHandler!=nil)
+		if(wCurrentMouseEventHandler!=nil)
 		{
-			[mCurrentMouseEventHandler mouseDragged:theEvent];
+			[wCurrentMouseEventHandler mouseDragged:theEvent];
 			return;
 		}
 		else
@@ -539,7 +539,7 @@
 			if(aHitTestResult)
 			{
 				[aHitTestResult mouseDragged:theEvent];
-				mCurrentMouseEventHandler = aHitTestResult;
+				wCurrentMouseEventHandler = aHitTestResult;
 				return;
 			}
 		}

@@ -86,23 +86,30 @@
 //=========================================================== 
 - (id)initWithCoder:(NSCoder*)theCoder
 {
-	if (![super initWithCoder:theCoder])
-		return nil;
+	if (self = [super initWithCoder:theCoder])
+	{
+		KTLayoutManager * aLayoutManager = [theCoder decodeObjectForKey:@"layoutManager"];
+		if(aLayoutManager == nil)
+			aLayoutManager = [[[KTLayoutManager alloc] initWithView:self] autorelease];
+		else
+			[aLayoutManager setView:self];
+		[self setViewLayoutManager:aLayoutManager];
+		[self setAutoresizesSubviews:NO];
+		[self setAutoresizingMask:NSViewNotSizable];
 		
-	KTLayoutManager * aLayoutManager = [theCoder decodeObjectForKey:@"layoutManager"];
-	if(aLayoutManager == nil)
-		aLayoutManager = [[[KTLayoutManager alloc] initWithView:self] autorelease];
-	else
-		[aLayoutManager setView:self];
-	[self setViewLayoutManager:aLayoutManager];
-	[self setAutoresizesSubviews:NO];
-	[self setAutoresizingMask:NSViewNotSizable];
-	
-	KTStyleManager * aStyleManager = [theCoder decodeObjectForKey:@"styleManager"];
-	[aStyleManager setView:self];
-	[self setStyleManager:aStyleManager];
-	[self setOpaque:NO];
-	[self setLabel:[theCoder decodeObjectForKey:@"label"]];
+		KTStyleManager * aStyleManager = [theCoder decodeObjectForKey:@"styleManager"];
+		if(aStyleManager == nil)
+			aStyleManager = [[[KTStyleManager alloc] initWithView:self] autorelease];
+		else
+			[aStyleManager setView:self];
+		[self setStyleManager:aStyleManager];
+		[self setOpaque:NO];
+		
+		NSString * aLabel = [theCoder decodeObjectForKey:@"label"];
+		if(aLabel == nil)
+			aLabel = [self description];
+		[self setLabel:[theCoder decodeObjectForKey:@"label"]];
+	}
 	return self;
 }
 
