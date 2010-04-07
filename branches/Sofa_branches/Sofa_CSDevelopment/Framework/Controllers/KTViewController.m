@@ -293,7 +293,6 @@
 		if([[aLayerController subcontrollers] count] > 0)
 			[aDescendantsList addObjectsFromArray:[aLayerController descendants]];
 	}
-	NSLog(@"%@ descendents: %@", self, aDescendantsList);
 	return aDescendantsList;
 }
 
