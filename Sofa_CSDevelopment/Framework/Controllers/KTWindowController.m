@@ -160,9 +160,10 @@
 		{
 			[aFlatViewControllersList addObject:aViewController];
 			[aFlatViewControllersList addObjectsFromArray:[aViewController descendants]];
+			NSLog(@"%@ descendents: %@", aViewController, [aViewController descendants]);
 		}
 	}
-	
+//	NSLog(@"%@", aFlatViewControllersList);
 	if([aFlatViewControllersList count]>0)
 	{
 		[self setNextResponder:[aFlatViewControllersList objectAtIndex:0]];

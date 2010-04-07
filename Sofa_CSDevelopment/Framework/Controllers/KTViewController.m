@@ -252,8 +252,11 @@
 //=========================================================== 
 - (void)removeLayerController:(KTLayerController*)theLayerController
 {
-	[mLayerControllers removeObject:theLayerController];
-	[[self windowController] patchResponderChain];
+	if(theLayerController)
+	{
+		[mLayerControllers removeObject:theLayerController];
+		[[self windowController] patchResponderChain];
+	}
 }
 
 
@@ -279,7 +282,8 @@
 		if([aSubViewController hidden]==NO)
 		{
 			[aDescendantsList addObject:aSubViewController];
-			if ([[aSubViewController subcontrollers] count] > 0)
+			if (	[[aSubViewController subcontrollers] count] > 0
+				||  [[aSubViewController layerControllers] count] > 0)
 				[aDescendantsList addObjectsFromArray:[aSubViewController descendants]];
 		}
 	}
@@ -289,6 +293,7 @@
 		if([[aLayerController subcontrollers] count] > 0)
 			[aDescendantsList addObjectsFromArray:[aLayerController descendants]];
 	}
+	NSLog(@"%@ descendents: %@", self, aDescendantsList);
 	return aDescendantsList;
 }
 
