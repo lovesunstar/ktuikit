@@ -219,8 +219,12 @@
 		if(mTileImage)
 			CGContextDrawTiledImage(theContext, CGRectMake(anImagePoint.x,anImagePoint.y, anImageSize.width, anImageSize.height), aCGBackgroundImage);
 		else 
+		{
+			// draw from the center
+			anImagePoint.x = floor(aViewBounds.origin.x+aViewBounds.size.width*.5-anImageSize.width*.5);
+			anImagePoint.y = floor(aViewBounds.origin.y+aViewBounds.size.height*.5-anImageSize.height*.5);
 			CGContextDrawImage(theContext, CGRectMake(anImagePoint.x,anImagePoint.y, anImageSize.width, anImageSize.height), aCGBackgroundImage);	
-		
+		}
 		CFRelease(aCGImageSourceRef);
 		CGImageRelease(aCGBackgroundImage);		
 	}
