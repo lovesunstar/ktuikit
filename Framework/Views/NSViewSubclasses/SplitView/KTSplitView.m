@@ -16,9 +16,9 @@
 @end
 
 @interface KTSplitView (Private)
-- (KTView*)firstView;
-- (KTView*)secondView;
 - (void)animateDividerToPosition:(float)thePosition time:(float)theTimeInSeconds;
+- (KTView*)firstViewContainer;
+- (KTView*)secondViewContainer;
 @end
 
 @implementation KTSplitView
@@ -243,7 +243,7 @@
 			{
 				if(mResetResizeInformation == YES)
 				{
-					mResizeInformation = [[self firstView] frame].size.height;
+					mResizeInformation = [[self firstViewContainer] frame].size.height;
 					mResetResizeInformation = NO;
 				}
 				[[self divider] setFrame:NSMakeRect(anOldDividerFrame.origin.x, theSize.height-mResizeInformation, theSize.width, anOldDividerFrame.size.height)];
@@ -252,7 +252,7 @@
 			{
 				if(mResetResizeInformation == YES)
 				{
-					mResizeInformation = [[self firstView] frame].origin.x+[[self firstView]  frame].size.width;
+					mResizeInformation = [[self firstViewContainer] frame].origin.x+[[self firstViewContainer]  frame].size.width;
 					mResetResizeInformation = NO;
 				}
 				[[self divider] setFrame:NSMakeRect(mResizeInformation, anOldDividerFrame.origin.y, anOldDividerFrame.size.width, theSize.height)];
@@ -265,7 +265,7 @@
 			{
 				if(mResetResizeInformation == YES)
 				{
-					mResizeInformation = [[self secondView] frame].size.height;
+					mResizeInformation = [[self secondViewContainer] frame].size.height;
 					mResetResizeInformation = NO;
 				}
 				[[self divider] setFrame:NSMakeRect(anOldDividerFrame.origin.x, mResizeInformation, theSize.width, anOldDividerFrame.size.height)];
@@ -274,7 +274,7 @@
 			{
 				if(mResetResizeInformation == YES)
 				{
-					mResizeInformation = [[self secondView] frame].size.width;
+					mResizeInformation = [[self secondViewContainer] frame].size.width;
 					mResetResizeInformation = NO;
 				}
 				[[self divider] setFrame:NSMakeRect(theSize.width-mResizeInformation-anOldDividerFrame.size.width, anOldDividerFrame.origin.y, anOldDividerFrame.size.width, theSize.height)];
@@ -346,10 +346,10 @@
 	if(aSecondViewFrame.size.width < 0)
 		aSecondViewFrame.size.width = 0;
 		
-	if(NSEqualRects(aFirstViewFrame, [[self firstView] frame]) == NO)
-		[[self firstView] setFrame:aFirstViewFrame];
-	if(NSEqualRects(aSecondViewFrame, [[self secondView] frame]) == NO)
-		[[self secondView] setFrame:aSecondViewFrame];
+	if(NSEqualRects(aFirstViewFrame, [[self firstViewContainer] frame]) == NO)
+		[[self firstViewContainer] setFrame:aFirstViewFrame];
+	if(NSEqualRects(aSecondViewFrame, [[self secondViewContainer] frame]) == NO)
+		[[self secondViewContainer] setFrame:aSecondViewFrame];
 }
 
 
@@ -529,9 +529,9 @@
 //===========================================================
 - (void)setFirstView:(NSView<KTView>*)theView
 {
-	[[self firstView] setSubviews:[NSArray array]];
+	[[self firstViewContainer] setSubviews:[NSArray array]];
 	if(theView!=nil)
-	[[self firstView] addSubview:theView];
+		[[self firstViewContainer] addSubview:theView];
 	[self layoutViews];
 }
 
@@ -540,9 +540,9 @@
 //===========================================================
 - (void)setSecondView:(NSView<KTView>*)theView
 {
-	[[self secondView] setSubviews:[NSArray array]];
+	[[self secondViewContainer] setSubviews:[NSArray array]];
 	if(theView!=nil)
-		[[self secondView] addSubview:theView];	
+		[[self secondViewContainer] addSubview:theView];	
 	[self layoutViews];
 }
 
@@ -556,12 +556,27 @@
 	[self layoutViews];
 }
 
+- (KTView*)firstViewContainer
+{
+	return mFirstView;
+}
+
 //=========================================================== 
 // - firstView
 //===========================================================
 - (KTView*)firstView
 {
-	return mFirstView;
+	KTView * aViewToReturn = nil;
+	if([[mFirstView subviews] count] > 0)
+		aViewToReturn = [[mFirstView subviews] objectAtIndex:0];
+	return aViewToReturn;
+}
+
+
+
+- (KTView*)secondViewContainer
+{
+	return mSecondView;
 }
 
 //=========================================================== 
@@ -569,7 +584,10 @@
 //===========================================================
 - (KTView*)secondView
 {
-	return mSecondView;
+	KTView * aViewToReturn = nil;
+	if([[mSecondView subviews] count] > 0)
+		aViewToReturn = [[mSecondView subviews] objectAtIndex:0];
+	return aViewToReturn;
 }
 
 //=========================================================== 
