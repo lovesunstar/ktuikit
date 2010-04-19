@@ -52,6 +52,7 @@
 	NSGradient *		mBackgroundGradient;
 	CGFloat				mGradientAngle;
 	NSImage *			mBackgroundImage;
+	CGImageRef			mBackgroundImageRef;
 	BOOL				mTileImage;
 	
 	id<KTStyle>			wView;

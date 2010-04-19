@@ -102,7 +102,7 @@
 	[mBorderColorLeft release];
 	[mBackgroundGradient release];
 	[mBackgroundImage release];
-	
+	CGImageRelease(mBackgroundImageRef);
 	[super dealloc];
 }
 
@@ -207,26 +207,27 @@
 	}
 	
 	// also need to figure out a way to optimize image drawing so it only draws in the dirty rect of the view
-	if(mBackgroundImage != nil)
+	if(		mBackgroundImage != nil
+		&&	mBackgroundImageRef != nil)
 	{
 		NSPoint anImagePoint = aViewBounds.origin;
 		NSSize anImageSize = [mBackgroundImage size];
 		
-		NSData * anImageData = [NSBitmapImageRep TIFFRepresentationOfImageRepsInArray: [mBackgroundImage representations]];
-		CGImageSourceRef aCGImageSourceRef = CGImageSourceCreateWithData((CFDataRef)anImageData, NULL);
-		CGImageRef aCGBackgroundImage = CGImageSourceCreateImageAtIndex(aCGImageSourceRef, 0, NULL);
+//		NSData * anImageData = [NSBitmapImageRep TIFFRepresentationOfImageRepsInArray: [mBackgroundImage representations]];
+//		CGImageSourceRef aCGImageSourceRef = CGImageSourceCreateWithData((CFDataRef)anImageData, NULL);
+//		CGImageRef aCGBackgroundImage = CGImageSourceCreateImageAtIndex(aCGImageSourceRef, 0, NULL);
 		
 		if(mTileImage)
-			CGContextDrawTiledImage(theContext, CGRectMake(anImagePoint.x,anImagePoint.y, anImageSize.width, anImageSize.height), aCGBackgroundImage);
+			CGContextDrawTiledImage(theContext, CGRectMake(anImagePoint.x,anImagePoint.y, anImageSize.width, anImageSize.height), mBackgroundImageRef);
 		else 
 		{
 			// draw from the center
 			anImagePoint.x = floor(aViewBounds.origin.x+aViewBounds.size.width*.5-anImageSize.width*.5);
 			anImagePoint.y = floor(aViewBounds.origin.y+aViewBounds.size.height*.5-anImageSize.height*.5);
-			CGContextDrawImage(theContext, CGRectMake(anImagePoint.x,anImagePoint.y, anImageSize.width, anImageSize.height), aCGBackgroundImage);	
+			CGContextDrawImage(theContext, CGRectMake(anImagePoint.x,anImagePoint.y, anImageSize.width, anImageSize.height), mBackgroundImageRef);	
 		}
-		CFRelease(aCGImageSourceRef);
-		CGImageRelease(aCGBackgroundImage);		
+//		CFRelease(aCGImageSourceRef);
+//		CGImageRelease(aCGBackgroundImage);		
 	}
 	
 	
@@ -368,7 +369,12 @@
 	{
 		[theBackgroundImage retain];
 		[mBackgroundImage release];
+		CGImageRelease(mBackgroundImageRef);
 		mBackgroundImage = theBackgroundImage;
+		NSData * anImageData = [NSBitmapImageRep TIFFRepresentationOfImageRepsInArray: [mBackgroundImage representations]];
+		CGImageSourceRef aCGImageSourceRef = CGImageSourceCreateWithData((CFDataRef)anImageData, NULL);
+		mBackgroundImageRef = CGImageSourceCreateImageAtIndex(aCGImageSourceRef, 0, NULL);
+		CFRelease(aCGImageSourceRef);		
 	}
 	mTileImage = theBool;
 	if(mTileImage)
