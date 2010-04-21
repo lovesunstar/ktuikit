@@ -111,7 +111,7 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 //	}
 	
 	// check to see if we're already animating this value for this object
-	id	anObjectToRemove = nil;
+	id	anAnimationToRemove = nil;
 	for(NSDictionary * anAnimationToCheck in mAnimationQueue)
 	{
 		id	anObject = [theAnimationProperties valueForKey:KTAnimatorAnimationObjectKey];
@@ -122,16 +122,17 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 			{
 				// we have the same object and the same keypath
 				// remove the animation in the queue, we don't care about this animation anymore
-				anObjectToRemove = anAnimationToCheck;
+				anAnimationToRemove = [[anAnimationToCheck retain] autorelease];
 				if([wDelegate respondsToSelector:@selector(animator:didEndAnimation:)])
-					[wDelegate animator:self didEndAnimation:anAnimationToCheck];
+					[wDelegate animator:self didEndAnimation:anAnimationToRemove];
+				break;
 			}
 		}
 	}
 	
-	if(anObjectToRemove!=nil)
+	if(anAnimationToRemove!=nil)
 	{
-		[mAnimationQueue removeObject:anObjectToRemove];
+		[mAnimationQueue removeObject:anAnimationToRemove];
 	}
 	
 	// add object to queue
