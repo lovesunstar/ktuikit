@@ -63,8 +63,7 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 
 - (void)removeAllAnimations
 {
-	if([mAnimationTimer isValid])
-		[mAnimationTimer invalidate];
+	[self endTimer];
 	[mAnimationQueue removeAllObjects];
 }
 
