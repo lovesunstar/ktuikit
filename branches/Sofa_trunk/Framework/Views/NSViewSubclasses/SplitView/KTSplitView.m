@@ -192,6 +192,7 @@
 		||	anOldViewFrame.size.height <= 0)
 	{
 		[super setFrameSize:theSize];
+		mCanSetDividerPosition = NO;
 		return;
 	}
 	
