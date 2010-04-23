@@ -192,7 +192,6 @@
 		||	anOldViewFrame.size.height <= 0)
 	{
 		[super setFrameSize:theSize];
-		mCanSetDividerPosition = NO;
 		return;
 	}
 	
@@ -216,10 +215,10 @@
 				// we need to calculate the position of the divider during a live resize
 				if(mResetResizeInformation == YES)
 				{	
-					mResizeInformation = floor(((anOldDividerFrame.origin.y+anOldDividerFrame.size.height*.5) / anOldViewFrame.size.height) * 100);
+					mResizeInformation = floor(((anOldDividerFrame.origin.y+anOldDividerFrame.size.height*.5) / anOldViewFrame.size.height) * 100.0);
 					mResetResizeInformation = NO;
 				}
-				CGFloat aDividerPosition = ((theSize.height*mResizeInformation)/100) - (anOldDividerFrame.size.height*.5);
+				CGFloat aDividerPosition = ((theSize.height*mResizeInformation)/100.0) - (anOldDividerFrame.size.height*.5);
 				aDividerPosition = floor(aDividerPosition);
 				[[self divider] setFrame:NSMakeRect(anOldDividerFrame.origin.x, aDividerPosition, theSize.width, anOldDividerFrame.size.height)];
 			}
@@ -227,10 +226,10 @@
 			{
 				if(mResetResizeInformation == YES)
 				{
-					mResizeInformation = floor(((anOldDividerFrame.origin.x+anOldDividerFrame.size.width*.5) / anOldViewFrame.size.width) * 100);
+					mResizeInformation = floor(((anOldDividerFrame.origin.x+anOldDividerFrame.size.width*.5) / anOldViewFrame.size.width) * 100.0);
 					mResetResizeInformation = NO;
 				}
-				CGFloat aDividerPosition = ((theSize.width*mResizeInformation)/100) - (anOldDividerFrame.size.width*.5);
+				CGFloat aDividerPosition = ((theSize.width*mResizeInformation)/100.0) - (anOldDividerFrame.size.width*.5);
 				aDividerPosition = floor(aDividerPosition);
 				[[self divider]  setFrame:NSMakeRect(aDividerPosition, anOldDividerFrame.origin.y, anOldDividerFrame.size.width, theSize.height)];
 			}
@@ -303,6 +302,7 @@
 		||	aSplitViewBounds.size.height < 0)
 			return;
 			
+
 	NSRect aDividerFrame = [[self divider] frame];
 	NSRect aFirstViewFrame;
 	NSRect aSecondViewFrame;
@@ -534,6 +534,7 @@
 	if(theView!=nil)
 		[[self firstViewContainer] addSubview:theView];
 	[self layoutViews];
+	[[[self firstViewContainer] viewLayoutManager] refreshLayout];
 }
 
 //=========================================================== 
@@ -545,6 +546,7 @@
 	if(theView!=nil)
 		[[self secondViewContainer] addSubview:theView];	
 	[self layoutViews];
+	[[[self secondViewContainer] viewLayoutManager] refreshLayout];
 }
 
 //=========================================================== 
@@ -616,19 +618,23 @@
 - (void)setDividerOrientation:(KTSplitViewDividerOrientation)theOrientation
 {
 	CGFloat aCurrentDividerThickness = [self dividerThickness];
-	mDividerOrientation = theOrientation;
-	if(mDividerOrientation==KTSplitViewDividerOrientation_Horizontal)
+	if(mDividerOrientation != theOrientation)
 	{
-		NSRect aFrame = NSMakeRect(0, [self frame].size.height*.5, [self frame].size.width, aCurrentDividerThickness);
-		[[self divider] setFrame:aFrame];
+		mDividerOrientation = theOrientation;
+		if(mDividerOrientation==KTSplitViewDividerOrientation_Horizontal)
+		{
+			NSRect aFrame = NSMakeRect(0, [self frame].size.height*.5, [self frame].size.width, aCurrentDividerThickness);
+			[[self divider] setFrame:aFrame];
+			//[self setDividerPosition:[self frame].size.height*.5 relativeToView:KTSplitViewFocusedViewFlag_FirstView];
+		}
+		else if(mDividerOrientation==KTSplitViewDividerOrientation_Vertical)
+		{
+			NSRect aFrame = NSMakeRect([self frame].size.width*.5, 0, aCurrentDividerThickness, [self frame].size.height);
+			[[self divider] setFrame:aFrame];
+			//[self setDividerPosition:[self frame].size.width*.5 relativeToView:KTSplitViewFocusedViewFlag_FirstView];
+		}
+		[self resetResizeInformation];
 	}
-	else if(mDividerOrientation==KTSplitViewDividerOrientation_Vertical)
-	{
-		NSRect aFrame = NSMakeRect([self frame].size.width*.5, 0, aCurrentDividerThickness, [self frame].size.height);
-		[[self divider] setFrame:aFrame];
-	}
-	[self resetResizeInformation];
-	[self setNeedsDisplay:YES];
 }
 
 //=========================================================== 
@@ -641,7 +647,7 @@
 	if(theResizeBehavior==KTSplitViewResizeBehavior_MaintainProportions)
 	{
 		[self resetResizeInformation];
-		[self setNeedsDisplay:YES];
+//		[self setNeedsDisplay:YES];
 	}
 }
 
