@@ -121,7 +121,6 @@
 		4CA2C4F10FCAE42A00555616 /* KTScrollView.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CA2C4F00FCAE42A00555616 /* KTScrollView.tif */; };
 		4CAFCB3F1091BD0900F9D292 /* KTSharedContextOpenGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAFCB3D1091BD0900F9D292 /* KTSharedContextOpenGLView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CAFCB401091BD0900F9D292 /* KTSharedContextOpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAFCB3E1091BD0900F9D292 /* KTSharedContextOpenGLView.m */; };
-		4CB23EFD0ED989E800486F39 /* poof_item.aif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB23EFC0ED989E800486F39 /* poof_item.aif */; };
 		4CB23FA70ED9A13F00486F39 /* KTColorWell.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB23FA50ED9A13F00486F39 /* KTColorWell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CB23FA80ED9A13F00486F39 /* KTColorWell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB23FA60ED9A13F00486F39 /* KTColorWell.m */; };
 		4CB23FE80ED9A40300486F39 /* KTColorWellIntegration.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB23FE70ED9A40300486F39 /* KTColorWellIntegration.m */; };
@@ -352,7 +351,6 @@
 		4CA2C4F00FCAE42A00555616 /* KTScrollView.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = KTScrollView.tif; sourceTree = "<group>"; };
 		4CAFCB3D1091BD0900F9D292 /* KTSharedContextOpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSharedContextOpenGLView.h; sourceTree = "<group>"; };
 		4CAFCB3E1091BD0900F9D292 /* KTSharedContextOpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTSharedContextOpenGLView.m; sourceTree = "<group>"; };
-		4CB23EFC0ED989E800486F39 /* poof_item.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = poof_item.aif; sourceTree = "<group>"; };
 		4CB23FA50ED9A13F00486F39 /* KTColorWell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTColorWell.h; sourceTree = "<group>"; };
 		4CB23FA60ED9A13F00486F39 /* KTColorWell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTColorWell.m; sourceTree = "<group>"; };
 		4CB23FE60ED9A3DD00486F39 /* KTColorWell.classdescription */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = KTColorWell.classdescription; path = "Plugin/Class Descriptions/KTColorWell.classdescription"; sourceTree = "<group>"; };
@@ -719,7 +717,6 @@
 		4CB23EFB0ED989E800486F39 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				4CB23EFC0ED989E800486F39 /* poof_item.aif */,
 			);
 			path = Sounds;
 			sourceTree = "<group>";
@@ -957,7 +954,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CB23EFD0ED989E800486F39 /* poof_item.aif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
