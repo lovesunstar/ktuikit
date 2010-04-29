@@ -254,12 +254,12 @@
 	{
 		if(mRemoveActiveColorStop)
 		{
-			NSString * aSoundPath = [[NSBundle bundleForClass:[KTGradientPicker class]] pathForResource:@"poof_item" ofType:@"aif"];
-			if(aSoundPath)
-			{
-				NSSound *  aPoofSound = [[[NSSound alloc] initWithContentsOfFile:aSoundPath byReference:NO] autorelease];
-				[aPoofSound play];
-			}
+//			NSString * aSoundPath = [[NSBundle bundleForClass:[KTGradientPicker class]] pathForResource:@"poof_item" ofType:@"aif"];
+//			if(aSoundPath)
+//			{
+//				NSSound *  aPoofSound = [[[NSSound alloc] initWithContentsOfFile:aSoundPath byReference:NO] autorelease];
+//				[aPoofSound play];
+//			}
 			[self removeStopAtIndex:mActiveColorStop];
 			[[NSCursor arrowCursor] set];
 		}
