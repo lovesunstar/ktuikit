@@ -294,7 +294,7 @@
 		break;
 		
 		case KTHorizontalPositionProportional:
-			aCurrentViewFrame.origin.x = (NSWidth(aSuperviewFrame)-NSWidth(aCurrentViewFrame))*mHorizontalPositionPercentage;
+			aCurrentViewFrame.origin.x = floor((NSWidth(aSuperviewFrame) - NSWidth(aCurrentViewFrame)) * mHorizontalPositionPercentage);
 		break;
 		
 		case KTHorizontalPositionFloatRight:
@@ -451,7 +451,7 @@
 		break;
 		
 		case KTVerticalPositionProportional:
-			aCurrentViewFrame.origin.y = (NSHeight(aSuperviewFrame)-NSHeight(aCurrentViewFrame))*mVerticalPositionPercentage;
+			aCurrentViewFrame.origin.y = floor((NSHeight(aSuperviewFrame)-NSHeight(aCurrentViewFrame)) * mVerticalPositionPercentage);
 		break;
 		
 		case KTVerticalPositionFloatUp:
