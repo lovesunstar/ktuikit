@@ -158,6 +158,16 @@
 	return mMouseDownCanMoveWindow;
 }
 
+- (void)setMouseDownCanMoveWindow:(BOOL)theBool
+{
+	mMouseDownCanMoveWindow = theBool;
+	if(mMouseDownCanMoveWindow == YES)
+	{
+		if([[self superview] isKindOfClass:[KTView class]])
+			[(KTView*)[self superview] setMouseDownCanMoveWindow:YES];
+	}
+}
+
 //=========================================================== 
 // - drawAsImage
 //=========================================================== 
@@ -318,6 +328,11 @@
 	if(		[theView conformsToProtocol:@protocol(KTViewLayout)] == NO
 		&&	[theView autoresizingMask] != NSViewNotSizable)
 		[self setAutoresizesSubviews:YES];
+	if([theView isKindOfClass:[KTView class]])
+	{
+		if([theView mouseDownCanMoveWindow])
+			[self setMouseDownCanMoveWindow:YES];
+	}
 }
 
 
