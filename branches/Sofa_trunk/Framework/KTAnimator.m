@@ -147,8 +147,8 @@ NSString *const KTAnimatorPointAnimation = @"KTAnimatorPointAnimation";
 
 - (void)performUpdateAnimation:(NSTimer*)theTimer
 {
-	//[self updateAnimation];
-	[self performSelectorOnMainThread:@selector(updateAnimation) withObject:nil waitUntilDone:NO];
+	[self updateAnimation];
+	// [self performSelectorOnMainThread:@selector(updateAnimation) withObject:nil waitUntilDone:NO];
 }
 
 
