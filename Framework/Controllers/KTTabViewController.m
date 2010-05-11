@@ -110,10 +110,11 @@
 - (void)addTabItem:(KTTabItem *)theTabItem select:(BOOL)theBool
 {
 	KTTabItem * aCurrentSelection = [self selectedTabItem];
-	[[self tabItemArrayController] setSelectsInsertedObjects:NO];
+	//[[self tabItemArrayController] setSelectsInsertedObjects:NO];
 	[self addTabItem:theTabItem];
+	
 	[self selectTabItem:aCurrentSelection];
-	[[self tabItemArrayController] setSelectsInsertedObjects:YES];
+	//[[self tabItemArrayController] setSelectsInsertedObjects:YES];
 }
 
 //=========================================================== 
