@@ -269,6 +269,8 @@
 //===========================================================
 - (void)selectTabItem:(KTTabItem*)theTabItem
 {
+	if (!theTabItem)
+		return;
 	[mTabItemArrayController setSelectedObjects:[NSArray arrayWithObject:theTabItem]];
 }
 
