@@ -104,6 +104,17 @@
 	[self insertTabItem:theTabItem atIndex:[[mTabItemArrayController arrangedObjects] count]];
 }
 
+//=========================================================== 
+// - addTabItem
+//===========================================================
+- (void)addTabItem:(KTTabItem *)theTabItem select:(BOOL)theBool
+{
+	KTTabItem * aCurrentSelection = [self selectedTabItem];
+	[[self tabItemArrayController] setSelectsInsertedObjects:NO];
+	[self addTabItem:theTabItem];
+	[self selectTabItem:aCurrentSelection];
+	[[self tabItemArrayController] setSelectsInsertedObjects:YES];
+}
 
 //=========================================================== 
 // - removeTabItem

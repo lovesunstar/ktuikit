@@ -31,6 +31,7 @@
 
 // adding/removing/getting tabs
 - (void)addTabItem:(KTTabItem*)theTabItem;
+- (void)addTabItem:(KTTabItem *)theTabItem select:(BOOL)theBool;
 - (void)removeTabItem:(KTTabItem*)theTabItem;
 - (void)insertTabItem:(KTTabItem*)theTabItem atIndex:(NSInteger)theIndex;
 - (NSArray*)tabItems;
