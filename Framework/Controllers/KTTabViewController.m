@@ -113,7 +113,8 @@
 	//[[self tabItemArrayController] setSelectsInsertedObjects:NO];
 	[self addTabItem:theTabItem];
 	
-	[self selectTabItem:aCurrentSelection];
+	if (!theBool)
+		[self selectTabItem:aCurrentSelection];
 	//[[self tabItemArrayController] setSelectsInsertedObjects:YES];
 }
 
