@@ -42,6 +42,7 @@
 @synthesize opaque = mOpaque;
 @synthesize canBecomeKeyView = mCanBecomeKeyView;
 @synthesize canBecomeFirstResponder = mCanBecomeFirstResponder;
+@synthesize acceptsFirstMouse = mAcceptsFirstMouse;
 @synthesize drawAsImage = mDrawAsImage;
 @synthesize cachedImage = mCachedImage;
 @synthesize drawDebuggingRect = mDrawDebuggingRect;
@@ -158,6 +159,9 @@
 	return mMouseDownCanMoveWindow;
 }
 
+//=========================================================== 
+// - setMouseDownCanMoveWindow:
+//=========================================================== 
 - (void)setMouseDownCanMoveWindow:(BOOL)theBool
 {
 	mMouseDownCanMoveWindow = theBool;
@@ -166,6 +170,14 @@
 		if([[self superview] isKindOfClass:[KTView class]])
 			[(KTView*)[self superview] setMouseDownCanMoveWindow:YES];
 	}
+}
+
+//=========================================================== 
+// - acceptsFirstMouse
+//=========================================================== 
+- (BOOL)acceptsFirstMouse
+{
+	return mAcceptsFirstMouse;
 }
 
 //=========================================================== 
