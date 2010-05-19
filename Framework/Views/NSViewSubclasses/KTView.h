@@ -44,6 +44,7 @@
 	NSString *					mLabel;
 	BOOL						mOpaque;
 	BOOL						mMouseDownCanMoveWindow;
+	BOOL						mAcceptsFirstMouse;
 	BOOL						mCanBecomeKeyView;
 	BOOL						mCanBecomeFirstResponder;
 	BOOL						mDrawAsImage;
@@ -54,6 +55,7 @@
 
 @property (nonatomic, readwrite, assign) BOOL opaque;
 @property (nonatomic, readwrite, assign) BOOL mouseDownCanMoveWindow;
+@property (nonatomic, readwrite, assign) BOOL acceptsFirstMouse;
 @property (nonatomic, readwrite, assign) BOOL canBecomeKeyView;
 @property (nonatomic, readwrite, assign) BOOL canBecomeFirstResponder;
 @property (nonatomic, readwrite, assign) BOOL drawAsImage;
