@@ -473,6 +473,14 @@
 //===========================================================
 - (void)animateDividerToPosition:(float)thePosition time:(float)theTimeInSeconds
 {		
+	if([mAnimator isAnimating])
+	{
+		[mAnimator stopAnimation];
+		[mAnimator setDelegate:nil];
+		[mAnimator release];
+		mAnimator = nil;
+		[self resetResizeInformation];
+	}
 	if(mAnimator == nil)
 	{
 		CGPoint aPositionToSet = NSPointToCGPoint([mDivider frame].origin);
@@ -490,7 +498,7 @@
 		[mAnimator setDelegate:self];																						
 		[mAnimator setDuration: theTimeInSeconds];
 		[mAnimator setAnimationCurve:NSAnimationEaseInOut];
-		[mAnimator setAnimationBlockingMode:NSAnimationBlocking];
+		[mAnimator setAnimationBlockingMode:NSAnimationNonblocking];
 		[mAnimator startAnimation];
 	}
 }
@@ -503,6 +511,7 @@
 {
 	if(theAnimation == mAnimator)
 	{
+		[mAnimator setDelegate:nil];
 		[mAnimator release];
 		mAnimator = nil;	
 		[self resetResizeInformation];	
