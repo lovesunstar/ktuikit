@@ -57,7 +57,7 @@
 	{
 		[mLayoutManager release];
 		mLayoutManager = [theLayoutManager retain];
-		[self setAutoresizingMask:NSViewNotSizable];
+		//[self setAutoresizingMask:NSViewNotSizable];
 	}
 }
 
