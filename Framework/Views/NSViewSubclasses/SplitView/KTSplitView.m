@@ -17,8 +17,8 @@
 
 @interface KTSplitView (Private)
 - (void)animateDividerToPosition:(float)thePosition time:(float)theTimeInSeconds;
-- (KTView*)firstViewContainer;
-- (KTView*)secondViewContainer;
+//- (KTView*)firstViewContainer;
+//- (KTView*)secondViewContainer;
 @end
 
 @implementation KTSplitView
