@@ -85,6 +85,8 @@ typedef enum
 - (void)setSecondView:(NSView<KTView>*)theView;
 - (KTView*)firstView;
 - (KTView*)secondView;
+- (KTView*)firstViewContainer;
+- (KTView*)secondViewContainer;
 - (void)setFirstView:(NSView<KTView>*)theFirstView secondView:(NSView<KTView>*)theSecondView;
 - (void)setDividerPosition:(CGFloat)thePosition relativeToView:(KTSplitViewFocusedViewFlag)theView;
 - (void)setDividerPosition:(CGFloat)thePosition relativeToView:(KTSplitViewFocusedViewFlag)theView animate:(BOOL)theBool animationDuration:(float)theTimeInSeconds;
